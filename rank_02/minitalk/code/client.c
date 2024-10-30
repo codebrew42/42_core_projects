@@ -29,7 +29,7 @@ void	send_str(pid_t pid, char *str)
 			else
 				kill(pid, SIGUSR1);
 			bit++;
-			usleep(200);
+			usleep(500);
 		}
 		i++;
 	}
