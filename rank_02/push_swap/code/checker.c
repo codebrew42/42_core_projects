@@ -84,6 +84,7 @@ int	read_and_execute_operation(t_node **stack_a, t_node **stack_b)
 			free(line);
 			free_stack_on_freeflag(stack_b, 1);
 			free_stack_and_exit(stack_a);
+			exit (1);
 		}
 		execute_operation(line, stack_a, stack_b);
 		free(line);
