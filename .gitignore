@@ -1,0 +1,29 @@
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE Settings
+.idea/
+.vscode/
+
+# Build Artifacts
+*.o
+*.class
+*.exe
+
+# Dependency Directories
+node_modules/
+__pycache__/
+venv/
+
+# Logs and Temporary Files
+*.log
+*.tmp
+
+# Sensitive Information
+.env
+
+# Documentation
+docs/_build/
+coverage/
+

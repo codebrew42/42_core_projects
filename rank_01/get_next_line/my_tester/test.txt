@@ -1,0 +1,5 @@
+1234
+5 678
+abcd
+z
+last line
