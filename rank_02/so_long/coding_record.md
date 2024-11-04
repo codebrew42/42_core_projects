@@ -16,7 +16,7 @@
 &nbsp;│ &nbsp;├── main.c  
 &nbsp;│ &nbsp;├── map1_init.c  
 &nbsp;│ &nbsp;├── map2_errcheck.c  
-&nbsp;│ &nbsp;├── player_movement.c  
+&nbsp;│ &nbsp;├── player.c  
 &nbsp;│ &nbsp;├── graphics.c  
 &nbsp;│ &nbsp;├──  
 &nbsp;│ &nbsp;└──  
