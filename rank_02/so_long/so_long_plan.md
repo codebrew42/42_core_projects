@@ -16,10 +16,13 @@ https://github.com/overbound/SonicTimeTwisted
 ## directly related
 https://harm-smits.github.io/42docs/libs/minilibx/getting_started.html
 
-# libx
+# code_linux
+
+gcc main.c mlx_linux/libmlx_Linux.a  -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
+
+# code_mac : libx
 normally: gcc main.c ... libmlx42.a -Iinclude -lglfw
 via homebrew: gcc main.c ... libmlx42.a -Iinclude -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/"
-
 
 https://github.com/codam-coding-college/MLX42?tab=readme-ov-file#download-and-build---mlx42
 
