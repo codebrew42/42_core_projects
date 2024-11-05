@@ -5,7 +5,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <fcntl.h>
+# include <fcntl.h> //open
 # include <errno.h>
 # include <string.h>
 # include "../get_next_line/get_next_line.h"
