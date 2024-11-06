@@ -25,15 +25,15 @@ SRCS         = ft_atoi.c ft_atol.c ft_bzero.c ft_calloc.c ft_isalnum.c \
                ft_lstclear.c ft_lstdelone.c ft_lstiter.c ft_lstmap.c ft_lstnew.c \
                ft_lstsize.c ft_strcmp.c
 
-BSRCS        = ft_lstadd_back.c ft_lstadd_front.c ft_lstlast.c ft_lstnew.c ft_lstsize.c \
-               ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c 
+BSRCS        = ft_lstadd_back.c ft_lstadd_front.c ft_lstlast.c ft_lstnew.c  \
+               ft_lstsize.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c 
 
 # Object files
 OBJS         = $(patsubst %.c, %.o, $(SRCS))
 BOBJS        = $(patsubst %.c, %.o, $(BSRCS))
 
 # Header file
-HEADER       = libft.h
+HEADER       = includes/libft.h
 CFLAGS       = -Wall -Wextra -Werror
 CC           = cc
 RM           = rm -f

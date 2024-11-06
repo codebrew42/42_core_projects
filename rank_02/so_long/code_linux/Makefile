@@ -2,7 +2,7 @@ name = so_long
 
 # directory
 LIBFT_DIR = libft
-INC_DIR = libft ft_printf get_next_line includes
+INC_DIR = libft/includes ft_printf/includes get_next_line/includes includes
 FT_PRINTF_DIR = ft_printf
 GET_NEXT_LINE_DIR = get_next_line
 
@@ -12,45 +12,44 @@ INC := -I$(INC_DIR)
 # src files
 SRC := src/main.c src/utils.c \
 
-LIBFT_SRC := libft/ft_strcmp libft/ft_strlen \
-
 # object
 OBJ := $(SRC:.c=.o)
 
+# compiler options
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror
+
 # others
-.PHONY: all clean fclean libft
+.PHONY: all clean fclean libft ft_printf get_next_line
 
 # default target
-all: $(NAME) libft 
+all: $(NAME) libft ft_printf get_next_line
+	$(CC) $(OBJ) -L$(LIBFT_DIR) -lft -L$(FT_PRINTF_DIR) -lft_printf -L$(GET_NEXT_LINE_DIR) -lget_next_line -o $(NAME)
 
-# build libft : check
-$(NAME): $(OBJ) $(LIBFT) $(FT_PRINTF) $(GET_NEXT_LINE)
+# Build libft
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
 
-$(LIBFT): $(LIBFT_OBJ)
-	$(MAKE) $(LIBFT_SRC)
-
-$(FT_PRINTF): $(FT_PRINTF_OBJ)
+# Build ft_printf
+$(FT_PRINTF):
 	$(MAKE) -C $(FT_PRINTF_DIR)
 
-$(GET_NEXT_LINE): $(GET_NEXT_LINE_OBJ)
+# Build get_next_line
+$(GET_NEXT_LINE):
 	$(MAKE) -C $(GET_NEXT_LINE_DIR)
 
-# Compiling
+# Compilation rule for object files in the main prog
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Cleaning
 clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
-	rm -f $(OBJ)
-	rm -f $(LIBFT_OBJ)
-	rm -f $(FT_PRINTF_OBJ)
-	rm -f $(GET_NEXT_LINE_OBJ)
-
-fclean: clean
-	$(MAKE) -C $(LIBFT_DIR) clean
 	$(MAKE) -C $(FT_PRINTF_DIR) clean
 	$(MAKE) -C $(GET_NEXT_LINE_DIR) clean
+	rm -f $(OBJ)
+
+fclean: clean
 	rm -f $(NAME)
 
 # includes files in sub-directories
