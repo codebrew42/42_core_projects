@@ -43,13 +43,24 @@ updated: 24.11.05
 
 	//first (3) = count of nbrs
 
-# va_arg
-## def
-- macro works by mving ptr to the next arg in the var arg list
 
-## how it works?
+# how it works? : va
 - *va_start* : inits *va_list* var, which means it point to the 1st arg
 	-> set up *va_list* (*args* this case)
 	-> and point to the 1st arg after the last fixed param (*count* here)
 - *va_arg* : retrieves or updates pointer to the next arg of the specified *type*, moves pointer forward by *sizeof(type)*
 - *va_end* : clean up the *va_list*, for resource management
+
+# va_arg
+## def
+- macro works by mving ptr to the next arg in the var arg list
+
+# va_start(args, s)
+## def
+### In the case of printf("hi")
+- the va_list is not used because there are no variable arguments; it simply prints the characters 
+- *s* points to the first character of the string, which is 'h'.
+
+### In the case of printf("%d", 101)
+- the *s* points to the format string "%d", and then it processes the format specifier and retrieves the variable argument 101.
+-  the va_list is used to retrieve the integer 101 for printing.
