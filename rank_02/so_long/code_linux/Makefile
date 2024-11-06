@@ -1,4 +1,4 @@
-name = so_long
+NAME = so_long
 
 # directory
 LIBFT_DIR = libft
@@ -10,7 +10,7 @@ GET_NEXT_LINE_DIR = get_next_line
 INC := -I$(INC_DIR)
 
 # src files
-SRC := src/main.c src/utils.c \
+SRC := src/main.c src/utils.c
 
 # object
 OBJ := $(SRC:.c=.o)
@@ -27,15 +27,15 @@ all: $(NAME) libft ft_printf get_next_line
 	$(CC) $(OBJ) -L$(LIBFT_DIR) -lft -L$(FT_PRINTF_DIR) -lft_printf -L$(GET_NEXT_LINE_DIR) -lget_next_line -o $(NAME)
 
 # Build libft
-$(LIBFT):
+libft:
 	$(MAKE) -C $(LIBFT_DIR)
 
 # Build ft_printf
-$(FT_PRINTF):
+ft_printf:
 	$(MAKE) -C $(FT_PRINTF_DIR)
 
 # Build get_next_line
-$(GET_NEXT_LINE):
+get_next_line:
 	$(MAKE) -C $(GET_NEXT_LINE_DIR)
 
 # Compilation rule for object files in the main prog
@@ -53,7 +53,7 @@ fclean: clean
 	rm -f $(NAME)
 
 # includes files in sub-directories
-vpath = get_next_line ft_printf
+#vpath = get_next_line ft_printf
 
 #rebuild
 re: fclean all

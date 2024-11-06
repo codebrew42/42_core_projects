@@ -7,10 +7,10 @@
 # include <fcntl.h> //open
 # include <errno.h>
 # include <string.h>
-# include "../ft_printf/ft_printf.h"
-# include "../get_next_line/get_next_line.h"
+# include "../ft_printf/includes/ft_printf.h"
+# include "../get_next_line/includes/get_next_line.h"
 # include "../minilibx-linux/mlx.h"
-# include "../libft/libft.h"
+# include "../libft/includes/libft.h"
 
 typedef struct s_game
 {
