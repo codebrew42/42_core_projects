@@ -1,28 +1,53 @@
 #include "includes/so_long.h"
 
-//utils.c
-int		display_error(void)
+void	init_game(t_game *game)
 {
-	
+	game->mlx_pointer = NULL;
+	game->window_pointer = NULL;
+	game->map = NULL;
+	game->map_column = 0;
+	game->map_row = 0;
 }
 
-
-void	check_param(char *param)
+int	read_valid_map(char *param, t_game *game)
 {
-	int	fd;
+	int		fd;
+	char	**temp_map;
+	int		i;
 
 	fd = open(param, O_RDONLY);
-	if (fd < 0)
-
+	if (fd < 0 || (ft_strcmp(param, ".ber") != 0))
+		return (1);
+	i = 0;
+	init_game(game);
+	while (1)
+	{
+		temp_map[i] = get_next_line(fd);
+		if (!temp_map[i])
+		{
+			if (!game->map_row)
+				return (report_error("Error: leer map!"));
+			break ;
+		}
+		game->map_row++;
+		i++;
+	}
+	game->map = malloc(sizeof(char *) * (game->map_row + 1));
+	if (!game->map)
+		return (1);
+	game->map = temp_map;
+	game->map[game->map_row + 1] = NULL;
+	return (0);
 }
 
 int	main(int ac, char **av)
 {
+	t_game	*game;
+
 	if (ac != 2)
 		return (1);
-	check_param(av[1]);
-
-	
+	if (read_valid_map(av[1], game) == 1)
+		return (1);	
 }
 
 /*

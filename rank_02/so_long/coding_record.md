@@ -4,6 +4,8 @@
 - planning : [structrue](#structure)
 - learning : how minilibx works
 
+## 241106
+- plan > check param, init map, validate map
 # structure
 /root  
 ├── Makefile  
