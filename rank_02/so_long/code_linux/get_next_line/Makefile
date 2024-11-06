@@ -15,6 +15,8 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	ar -rcs $(NAME) $(OBJS)
 
+$(OBJS): $(SRCS)
+
 %.o: %.c $(INC_DIR)/*.h
 	$(CC) -c $(FLAGS) $(HEADER) $< -o $@
 
@@ -22,7 +24,7 @@ clean:
 	rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME) 
+	rm -f $(NAME)
 
 re: fclean all
 

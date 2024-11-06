@@ -12,27 +12,6 @@
 
 #include "get_next_line.h"
 
-int	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strchr(char *s, int c)
-{
-	while (*s)
-	{
-		if (*s == (char) c)
-			return (s);
-		s++;
-	}
-	return (NULL);
-}
-
 char	*ft_strjoin_free_param(char *s1, char *s2)
 {
 	char	*dest;
