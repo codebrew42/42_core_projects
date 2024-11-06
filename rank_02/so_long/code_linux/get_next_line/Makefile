@@ -1,11 +1,11 @@
-NAME := get_next_line.a
+NAME := libget_next_line.a
 
 SRCS := get_next_line.c get_next_line_utils.c
 OBJS := $(SRCS:%.c=%.o)
 
 LIBFT_DIR := ../libft
 INC_DIR := includes
-HEADER := -I$(INC_DIR)
+HEADER := -I$(INC_DIR) -I../libft/includes
 
 CC := cc
 FLAGS := -Wall -Werror -Wextra
@@ -17,7 +17,7 @@ $(NAME): $(OBJS)
 
 $(OBJS): $(SRCS)
 
-%.o: %.c $(INC_DIR)/*.h
+%.o: %.c $(INC_DIR)/*.h $../libft/includes/libft.h
 	$(CC) -c $(FLAGS) $(HEADER) $< -o $@
 
 clean: 

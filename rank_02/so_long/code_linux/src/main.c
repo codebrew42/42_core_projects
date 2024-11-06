@@ -12,7 +12,7 @@ void	init_game(t_game *game)
 int	read_valid_map(char *param, t_game *game)
 {
 	int		fd;
-	char	**temp_map;
+	char	**temp_map = NULL;
 	int		i;
 
 	fd = open(param, O_RDONLY);
@@ -42,7 +42,7 @@ int	read_valid_map(char *param, t_game *game)
 
 int	main(int ac, char **av)
 {
-	t_game	*game;
+	t_game	*game = NULL;
 
 	if (ac != 2)
 		return (1);

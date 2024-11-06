@@ -1,4 +1,4 @@
-NAME := ft_printf.a
+NAME := libft_printf.a
 
 SRCS := ft_printf.c printing_utils.c
 OBJS := $(SRCS:%.c=%.o)
