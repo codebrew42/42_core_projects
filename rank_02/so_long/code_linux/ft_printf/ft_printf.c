@@ -19,7 +19,7 @@ int	print_formatted(const char c, va_list *args)
 	return (-1);
 }
 
-int	main(const char *s, ...)
+int	ft_printf(const char *s, ...)
 {
 	va_list			args;
 	unsigned int	output_len;
@@ -33,7 +33,10 @@ int	main(const char *s, ...)
 	while (s[i])
 	{
 		if (s[i] == '%')
-			output_len += print_formatted(s[++i], args);
+		{
+			output_len += print_formatted(s[++i], &args);
+			i++;
+		}
 		else
 			output_len += print_char(s[i]);
 		i++;

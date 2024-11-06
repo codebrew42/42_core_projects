@@ -4,10 +4,10 @@ SRCS := ft_printf.c printing_utils.c
 OBJS := $(SRCS:%.c=%.o)
 
 LIBFT_DIR := ../libft
-INC_DIR := includes
-HEADER := -I$(INC_DIR)
+INC_DIR := includes ../libft/includes
+HEADER := -Iincludes -I../libft/includes
 
-CC := cc
+CC := gcc
 FLAGS := -Wall -Werror -Wextra
 
 all: $(NAME)
@@ -22,7 +22,7 @@ clean:
 	rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME) 
+	rm -f $(NAME)
 
 re: fclean all
 

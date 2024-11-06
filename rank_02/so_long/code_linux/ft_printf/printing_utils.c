@@ -11,7 +11,7 @@ int	print_ptr(unsigned long long int nb, int base)
 	len = 0;
 	if (!nb)
 	{
-		ft_putstr("(nil)");
+		ft_putstr_fd("(nil)", 1);
 		return (5);
 	}
 	write(1, "0x", 2);
@@ -60,7 +60,7 @@ int	print_digit(long nb, int base, char c)
 int	print_str(char *str)
 {
 	while (*str)
-		write(1, (*str)++, 1);
+		write(1, str++, 1);
 	return (ft_strlen(str));
 }
 
