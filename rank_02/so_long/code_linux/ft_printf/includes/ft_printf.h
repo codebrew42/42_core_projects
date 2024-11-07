@@ -4,7 +4,6 @@
 # define SPECIFIERS "cspdiuxX%"
 # define HEX_BASE_LOWER "0123456789abcdef"
 # define HEX_BASE_UPPER "0123456789ABCDEF"
-
 # include <unistd.h>
 # include <stdarg.h>
 # include "../../libft/includes/libft.h"
