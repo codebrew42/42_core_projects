@@ -23,6 +23,8 @@ typedef struct s_game
 } t_game;
 
 //utils.c
+int free_close_and_report_error(int fd, char *str_to_free, char *str);
+int free_and_report_error(char *str_to_free, char *str);
 int report_error(char *str);
 
 #endif

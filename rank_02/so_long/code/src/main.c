@@ -23,32 +23,57 @@ void	init_game(t_game *game)
 
 int	read_valid_map(char *param, t_game *game)
 {
-	int		fd;
 	char	**temp_map = NULL;
 	int		i;
+	int		fd;
+	size_t		prev_map_column;
 
 	fd = open(param, O_RDONLY);
+	if (fd < 0)
+		return (1);
+			write(1, "E", 1);
+
+/*
+	if ((ft_strcmp(param, ".ber") != 0))
+		return (1);
+			write(1, "E", 1);
+
 	if (fd < 0 || (ft_strcmp(param, ".ber") != 0))
 		return (1);
+			write(1, "E", 1);
+*/
+    temp_map = malloc(sizeof(char *) * 500); //max row:edit
+    if (!temp_map)
+	{
+        return (free_close_and_report_error(fd, NULL, "malloc failed!"));
+	}
 	i = 0;
 	init_game(game);
 	while (1)
 	{
 		temp_map[i] = get_next_line(fd);
+		prev_map_column = ft_strlen(temp_map[i]);
+			write(1, "C", 1);
+
 		if (!temp_map[i])
 		{
 			if (!game->map_row)
-				return (report_error("Error: leer map!"));
+				return (free_close_and_report_error(fd, *temp_map, "leer map!"));
+			game->map[i + 1] = NULL;
 			break ;
 		}
+			write(1, "D", 1);
+
+		game->map[i] = malloc(prev_map_column + 1);
+		if (!game->map[i] || prev_map_column != ft_strlen(temp_map[i]))
+			return (free_close_and_report_error(fd, *temp_map, "malloc or column length!"));
+		game->map[i] = temp_map[i];
 		game->map_row++;
 		i++;
 	}
-	game->map = malloc(sizeof(char *) * (game->map_row + 1));
-	if (!game->map)
-		return (1);
-	game->map = temp_map;
-	game->map[game->map_row + 1] = NULL;
+	game->map[i] = NULL; // Set the last element to NULL
+    free(temp_map); // Free temp_map after copying
+    close(fd); // Close the file descriptor
 	return (0);
 }
 
@@ -58,9 +83,22 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		return (1);
-	write(1, "A", 1);
+	game = malloc(sizeof(t_game));
+	if (!game)
+		return (1);
 	if (read_valid_map(av[1], game) == 1)
 		return (1);	
+	//dsp check
+	 for (int i = 0; i < game->map_row; i++)
+    {
+        printf("%s", game->map[i]); // Print each line of the map
+    }
+    // Free the allocated map after use
+    for (int i = 0; i < game->map_row; i++)
+    {
+        free(game->map[i]); // Free each line
+    }
+    free(game->map); // Free the map array itself
 	write(1, "A", 1);
 }
 

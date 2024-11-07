@@ -7,6 +7,12 @@
 ## 241106
 - plan > check param, init map, validate map
 
+## 241107
+checking the map valid? -> str_cmp causes error
+reading the map -> core_dump
+
+### to learn
+- .ber type
 
 ## basic plan
 
