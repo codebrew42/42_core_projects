@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "includes/get_next_line.h"
 
 char	*ft_strjoin_free_param(char *s1, char *s2)
 {
