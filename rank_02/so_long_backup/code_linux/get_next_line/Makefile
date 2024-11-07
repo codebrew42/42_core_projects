@@ -13,6 +13,7 @@ FLAGS := -Wall -Werror -Wextra
 all: $(NAME)
 
 $(NAME): $(OBJS)
+	$(MAKE) -C $(LIBFT_DIR)
 	ar -rcs $(NAME) $(OBJS)
 
 $(OBJS): $(SRCS)
