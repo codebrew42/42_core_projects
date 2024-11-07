@@ -8,23 +8,27 @@
 - plan > check param, init map, validate map
 # structure
 /root  
-├── Makefile  
+├── Makefile (for so_long)  
 ├── headers/  
-&nbsp;│ &nbsp; ├── so_long.h  
-&nbsp;│ &nbsp; ├── get_next_line.h  
-&nbsp;│ &nbsp; └──  
+│   ├── so_long.h  
+│   ├── get_next_line.h  
 ├── get_next_line/  
+│   ├── Makefile (for get_next_line)  
+│   ├── get_next_line.c  
+│   ├── get_next_line_utils.c  
+├── ft_printf/  
+│   ├── Makefile (for ft_printf)  
+│   ├── ft_printf.c  
+│   ├── printing_utils.c  
+├── libft/  
+│   ├── Makefile (for libft)  
+│   ├── ft_*.c (all the libft source files)  
 ├── game_logic/  
-&nbsp;│ &nbsp;├── main.c  
-&nbsp;│ &nbsp;├── map1_init.c  
-&nbsp;│ &nbsp;├── map2_errcheck.c  
-&nbsp;│ &nbsp;├── player.c  
-&nbsp;│ &nbsp;├── graphics.c  
-&nbsp;│ &nbsp;├──  
-&nbsp;│ &nbsp;└──  
-&nbsp;│ game_maps/  
-&nbsp;│ &nbsp;├── map1.ber  
-└└── map2.ber  
+│   ├── main.c  
+│   ├── map1_init.c  
+│   ├── map2_errcheck.c  
+│   ├── player.c  
+│   ├── graphics.c  
 
 
 ## basic plan

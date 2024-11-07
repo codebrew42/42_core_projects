@@ -1,4 +1,4 @@
-NAME := get_next_line.a
+NAME := libget_next_line.a
 
 SRCS := get_next_line.c get_next_line_utils.c
 OBJS := $(SRCS:%.c=%.o)
