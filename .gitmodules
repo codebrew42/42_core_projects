@@ -1,6 +1,6 @@
-[submodule "Push-Swap-Tester"]
-	path = Push-Swap-Tester
-	url = git@github.com:coderquokka/Push-Swap-Tester.git
 [submodule "rank_02/push_swap/Push-Swap-Test"]
 	path = rank_02/push_swap/Push-Swap-Test
 	url = git@github.com:coderquokka/Push-Swap-Tester.git
+[submodule "rank_02/so_long/code_linux/minilibx-linux"]
+	path = rank_02/so_long/code_linux/minilibx-linux
+	url = git@github.com:coderquokka/minilibx-linux.git
