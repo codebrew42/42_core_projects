@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jiepark <jiepark@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/07 17:50:14 by jiepark           #+#    #+#             */
+/*   Updated: 2024/11/07 17:50:16 by jiepark          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/so_long.h"
 
 void	init_game(t_game *game)
@@ -44,13 +56,12 @@ int	main(int ac, char **av)
 {
 	t_game	*game = NULL;
 
-	ft_printf("hi");
-	write(1, "A", 1);
 	if (ac != 2)
 		return (1);
 	write(1, "A", 1);
 	if (read_valid_map(av[1], game) == 1)
 		return (1);	
+	write(1, "A", 1);
 }
 
 /*

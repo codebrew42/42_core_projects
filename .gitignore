@@ -11,6 +11,8 @@ Thumbs.db
 *.class
 *.exe
 
+!rank_02/so_long/code/minilibx-linux/
+
 # Dependency Directories
 node_modules/
 __pycache__/

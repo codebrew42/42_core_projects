@@ -6,26 +6,6 @@
 
 ## 241106
 - plan > check param, init map, validate map
-# structure
-/root of so_long
-├── Makefile (for so_long)  
-├── includes/  
-│   ├── so_long.h  
-│   ├── get_next_line.h  
-├── get_next_line/  
-│   ├── Makefile (for get_next_line)  
-│   ├── get_next_line.c  
-│   ├── get_next_line_utils.c  
-├── ft_printf/  
-│   ├── Makefile (for ft_printf)  
-│   ├── ft_printf.c  
-│   ├── printing_utils.c  
-├── libft/  
-│   ├── Makefile (for libft)  
-│   ├── ft_*.c (all the libft source files)  
-├──src/
-│   ├── main.c (for so_long)  
-│   ├── utils.c (for so_long)   
 
 
 ## basic plan

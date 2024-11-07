@@ -1,23 +1,52 @@
 # websites
-
 https://thegimptutorials.com/how-to-make-pixel-art/
-
 https://itch.io/
-
 https://opengameart.org/
-
 https://jamiecross.itch.io/8-bit-dungeon-tilesetsprites
-
-https://overboundn.itch.io/sonic-time-twisted
--> wow...
+https://overboundn.itch.io/sonic-time-twisted-> wow...
 https://github.com/overbound/SonicTimeTwisted
-
 
 ## directly related
 https://harm-smits.github.io/42docs/libs/minilibx/getting_started.html
 
-# code_linux
+# structure
+## general
+# structure
+/root of so_long  
+so_long  
+├── code  
+│ ├── includes  
+│ │ └── so_long.h  
+│ ├── libft  
+│ │ ├── ft_printf  
+│ │ │ ├── includes  
+│ │ │ │ └── ft_printf.h  
+│ │ │ ├── ft_printf.c  
+│ │ │ └── printing_utils.c  
+│ │ ├── get_next_line  
+│ │ │ ├── includes  
+│ │ │ │ └── get_next_line.h  
+│ │ │ ├── get_next_line.c  
+│ │ │ └── get_next_line_utils.c  
+│ │ ├── includes  
+│ │ │ └── libft.h  
+│ │ ├── Makefile  
+│ │ └── .c (libft source files)  
+│ ├── minilibx-linux  
+│ │ └── (MLX library files)  
+│ ├── maps  
+│ │ └── .ber  
+│ ├── src  
+│ │ ├── main.c  
+│ │ └── utils.c  
+│ └── Makefile  
+└── README.md  
 
+
+
+# compilation
+
+## code_linux
 gcc main.c mlx_linux/libmlx_Linux.a  -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
 jin@jin:~/coding/42_core_projects_git/rank_02/so_long/code_linux$ gcc main.c utils.c -Lmlx_linux -L/usr/lib -Imlx -lXext -lX11 -lm -lz
@@ -27,13 +56,6 @@ main.c:(.text+0x78): undefined reference to `ft_strcmp'
 /usr/bin/ld: /tmp/ccJbxBbi.o: in function `report_error':
 utils.c:(.text+0x18): undefined reference to `ft_printf'
 collect2: error: ld returned 1 exit status
-
-
-# code_mac : libx
-normally: gcc main.c ... libmlx42.a -Iinclude -lglfw
-via homebrew: gcc main.c ... libmlx42.a -Iinclude -lglfw -L"/opt/homebrew/Cellar/glfw/3.3.8/lib/"
-
-https://github.com/codam-coding-college/MLX42?tab=readme-ov-file#download-and-build---mlx42
 
 
 # guide
