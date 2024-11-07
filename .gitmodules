@@ -4,3 +4,6 @@
 [submodule "rank_02/so_long/code_linux/minilibx-linux"]
 	path = rank_02/so_long/code_linux/minilibx-linux
 	url = git@github.com:coderquokka/minilibx-linux.git
+[submodule "rank_02/so_long/code/minilibx-linux"]
+	path = rank_02/so_long/code/minilibx-linux
+	url = git@github.com:coderquokka/minilibx-linux.git

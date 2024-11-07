@@ -1,5 +1,0 @@
-void	map_init()
-{
-
-	
-}
