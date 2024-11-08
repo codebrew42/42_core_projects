@@ -7,7 +7,8 @@ LIBFT_DIR = libft
 HEADER := -Iincludes -I$(LIBFT_DIR)/includes 
 
 # Source files
-SRC := src/main.c src/utils.c
+SRC := src/main.c src/utils.c \
+		src/for_debug.c #//rm
 
 # Object files
 OBJ := $(SRC:.c=.o)

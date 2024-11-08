@@ -14,29 +14,45 @@
 
 void	free_game(t_game *game)
 {
-	size_t	i;
-
 	if (!game)
 		return ;
-	i = 0;
-	while (i < game->map_max_row)
+	game->map_row_idx = 0;
+	while (game->map_mem_allocated && game->map_row_idx < game->map_row)
 	{
-		free(game->map[i]);
-		i++;
+		free(game->map[game->map_row_idx]);
+		game->map_row_idx++;
 	}
 	free(game->map);
 	free(game);
 }
 
 
-int	clean_exit(int fd, t_game *game_to_free, char *str_to_free, char *str)
+int	clean_exit(int fd, t_game *game, int double_arr, char **str, char *msg)
 {
-	close(fd);
-	if (game_to_free)
-		free_game(game_to_free);
-	if (str_to_free)
-		free(str_to_free);
-	ft_printf("Error: %s", str);
+	char	**str_arr;
+	int		i;
+
+	if (fd >= 0)
+		close(fd);
+	if (game)
+		free_game(game);
+	if (str)
+	{
+		if (double_arr)
+		{
+			str_arr = (char **)str;
+			i = 0;
+			while (str_arr[i])
+			{
+				free(str_arr[i]);
+				i++;
+			}
+			free(str_arr);
+		}
+		else
+			free(str);
+	}
+	ft_printf("Error: %s", msg);
 	return (1);
 }
 

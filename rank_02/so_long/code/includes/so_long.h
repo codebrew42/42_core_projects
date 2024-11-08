@@ -17,8 +17,9 @@ typedef struct s_game
 	void		*mlx_pointer;
 	void		*window_pointer;
 	char		**map;
-	size_t		map_cur_row;
-	size_t		map_max_row;
+	int			map_mem_allocated;
+	size_t		map_row_idx;
+	size_t		map_row;
 	size_t		map_column;
 	size_t		map_collectives;
 	size_t		map_player;
@@ -35,8 +36,12 @@ typedef struct s_game
 }	t_map;
  */
 //utils.c
-int	clean_exit(int fd, t_game *game_to_free, char *str_to_free, char *str);
-int	free_and_report_error(char *str_to_free, char *str);
-int	report_error(char *str);
+void	free_game(t_game *game);
+int		clean_exit(int fd, t_game *game, int is_double, char **str, char *msg);
+int		free_and_report_error(char *str_to_free, char *str);
+int		report_error(char *str);
+
+//for_debug.c : //rm
+void	print_t_game(t_game *game);
 
 #endif

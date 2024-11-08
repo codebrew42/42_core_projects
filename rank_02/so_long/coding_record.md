@@ -14,6 +14,17 @@ reading the map -> core_dump
 ### to learn
 - .ber type
 
+## 241108
+### what i did
+- reading map
+- found issue : edge case(not ends with '\n' in the last line)
+- ASCII for debugging : ASCII 0 = NULL, 10 = Newline/NL, 48 = 0, 49 = 1
+- found error of my ft_printf 
+
+### to do
+- A1. deal with map0 cases(invalid), valgrind check
+- B1. fix ft_printf (of so_long, of rank_01)
+
 ## basic plan
 
 initializing the graphics, loading the map, rendering the game state, handling player input, and checking game conditions.
