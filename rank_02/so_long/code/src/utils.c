@@ -10,26 +10,46 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/so_long.h"
 
-int free_close_and_report_error(int fd, char *str_to_free, char *str)
+void	free_game(t_game *game)
 {
-    close(fd);
-    free(str_to_free);
-    ft_printf("Error: %d", str);
-    return (1);
+	size_t	i;
+
+	if (!game)
+		return ;
+	i = 0;
+	while (i < game->map_max_row)
+	{
+		free(game->map[i]);
+		i++;
+	}
+	free(game->map);
+	free(game);
 }
 
-int free_and_report_error(char *str_to_free, char *str)
+
+int	clean_exit(int fd, t_game *game_to_free, char *str_to_free, char *str)
 {
-    free(str_to_free);
-    ft_printf("Error: %d", str);
-    return (1);
+	close(fd);
+	if (game_to_free)
+		free_game(game_to_free);
+	if (str_to_free)
+		free(str_to_free);
+	ft_printf("Error: %s", str);
+	return (1);
 }
 
-int report_error(char *str)
+int	free_and_report_error(char *str_to_free, char *str)
 {
-    ft_printf("Error: %d", str);
-    return (1);
+	free(str_to_free);
+	ft_printf("Error: %s", str);
+	return (1);
 }
+
+int	report_error(char *str)
+{
+	ft_printf("Error: %s", str);
+	return (1);
+}
+

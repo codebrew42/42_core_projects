@@ -11,95 +11,182 @@
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
-
-void	init_game(t_game *game)
+/* 
+int	read_map_characters(t_game *game, char *line, int fd)
 {
-	game->mlx_pointer = NULL;
-	game->window_pointer = NULL;
-	game->map = NULL;
-	game->map_column = 0;
-	game->map_row = 0;
+	int		i;
+
+	if (game->map_cur_row && ft_strlen(line) != game->map_column)
+		return (clean_exit(fd, game, line, "Map is not rectangular"));
+	if (game->map_cur_row == 0 || game->map_cur_row == game->map_column)
+	{
+		i = 0;
+		while (i < game->map_column)
+		{
+			if (game->map[game->map_cur_row][i] != '1')
+				return (clean_exit(fd, game, line, "Missing wall"));
+			i++;
+		}
+	}
+	i = 0;
+	while (i < game->map_column)
+	{
+		if (game->map[game->map_cur_row][0] != '1' ||
+			game->map[game->map_cur_row][game->map_column - 1] != '1')
+			return (clean_exit(fd, game, line, "Missing wall"));
+		if (game->map[game->map_cur_row][i] != 'C')
+			game->map_collectives++;
+		if (game->map[game->map_cur_row][i] != 'P')
+			game->map_player++;
+		if (game->map[game->map_cur_row][i] != 'E')
+			game->map_exit++;
+		i++;
+	}
+} */
+
+
+int	has_valid_wall(t_game *game, char *line, int fd)
+{
+	size_t		i;
+	size_t		len;
+
+	len = ft_strlen(line);
+	if (!len || !line)
+		return (clean_exit(fd, game, line, "Empty line"));
+	if (game->map_cur_row == game->map_max_row)
+	{
+		if (!(len == game->map_column && line[len - 1] == '\n')
+			|| (len == game->map_column - 1 && line[len - 1] != '\n'))
+			return (clean_exit(fd, game, line, "Map is not rectangular"));
+	}
+	if (!game->map_cur_row || game->map_cur_row == game->map_max_row)
+	{
+		i = 0;
+		while ((i < len - 1 && line[len - 1] == '\n')
+			|| (i < len && line[len - 1] != '\n'))
+		{
+			if (line[i] != '1')
+				return (clean_exit(fd, game, line, "Missing wall"));
+			i++;
+		}
+	}
+	return (0);
 }
 
-int	read_valid_map(char *param, t_game *game)
+int	update_map_max_row(t_game *game, const char *param)
 {
-	char	**temp_map = NULL;
-	int		i;
 	int		fd;
-	size_t		prev_map_column;
+	char	*line;
+	size_t	line_count;
 
 	fd = open(param, O_RDONLY);
 	if (fd < 0)
 		return (1);
-			write(1, "E", 1);
-
-/*
-	if ((ft_strcmp(param, ".ber") != 0))
-		return (1);
-			write(1, "E", 1);
-
-	if (fd < 0 || (ft_strcmp(param, ".ber") != 0))
-		return (1);
-			write(1, "E", 1);
-*/
-    temp_map = malloc(sizeof(char *) * 500); //max row:edit
-    if (!temp_map)
-	{
-        return (free_close_and_report_error(fd, NULL, "malloc failed!"));
-	}
-	i = 0;
-	init_game(game);
+	line_count = 0;
 	while (1)
 	{
-		temp_map[i] = get_next_line(fd);
-		prev_map_column = ft_strlen(temp_map[i]);
-			write(1, "C", 1);
-
-		if (!temp_map[i])
-		{
-			if (!game->map_row)
-				return (free_close_and_report_error(fd, *temp_map, "leer map!"));
-			game->map[i + 1] = NULL;
+		line = get_next_line(fd);
+		if (!line)
 			break ;
-		}
-			write(1, "D", 1);
-
-		game->map[i] = malloc(prev_map_column + 1);
-		if (!game->map[i] || prev_map_column != ft_strlen(temp_map[i]))
-			return (free_close_and_report_error(fd, *temp_map, "malloc or column length!"));
-		game->map[i] = temp_map[i];
-		game->map_row++;
-		i++;
+		free (line);
+		line_count++;
 	}
-	game->map[i] = NULL; // Set the last element to NULL
-    free(temp_map); // Free temp_map after copying
-    close(fd); // Close the file descriptor
+	close (fd);
+	game->map_max_row = line_count;
 	return (0);
 }
 
-int	main(int ac, char **av)
+int	is_valid_map(t_game *game, const char *param)
 {
-	t_game	*game = NULL;
+	int		fd;
+	char	*line;
+
+	fd = open(param, O_RDONLY);
+	if (fd < 0 || !ft_strnstr(param, ".ber", ft_strlen(param)))
+		return (report_error("Opening \".ber\" file failed"));
+	if (update_map_max_row(game, param))
+		return (report_error("Opening file failed"));
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+		{
+			if (!game->map_cur_row)
+				return (clean_exit(fd, game, line, "Leer map"));
+			break ;
+		}
+		game->map_column = ft_strlen(line);
+		if (has_valid_wall(game, line, fd))
+			return (1);
+		ft_printf("%s\n", line); //rm
+		free(line);
+		game->map_cur_row++;
+	}
+	close(fd);
+	return (0);
+}
+/**
+ * @brief Saves a map to 'game', counting 'C/P/E' line by line
+ * @return 0 if the map is successfully read, 1 if it fails or is an invalid map
+ * @note how to free 'char **'?
+ */
+int	read_map(t_game *game, const char *param)
+{
+	char		**temp_map;
+	size_t		i;
+	int			fd;
+
+	fd = open(param, O_RDONLY);
+	if (fd < 0 || ft_strnstr(param, ".ber", ft_strlen(param)))
+		return (report_error("Opening file failed"));
+	i = 0;
+	temp_map = malloc(sizeof(char *) * (game->map_cur_row + 1));
+	if (!temp_map)
+		return (report_error("Malloc failed"));
+	while (i < game->map_cur_row)
+	{
+		temp_map[i] = get_next_line(fd);
+
+	}
+	game->map[i] = NULL;
+	free (temp_map);
+	close(fd);
+	return (0);
+}
+
+
+int	init_game(t_game **game)
+{
+	*game = malloc(sizeof(t_game));
+	if (!*game)
+		return (report_error("Malloc failed"));
+	(*game)->mlx_pointer = NULL;
+	(*game)->window_pointer = NULL;
+	(*game)->map = NULL;
+	(*game)->map_cur_row = 0;
+	(*game)->map_max_row = 0;
+	(*game)->map_column = 0;
+	(*game)->map_collectives = 0;
+	(*game)->map_player = 0;
+	(*game)->map_exit = 0;
+	return (0);
+}
+
+
+int	main(int ac, const char **av)
+{
+	t_game	*game;
 
 	if (ac != 2)
+		return (report_error("Usage: ./so_long map.ber"));
+	if (init_game(&game))
 		return (1);
-	game = malloc(sizeof(t_game));
-	if (!game)
+	if (is_valid_map(game, av[1])) //update: map->row map->column
 		return (1);
-	if (read_valid_map(av[1], game) == 1)
-		return (1);	
+	// if (read_map(game, av[1])) //checK: nbr of c, p, e
+	// 	return (1);	
 	//dsp check
-	 for (int i = 0; i < game->map_row; i++)
-    {
-        printf("%s", game->map[i]); // Print each line of the map
-    }
-    // Free the allocated map after use
-    for (int i = 0; i < game->map_row; i++)
-    {
-        free(game->map[i]); // Free each line
-    }
-    free(game->map); // Free the map array itself
-	write(1, "A", 1);
+
 }
 
 /*

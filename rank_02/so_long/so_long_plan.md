@@ -9,7 +9,7 @@ https://github.com/overbound/SonicTimeTwisted
 ## directly related
 https://harm-smits.github.io/42docs/libs/minilibx/getting_started.html
 
-# structure
+# structureggg
 ## general
 # structure
 /root of so_long  
@@ -50,7 +50,7 @@ so_long
 gcc main.c mlx_linux/libmlx_Linux.a  -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
 
 jin@jin:~/coding/42_core_projects_git/rank_02/so_long/code_linux$ gcc main.c utils.c -Lmlx_linux -L/usr/lib -Imlx -lXext -lX11 -lm -lz
-/usr/bin/ld: /tmp/ccRPPRJ3.o: in function `read_valid_map':
+/usr/bin/ld: /tmp/ccRPPRJ3.o: in function `read_map':
 main.c:(.text+0x78): undefined reference to `ft_strcmp'
 /usr/bin/ld: main.c:(.text+0xac): undefined reference to `get_next_line'
 /usr/bin/ld: /tmp/ccJbxBbi.o: in function `report_error':
