@@ -12,6 +12,10 @@
 
 #include "get_next_line.h"
 
+/**
+ * @note "stash[k + 1] == '\0'" chekcs if nothing after 
+ * newline at the end of the file
+ */
 char	*update_stash(char *stash)
 {
 	char	*dest;
@@ -25,7 +29,7 @@ char	*update_stash(char *stash)
 	k = 0;
 	while (stash[k] != '\n' && stash[k])
 		k++;
-	if (stash[k] == '\0')
+	if (stash[k] == '\0' || stash[k + 1] == '\0')
 		return (free(stash), NULL);
 	k++;
 	dest = ft_calloc(ft_strlen(stash) - k + 1, 1);
