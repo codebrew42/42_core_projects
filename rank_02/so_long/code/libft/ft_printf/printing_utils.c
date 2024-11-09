@@ -1,9 +1,5 @@
 #include "includes/ft_printf.h"
 
-/*note
-print_char : &c
-*/
-
 int	print_ptr(unsigned long long int nb, int base)
 {
 	int		len;
@@ -59,9 +55,16 @@ int	print_digit(long nb, int base, char c)
 
 int	print_str(char *str)
 {
-	while (*str)
-		write(1, str++, 1);
-	return (ft_strlen(str));
+	int	len;
+
+	if (!str)
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
+	len = ft_strlen(str);
+	write(1, str, len);
+	return (len);
 }
 
 int	print_char(char c)

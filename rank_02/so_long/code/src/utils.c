@@ -52,20 +52,23 @@ int	clean_exit(int fd, t_game *game, int double_arr, char **str, char *msg)
 		else
 			free(str);
 	}
-	ft_printf("Error: %s", msg);
+	if (msg)
+		ft_printf("%s", msg);
 	return (1);
 }
 
 int	free_and_report_error(char *str_to_free, char *str)
 {
 	free(str_to_free);
-	ft_printf("Error: %s", str);
+	if (str)
+		ft_printf("%s", str);
 	return (1);
 }
 
 int	report_error(char *str)
 {
-	ft_printf("Error: %s", str);
+	if (str)
+		ft_printf("%s", str);
 	return (1);
 }
 

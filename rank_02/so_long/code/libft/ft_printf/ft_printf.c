@@ -3,7 +3,7 @@
 int	print_formatted(const char c, va_list *args)
 {
 	if (c == 'c')
-		return (print_char(va_arg(*args, int))); //read next args (where it points) as an int
+		return (print_char(va_arg(*args, int)));
 	else if (c == 's')
 		return (print_str(va_arg(*args, char *)));
 	else if (c == 'd' || c == 'i')
@@ -19,27 +19,27 @@ int	print_formatted(const char c, va_list *args)
 	return (-1);
 }
 
+
 int	ft_printf(const char *s, ...)
 {
 	va_list			args;
-	unsigned int	output_len;
-	unsigned int	i;
+	unsigned int	ret;
 
-	//to check: printf("hi") ; s points to "h"
-	//to check: printf("%d", 101) ; s points to "%d", 
-	va_start(args, s); 
-	output_len = 0;
-	i = 0;
-	while (s[i])
+	ret = 0;
+	va_start(args, s);
+	while (*s)
 	{
-		if (s[i] == '%')
+		if (*s == '%' && *++s)
 		{
-			output_len += print_formatted(s[++i], &args);
-			i++;
+			ret += print_formatted(*s, &args);
+			s++;
 		}
 		else
-			output_len += print_char(s[i]);
-		i++;
+		{
+			ret += print_char(*s);
+			s++;
+		}
 	}
-	return (output_len);
+	va_end(args);
+	return (ret);
 }

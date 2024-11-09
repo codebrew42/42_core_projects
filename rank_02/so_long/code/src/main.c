@@ -20,7 +20,6 @@
  * and exit respectively.
  * 
  * @return 0 on success, 1 on error
-
  */
 int	validate_map_characters(t_game *game, char *line)
 {
@@ -28,7 +27,7 @@ int	validate_map_characters(t_game *game, char *line)
 
 	i = 0;
 	//rm
-	ft_printf("cur row: %d, C/P/E: %d, %d, %d\n\n", game->map_row_idx, game->map_collectives, game->map_player, game->map_exit);
+	ft_printf("row(%d): C/P/E: %d/%d/%d\t", game->map_row_idx, game->map_collectives, game->map_player, game->map_exit);
 	while (line[i])
 	{
 		if (line[i] == 'C')
@@ -42,45 +41,46 @@ int	validate_map_characters(t_game *game, char *line)
 	if (game->map_row_idx == game->map_row - 1)
 	{
 		if (game->map_collectives < 1)
-			return (clean_exit(-1, game, 0, NULL, "Wrong number: \'C\'"));
+			return (clean_exit(-1, game, 0, NULL, "Error: invalid \'C\'"));
 		if (game->map_player != 1)
-			return (clean_exit(-1, game, 0, NULL, "Wrong number: \'P\'"));
+			return (clean_exit(-1, game, 0, NULL, "Error: invalid \'P\'"));
 		if (game->map_exit != 1)
-			return (clean_exit(-1, game, 0, NULL, "Wrong number: \'E\'"));
+			return (clean_exit(-1, game, 0, NULL, "Error: invalid \'E\'"));
 	}
 	return (0);
 }
 
 /**
+ * @param net_len = str length except \n
  * @note edge case how to handle? last line doesnt contain '\n'
+ * free_double(&line) causes error, but free_double((char **)line) is okay
+ * why? &line : takes adr of the line 
+ *      (char **)line : casts the value of the line
  */
-
 int	has_invalid_wall(t_game *game, char *line, int fd)
 {
 	size_t		i;
-	size_t		len;
+	size_t		net_len;
 
-	len = ft_strlen(line);
-	if (!len || !line)
-		return (clean_exit(fd, game, 0, &line, "Empty line"));
-	if ((line[len - 1] == '\n' && len != game->map_column)
-		&& !(game->map_row_idx == game->map_row - 1 && line[len - 1] == '1'))
-		return (clean_exit(fd, game, 0, &line, "Map is not rectangular"));
+	net_len = ft_strlen(line);
+	if (!net_len || !line)
+		return (clean_exit(fd, game, 0, (char **)line, "Error: Empty line"));
+	if (line[net_len - 1] == '\n')
+		net_len--;
+	if (net_len != game->map_column - 1)
+		return (clean_exit(fd, game, 0, (char **)line, "Error: Map not even"));
 	if (!game->map_row_idx || game->map_row_idx == game->map_row - 1)
 	{
 		i = 0;
-		while (line[i] && line[i] != '\n')
+		while (i < net_len)
 		{
 			if (line[i] != '1')
-				return (clean_exit(fd, game, 0, &line, "Missing wall"));
+				return (clean_exit(fd, game, 0, (char **)line, "Error: Wall"));
 			i++;
 		}
 	}
-	if (line[0] != '1' || (line[len - 1] != '1' && line[len - 1] != '\n'))
-		return (clean_exit(fd, game, 0, &line, "Missing wall"));
-	// if (line[0] != '1' || line[len - 2] != '1'
-	// 	|| !(game->map_row_idx == game->map_row - 1 && line[len - 1] == '1'))
-	// 	return (clean_exit(fd, game, 0, &line, "Missing wall"));
+	if (line[0] != '1' || line[net_len - 1] != '1')
+		return (clean_exit(fd, game, 0, (char **)line, "Error: Wall"));
 	return (0);
 }
 
@@ -121,21 +121,22 @@ int	is_valid_map(t_game *game, const char *param)
 	fd = open(param, O_RDONLY);
 	if (fd < 0 || !ft_strnstr(param, ".ber", ft_strlen(param))
 		|| update_map_row(game, param))
-		return (clean_exit(fd, game, 0, NULL, "Opening \".ber\" file failed"));
+		return (clean_exit(fd, game, 0, NULL, "Error: invalid \".ber\" file"));
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 		{
 			if (!game->map_row_idx)
-				return (clean_exit(fd, game, 0, NULL, "Leer map"));
+				return (clean_exit(fd, game, 0, NULL, "Error: Leer map"));
 			break ;
 		}
 		if (!game->map_row_idx)
 			game->map_column = ft_strlen(line);
-		// if (has_invalid_wall(game, line, fd))
-		// 	return (1);
-		ft_printf("%s\n", line); //rm
+		if (has_invalid_wall(game, line, fd))
+			return (clean_exit(fd, NULL, 0, NULL, NULL));
+		 ft_printf("%s", line); //rm
+		// ft_printf("last char: (%c)", line[ft_strlen(line) -1]); //rm
 		free(line);
 		game->map_row_idx++;
 	}
@@ -165,7 +166,7 @@ int	read_map(t_game *game, const char *param)
 	{
 		game->map[i] = get_next_line(fd);
 		if (!game->map[i])
-			return (clean_exit(fd, game, 1, game->map, "Malloc  failed"));
+			return (clean_exit(fd, game, 1, game->map, "Error: Malloc failed"));
 		game->map_row_idx = i;
 		validate_map_characters(game, game->map[i]);
 		i++;
@@ -208,19 +209,21 @@ int	main(int ac, const char **av)
 		return (1);
 	if (is_valid_map(game, av[1]))
 		return (1);
-	
-	print_t_game(game); //rm
+	//print_t_game(game); //rm
+	write(1, "AA", 2);
 	 if (read_map(game, av[1])) //checK: nbr of c, p, e
-		return (1);	
-	//dsp check
-	char last_char = game->map[game->map_row - 1][game->map_column - 1];
-	ft_printf("ASCII value of last char: (%d)\n\n", last_char);
-	ft_printf("last line of the map: (%s)\n\n", game->map[game->map_row - 1]);
-	ft_printf("last char of the map: (%c)\n\n", last_char);
+		return (1);
+	write(1, "BB", 2);
 
-	last_char = game->map[game->map_row - 1][game->map_column - 2];
-	ft_printf("ASCII value of 2nd last char: (%d)\n\n", last_char);
-	ft_printf("end last char of the map: (%c)\n\n", last_char);
+	//dsp check //rm
+	// char last_char = game->map[game->map_row - 1][game->map_column - 1];
+	// ft_printf("ASCII value of last char: (%d)\n", last_char);
+	// ft_printf("last line of the map: (%s)\n", game->map[game->map_row - 1]);
+	// ft_printf("last char of the map: (%c)\n", last_char);
+
+	// last_char = game->map[game->map_row - 1][game->map_column - 2];
+	// printf("ASCII value of 2nd last char: (%d)\n", last_char);
+	// printf("end last char of the map: (%c)\n", last_char);
 	free_game(game); //later : 0 -> 1 since it will be malloced
 	ft_printf("suc");
 	return (0);

@@ -22,15 +22,31 @@ reading the map -> core_dump
 - found error of my ft_printf 
 
 ### to do
-- A1. deal with map0 cases(invalid), valgrind check
-- B1. fix ft_printf (of so_long, of rank_01)
+- A1. deal with map0 cases(invalid), valgrind check (O)
+- B1. fix ft_printf (of so_long, of rank_01) (O)
+
+## 241109
+### what i did
+- reading map : almost finished (all the .ber file so far: 0-*, 1-*)
+- found error of my gnl (both updated:rank01, solong)
+- setting "net_len" improved my code (see: *has_invalid_wall()*)
+- I still make mistakes about freeing, returning on error(sub func)
+
+### to do
+- A1. see the plan, plan again from [init_game](#init_game)
+- B1. check more edge cases of .ber (slack)
 
 ## basic plan
 
-initializing the graphics, loading the map, rendering the game state, handling player input, and checking game conditions.
+initializing the graphics, 
+loading the map, (O: check more edge cases)
+rendering the game state, 
+handling player input, 
+and checking game conditions.
 
 
-### param check -> map check
+# plans
+## param check -> map check (finished)
 
 (1) param check
 - argc = 2 
