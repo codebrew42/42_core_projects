@@ -12,6 +12,16 @@
 # include "../libft/get_next_line/includes/get_next_line.h"
 # include "../minilibx-linux/mlx.h"
 
+/* to save images */
+typedef struct s_image
+{
+	void	*wall;
+	void	*floor;
+	void	*collectives;
+	void	*player;
+	void	*exit;
+}	t_image;
+
 typedef struct s_game
 {
 	void		*mlx_pointer;
@@ -24,17 +34,10 @@ typedef struct s_game
 	size_t		map_collectives;
 	size_t		map_player;
 	size_t		map_exit;
+	t_image		image;
 }	t_game;
 
-/* typedef struct s_map
-{
-	int		row;
-	int		column;
-	int		collectives;
-	int		player;
-	int		exit;
-}	t_map;
- */
+
 
 
 /* init1_game.c : t_game game Initialization and Cleanup */
@@ -53,6 +56,10 @@ int		read_map(t_game *game, const char *param);
 int		clean_exit_double(int fd, t_game *game, char **str, char *msg);
 int		clean_exit(int fd, t_game *game, char *str, char *msg);
 int		report_error(char *str);
+
+/* graphic.c : Report Error and Cleanup*/
+void	place_images_in_game(t_game *game);
+
 
 /* Debug Functions - for_debug.c */ //rm
 void	print_t_game(t_game *game); //rm

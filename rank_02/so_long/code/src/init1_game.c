@@ -51,6 +51,7 @@ int	init_game(t_game **game)
 	(*game)->mlx_pointer = NULL;
 	(*game)->window_pointer = NULL;
 	(*game)->map = NULL;
+	//(*game)->image = NULL; //err: incompatible
 	(*game)->map_row_idx = 0;
 	(*game)->map_row = 0;
 	(*game)->map_column = 0;

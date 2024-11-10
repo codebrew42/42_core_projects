@@ -8,8 +8,9 @@ MINILIBX_DIR := minilibx-linux
 HEADER := -Iincludes -I$(LIBFT_DIR)/includes 
 
 # Source files
-SRC :=	src/init1_game.c src/init2_map.c src/error.c\
-		src/for_debug.c  src/main.c #//rm
+SRC :=	src/init1_game.c	src/init2_map.c		src/error.c\
+		src/graphic.c		src/main.c \
+		src/for_debug.c #//rm
 
 # Object files
 OBJ := $(SRC:.c=.o)

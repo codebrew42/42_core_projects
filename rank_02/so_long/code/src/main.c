@@ -25,6 +25,7 @@ int	main(int ac, const char **av)
 		return (1);
 	if (init_pointers(game))
 		return (1);
+	place_images_in_game(game);
 	// Add MLX loop to keep window open
 	mlx_loop(game->mlx_pointer);
 	
