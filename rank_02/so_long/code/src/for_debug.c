@@ -1,5 +1,26 @@
 #include "../includes/so_long.h"
 
+/**
+ * @note 
+ * 
+ */
+void	print_map(t_game *game)
+{
+	int	i;
+
+	if (!game || !game->map_mem_allocated)
+		return ;
+	i = 0;
+	ft_printf("\n");
+	while (game->map[i])
+	{
+		ft_printf("(adr: %p)%s", (void *)game->map[i], game->map[i]);
+		i++;
+	}
+}
+
+
+
 void	print_t_game(t_game *game)
 {
 	if (!game)

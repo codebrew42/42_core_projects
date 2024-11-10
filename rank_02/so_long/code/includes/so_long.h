@@ -35,13 +35,17 @@ typedef struct s_game
 	int		exit;
 }	t_map;
  */
-//utils.c
+
+
+//utils_main.c
 void	free_game(t_game *game);
-int		clean_exit(int fd, t_game *game, int is_double, char **str, char *msg);
-int		free_and_report_error(char *str_to_free, char *str);
+int		clean_exit(int fd, t_game *game, char *str, char *msg);
+int		clean_exit_double(int fd, t_game *game, char **str, char *msg);
 int		report_error(char *str);
+int		init_game(t_game **game);
 
 //for_debug.c : //rm
 void	print_t_game(t_game *game);
+void	print_map(t_game *game);
 
 #endif

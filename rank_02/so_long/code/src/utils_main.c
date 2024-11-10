@@ -25,9 +25,35 @@ void	free_game(t_game *game)
 	free(game->map);
 	free(game);
 }
+// int	clean_exit(int fd, t_game *game, char **str, char *msg)
+// {
+// 	int		i;
 
+// 	if (fd >= 0)
+// 		close(fd);
+// 	if (game)
+// 		free_game(game);
+// 	if (str)
+// 	{
+// 		// Try to dereference first element to check if it's a valid pointer
+// 		if (str[0] && (size_t)str[0] > 4096)  // Basic pointer validity check
+// 		{
+// 			// It's likely a double array
+// 			i = 0;
+// 			while (str[i])
+// 				free(str[i++]);
+// 			free(str);
+// 		}
+// 		else
+// 			// It's a single string
+// 			free(str);
+// 	}
+// 	if (msg)
+// 		ft_printf("%s", msg);
+// 	return (1);
+// }
 
-int	clean_exit(int fd, t_game *game, int double_arr, char **str, char *msg)
+int	clean_exit_double(int fd, t_game *game, char **str, char *msg)
 {
 	char	**str_arr;
 	int		i;
@@ -38,30 +64,30 @@ int	clean_exit(int fd, t_game *game, int double_arr, char **str, char *msg)
 		free_game(game);
 	if (str)
 	{
-		if (double_arr)
+		str_arr = (char **)str;
+		i = 0;
+		while (str_arr[i])
 		{
-			str_arr = (char **)str;
-			i = 0;
-			while (str_arr[i])
-			{
-				free(str_arr[i]);
-				i++;
-			}
-			free(str_arr);
+			free(str_arr[i]);
+			i++;
 		}
-		else
-			free(str);
+		free(str_arr);
 	}
 	if (msg)
 		ft_printf("%s", msg);
 	return (1);
 }
 
-int	free_and_report_error(char *str_to_free, char *str)
+int	clean_exit(int fd, t_game *game, char *str, char *msg)
 {
-	free(str_to_free);
+	if (fd >= 0)
+		close(fd);
+	if (game)
+		free_game(game);
 	if (str)
-		ft_printf("%s", str);
+		free(str);
+	if (msg)
+		ft_printf("%s", msg);
 	return (1);
 }
 
@@ -72,3 +98,24 @@ int	report_error(char *str)
 	return (1);
 }
 
+/**
+ * @brief Malloc 't_game *game', assign Null, 0 to elements
+ * @return 0 if malloc was successful, otherwise 1
+ */
+int	init_game(t_game **game)
+{
+	*game = malloc(sizeof(t_game));
+	if (!*game)
+		return (report_error("Malloc failed"));
+	(*game)->mlx_pointer = NULL;
+	(*game)->window_pointer = NULL;
+	(*game)->map = NULL;
+	(*game)->map_row_idx = 0;
+	(*game)->map_row = 0;
+	(*game)->map_column = 0;
+	(*game)->map_collectives = 0;
+	(*game)->map_player = 0;
+	(*game)->map_exit = 0;
+	(*game)->map_mem_allocated = 0;
+	return (0);
+}

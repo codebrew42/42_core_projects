@@ -9,9 +9,8 @@ https://github.com/overbound/SonicTimeTwisted
 ## directly related
 https://harm-smits.github.io/42docs/libs/minilibx/getting_started.html
 
-# structureggg
-## general
 # structure
+## general
 /root of so_long  
 so_long  
 ├── code  
