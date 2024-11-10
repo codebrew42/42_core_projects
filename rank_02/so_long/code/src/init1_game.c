@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   init1_game.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiepark <jiepark@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/07 18:01:59 by jiepark          #+#    #+#              */
-/*   Updated: 2024/11/07 18:01:59 by jiepark         ###   ########.fr        */
+/*   Created: 2024/11/10 21:40:03 by jiepark          #+#    #+#              */
+/*   Updated: 2024/11/10 21:40:03 by jiepark         ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
+
+int	init_pointers(t_game *game)
+{
+	game->mlx_pointer = mlx_init();
+	if (!game->mlx_pointer)
+		return (clean_exit(-1, game, NULL, "Error: MLX init failed"));
+	game->window_pointer = mlx_new_window(game->mlx_pointer,
+			game->map_row * 32, game->map_column * 32, "so_long");
+	if (!game->window_pointer)
+		return (clean_exit(-1, game, NULL, "Error: Window creation failed"));
+	return (0);
+}
 
 void	free_game(t_game *game)
 {
@@ -22,80 +34,9 @@ void	free_game(t_game *game)
 		free(game->map[game->map_row_idx]);
 		game->map_row_idx++;
 	}
-	free(game->map);
+	if (game->map)
+		free(game->map);
 	free(game);
-}
-// int	clean_exit(int fd, t_game *game, char **str, char *msg)
-// {
-// 	int		i;
-
-// 	if (fd >= 0)
-// 		close(fd);
-// 	if (game)
-// 		free_game(game);
-// 	if (str)
-// 	{
-// 		// Try to dereference first element to check if it's a valid pointer
-// 		if (str[0] && (size_t)str[0] > 4096)  // Basic pointer validity check
-// 		{
-// 			// It's likely a double array
-// 			i = 0;
-// 			while (str[i])
-// 				free(str[i++]);
-// 			free(str);
-// 		}
-// 		else
-// 			// It's a single string
-// 			free(str);
-// 	}
-// 	if (msg)
-// 		ft_printf("%s", msg);
-// 	return (1);
-// }
-
-int	clean_exit_double(int fd, t_game *game, char **str, char *msg)
-{
-	char	**str_arr;
-	int		i;
-
-	if (fd >= 0)
-		close(fd);
-	if (game)
-		free_game(game);
-	if (str)
-	{
-		str_arr = (char **)str;
-		i = 0;
-		while (str_arr[i])
-		{
-			free(str_arr[i]);
-			i++;
-		}
-		free(str_arr);
-	}
-	if (msg)
-		ft_printf("%s", msg);
-	return (1);
-}
-
-int	clean_exit(int fd, t_game *game, char *str, char *msg)
-{
-	if (fd >= 0)
-		close(fd);
-	if (game)
-		free_game(game);
-	if (str)
-		free(str);
-	if (msg)
-		ft_printf("%s", msg);
-	return (1);
-}
-
-int	report_error(char *str)
-{
-	if (str)
-		ft_printf("%s", str);
-	return (1);
 }
 
 /**

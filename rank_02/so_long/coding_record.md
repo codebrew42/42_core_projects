@@ -36,14 +36,40 @@ reading the map -> core_dump
 - A1. see the plan, plan again from [init_game](#init_game)
 - B1. check more edge cases of .ber (slack)
 
+## 241110
+### what i did
+- init window
+- pixels : 32*32 recommended, matching XPM files' pixel is also recommended
+- *Still reachable* prob of XLM
+- when freeing double pointer: always set NULL str[i][j] level, and also str[i] level. both. -> it caused err
+### to do
+- B1. the window's shape does not match the maps shape
+- A1. to see if it's fixable : - Still reachable prob of XLM
+- A2. save image, using the example XPM files (I copied)
+
 ## basic plan
+(0) getting ready : (O)
+initializing the game (O)
+loading the map, (O/ but check more edge cases)
 
-initializing the graphics, 
-loading the map, (O: check more edge cases)
-rendering the game state, 
-handling player input, 
-and checking game conditions.
+(1) visual part
+*what it does*
+init graphical window using XML library (x)
 
+load images from XPMs-> save to t_game
+	*image pixel should be 32 * 32, set to be 32 * 32 too
+draw initial game state (graphics)
+
+(2)event/control part
+*what it does*
+-listen for events(keyboards/window)
+-update game state
+-redraw the screen when required
+
+[code]
+    mlx_key_hook(game.winpointer, controls_working, &game);  // Keyboard input
+    mlx_hook(game.winpointer, 17, 0, (void *)exit, 0);      // Window close button
+    mlx_loop(game.mlxpointer);  // Start the game loop
 
 # plans
 ## param check -> map check (finished)

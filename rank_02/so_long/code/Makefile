@@ -2,13 +2,14 @@ NAME = so_long
 
 # Directories
 LIBFT_DIR = libft
+MINILIBX_DIR := minilibx-linux
 
 # Header
 HEADER := -Iincludes -I$(LIBFT_DIR)/includes 
 
 # Source files
-SRC := src/main.c src/utils_main.c \
-		src/for_debug.c #//rm
+SRC :=	src/init1_game.c src/init2_map.c src/error.c\
+		src/for_debug.c  src/main.c #//rm
 
 # Object files
 OBJ := $(SRC:.c=.o)
@@ -21,13 +22,15 @@ CFLAGS = -Wall -Wextra -Werror $(HEADER)
 .PHONY: all clean fclean libft re
 
 # libraries
-LIB := -L$(LIBFT_DIR) -llibft 
+LIB			:= -L$(LIBFT_DIR) -l$(LIBFT_DIR) 
+MINILIBX	:= -L$(MINILIBX_DIR) -lmlx -lXext -lX11 -lm -lz
 
 # Default target
 all: $(NAME)
 
 $(NAME): libft/liblibft.a $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIB) -o $(NAME)
+	make -C $(MINILIBX_DIR)
+	$(CC) $(CFLAGS) $(OBJ) $(LIB) $(MINILIBX) -o $(NAME)
 
 # Compilation rule for object files in the main program
 %.o: %.c
