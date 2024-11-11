@@ -41,9 +41,10 @@ void	print_t_game(t_game *game)
 	ft_printf("\nCurrent Row: %d\t", game->map_row_idx);
 	ft_printf("Max Rows: %d\t", game->map_row);
 	ft_printf("Max Columns: %d\n", game->map_column);
-	ft_printf("Collectives: %d\t", game->map_collectives);
+	ft_printf("items: %d\t", game->map_items);
 	ft_printf("Players: %d\t", game->map_player);
 	ft_printf("Exits: %d\t", game->map_exit);
 	ft_printf("Maps: ");
 	print_map(game);
+	ft_printf("Player Pos: %d, %d", game->x_player_position, game->y_player_position);
 }

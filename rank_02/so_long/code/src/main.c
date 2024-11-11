@@ -12,6 +12,7 @@
 
 #include "../includes/so_long.h"
 
+
 /**
  * @note (found one issue for eval) of MLX function
  */
@@ -29,9 +30,13 @@ int	main(int ac, const char **av)
 	place_images_in_game(game);
 	render_map(game);
 	// Add MLX loop to keep window open
-	mlx_loop(game->mlx_pointer);
-	
+	//mlx_key_hook(game->window_ptr, key_control, game)
+	//mlx_hook
+	mlx_loop(game->mlx_ptr);
+
+	print_t_game(game); //rm
 	free_game(game);
+
 	ft_printf("suc"); //rm
 	return (0);
 }

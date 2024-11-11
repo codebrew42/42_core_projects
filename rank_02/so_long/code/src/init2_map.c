@@ -16,7 +16,7 @@
  * @brief Saves and checks the map characters for validity
  * 
  * This function iterates over a line of the map, counting the occurrences
- * of 'C', 'P', and 'E' characters, which represent collectives, player, 
+ * of 'C', 'P', and 'E' characters, which represent items, player, 
  * and exit respectively.
  * 
  * @return 0 on success, 1 on error
@@ -26,26 +26,24 @@ int	validate_map_characters(t_game *game, char *line)
 	size_t		i;
 
 	i = 0;
-	//rm
-	//ft_printf("row(%d): C/P/E: %d/%d/%d\t", game->map_row_idx, game->map_collectives, game->map_player, game->map_exit);
 	while (line[i])
 	{
 		if (line[i] == 'C')
-			game->map_collectives++;
+			game->map_items++;
 		if (line[i] == 'P')
+		{
 			game->map_player++;
+			game->x_player_position = i;
+			game->y_player_position = game->map_row_idx;
+		}
 		if (line[i] == 'E')
 			game->map_exit++;
 		i++;
 	}
 	if (game->map_row_idx == game->map_row - 1)
 	{
-		if (game->map_collectives < 1)
-			return (clean_exit(-1, game, NULL, "Error: invalid \'C\'"));
-		if (game->map_player != 1)
-			return (clean_exit(-1, game, NULL, "Error: invalid \'P\'"));
-		if (game->map_exit != 1)
-			return (clean_exit(-1, game, NULL, "Error: invalid \'E\'"));
+		if (game->map_player != 1 || game->map_exit != 1 || game->map_items < 1)
+			return (clean_exit(-1, game, NULL, "Error: wrong 'C', 'P' or 'E'"));
 	}
 	return (0);
 }
