@@ -18,7 +18,7 @@ int	init_pointers(t_game *game)
 	if (!game->mlx_pointer)
 		return (clean_exit(-1, game, NULL, "Error: MLX init failed"));
 	game->window_pointer = mlx_new_window(game->mlx_pointer,
-			game->map_row * 32, game->map_column * 32, "so_long");
+			game->map_column * 32, game->map_row * 32, "so_long");
 	if (!game->window_pointer)
 		return (clean_exit(-1, game, NULL, "Error: Window creation failed"));
 	return (0);

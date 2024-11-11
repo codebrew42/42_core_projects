@@ -27,7 +27,7 @@ int	validate_map_characters(t_game *game, char *line)
 
 	i = 0;
 	//rm
-	ft_printf("row(%d): C/P/E: %d/%d/%d\t", game->map_row_idx, game->map_collectives, game->map_player, game->map_exit);
+	//ft_printf("row(%d): C/P/E: %d/%d/%d\t", game->map_row_idx, game->map_collectives, game->map_player, game->map_exit);
 	while (line[i])
 	{
 		if (line[i] == 'C')

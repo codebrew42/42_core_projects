@@ -10,7 +10,7 @@
 # include "../libft/includes/libft.h"
 # include "../libft/ft_printf/includes/ft_printf.h"
 # include "../libft/get_next_line/includes/get_next_line.h"
-# include "../../code_linux/minilibx-linux/mlx.h"
+# include "../minilibx-linux/mlx.h"
 
 /* to save images */
 typedef struct s_image

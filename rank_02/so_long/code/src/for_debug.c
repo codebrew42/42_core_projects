@@ -44,4 +44,6 @@ void	print_t_game(t_game *game)
 	ft_printf("Collectives: %d\t", game->map_collectives);
 	ft_printf("Players: %d\t", game->map_player);
 	ft_printf("Exits: %d\t", game->map_exit);
+	ft_printf("Maps: ");
+	print_map(game);
 }
