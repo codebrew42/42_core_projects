@@ -33,8 +33,8 @@ int	validate_map_characters(t_game *game, char *line)
 		if (line[i] == 'P')
 		{
 			game->map_player++;
-			game->x_player_position = i;
-			game->y_player_position = game->map_row_idx;
+			game->x_player_pos = i;
+			game->y_player_pos = game->map_row_idx;
 		}
 		if (line[i] == 'E')
 			game->map_exit++;
@@ -43,7 +43,7 @@ int	validate_map_characters(t_game *game, char *line)
 	if (game->map_row_idx == game->map_row - 1)
 	{
 		if (game->map_player != 1 || game->map_exit != 1 || game->map_items < 1)
-			return (clean_exit(-1, game, NULL, "Error: wrong 'C', 'P' or 'E'"));
+			return (clean_exit(-1, game, NULL, "Error\n: wrong P, E or C"));
 	}
 	return (0);
 }
@@ -61,25 +61,24 @@ int	has_invalid_wall(t_game *game, char *line, int fd)
 	size_t		net_len;
 
 	net_len = ft_strlen(line);
-	ft_printf("adr:%p", (void *)net_len); //rm
 	if (!net_len || !line)
-		return (clean_exit(fd, game, line, "Error: Reading line"));
+		return (clean_exit(fd, game, line, "Error\n: Reading line"));
 	if (line[net_len - 1] == '\n')
 		net_len--;
 	if (net_len != game->map_column - 1)
-		return (clean_exit(fd, game, line, "Error: Map is not rectangular"));
+		return (clean_exit(fd, game, line, "Error\n: Map is not square"));
 	if (!game->map_row_idx || game->map_row_idx == game->map_row - 1)
 	{
 		i = 0;
 		while (i < net_len)
 		{
 			if (line[i] != '1')
-				return (clean_exit(fd, game, line, "Error: Missing mid-wall"));
+				return (clean_exit(fd, game, line, "Error\n: Missing wall"));
 			i++;
 		}
 	}
 	if (line[0] != '1' || line[net_len - 1] != '1')
-		return (clean_exit(fd, game, line, "Error: Missing top/bottom-Wall"));
+		return (clean_exit(fd, game, line, "Error\n: Missing middle wall"));
 	return (0);
 }
 
@@ -119,14 +118,14 @@ int	is_valid_map(t_game *game, const char *map)
 
 	fd = open(map, O_RDONLY);
 	if (fd < 0 || !ft_strnstr(map, ".ber", ft_strlen(map)) || ct_row(game, map))
-		return (clean_exit(fd, game, NULL, "Error: invalid \".ber\" file"));
+		return (clean_exit(fd, game, NULL, "Error\n: invalid \".ber\" file"));
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 		{
 			if (!game->map_row_idx)
-				return (clean_exit(fd, game, NULL, "Error: Leer map"));
+				return (clean_exit(fd, game, NULL, "Error\n: Leer map"));
 			break ;
 		}
 		if (!game->map_row_idx)
@@ -153,17 +152,17 @@ int	read_map(t_game *game, const char *map_path)
 
 	fd = open(map_path, O_RDONLY);
 	if (fd < 0)
-		return (clean_exit(fd, game, NULL, "Error: Opening file failed"));
+		return (clean_exit(fd, game, NULL, "Error\n: Opening file failed"));
 	game->map = malloc(sizeof(char *) * (game->map_row + 1));
 	if (!game->map)
-		return (clean_exit(fd, game, NULL, "Error: Malloc \'game->map\'"));
+		return (clean_exit(fd, game, NULL, "Error\n: Malloc failed"));
 	i = 0;
 	game->map_mem_allocated = 1;
 	while (i < game->map_row)
 	{
 		game->map[i] = get_next_line(fd);
 		if (!game->map[i])
-			return (clean_exit_double(fd, game, NULL, "Error: Malloc"));
+			return (clean_exit_double(fd, game, NULL, "Error\n: Malloc"));
 		game->map_row_idx = i;
 		if (validate_map_characters(game, game->map[i]))
 			return (clean_exit(fd, NULL, NULL, NULL));

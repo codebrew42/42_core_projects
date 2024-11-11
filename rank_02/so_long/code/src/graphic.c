@@ -17,23 +17,30 @@ void	place_images_in_game(t_game *game)
 	int	i;
 	int	j;
 
-	game->image.floor = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->image.floor = mlx_xpm_file_to_image(game->p_mlx,
 			"images/floor.xpm", &i, &j);
-	game->image.wall = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->image.wall = mlx_xpm_file_to_image(game->p_mlx,
 			"images/wall.xpm", &i, &j);
-	game->image.player = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->image.player = mlx_xpm_file_to_image(game->p_mlx,
 			"images/player.xpm", &i, &j);
-	game->image.exit = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->image.exit = mlx_xpm_file_to_image(game->p_mlx,
 			"images/exit.xpm", &i, &j);
-	game->image.items = mlx_xpm_file_to_image(game->mlx_ptr,
+	game->image.item = mlx_xpm_file_to_image(game->p_mlx,
 			"images/item.xpm", &i, &j);
 }
-//check dir: .../images?
+
+void	render_image(t_game *game, void *image, int width, int height)
+{
+	if (!game || !image)
+		return ;
+	mlx_put_image_to_window(game->p_mlx, game->p_window, image, width, height);
+}
+
 
 void	render_map(t_game *game)
 {
-	size_t x;
-	size_t y;
+	size_t	x;
+	size_t	y;
 
 	y = 0;
 	while (y < game->map_row)
@@ -42,20 +49,15 @@ void	render_map(t_game *game)
 		while (x < game->map_column)
 		{
 			if (game->map[y][x] == '1')
-				mlx_put_image_to_window(game->mlx_ptr, game->window_ptr,
-					game->image.wall, x * PIXEL, y * PIXEL);
+				render_source(game, game->image.wall, x * PIXEL, y * PIXEL);
 			else if (game->map[y][x] == '0')
-				mlx_put_image_to_window(game->mlx_ptr, game->window_ptr,
-					game->image.floor, x * PIXEL, y * PIXEL);
+				render_source(game, game->image.floor, x * PIXEL, y * PIXEL);
 			else if (game->map[y][x] == 'P')
-				mlx_put_image_to_window(game->mlx_ptr, game->window_ptr,
-					game->image.player, x * PIXEL, y * PIXEL);
+				render_source(game, game->image.player, x * PIXEL, y * PIXEL);
 			else if (game->map[y][x] == 'E')
-				mlx_put_image_to_window(game->mlx_ptr, game->window_ptr,
-					game->image.exit, x * PIXEL, y * PIXEL);
+				render_source(game, game->image.exit, x * PIXEL, y * PIXEL);
 			else if (game->map[y][x] == 'C')
-				mlx_put_image_to_window(game->mlx_ptr, game->window_ptr,
-					game->image.items, x * PIXEL, y * PIXEL);
+				render_source(game, game->image.item, x * PIXEL, y * PIXEL);
 			x++;
 		}
 		y++;

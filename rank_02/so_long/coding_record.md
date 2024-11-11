@@ -47,24 +47,42 @@ reading the map -> core_dump
 - A1. to see if it's fixable : - Still reachable prob of XLM
 - A2. save image, using the example XPM files (I copied)
 
+## 241111
+### issues to fix
+- .xpm : graphic only 1/4 shown, background not sync
+- valgrind issue with valid maps : freeing?
+
+### what i did
+- pixel : set as 64*64 (128*128 didnt solve .xpm issue)
+
+### to do
+- A1. solve valgrind issue :  check free-game()
+- A2. validate map_path 
+- B0. https://github.com/Vpekdas/so_long
+- B1. right .xpm files update
+- B2. see K-blog on so_long
+- B3. if(have time){bonus}
+
 ## basic plan
-(0) getting ready : (O)
-initializing the game (O)
-loading the map, (O/ but check more edge cases)
+(0) getting ready
+- initializing the game (O)
+- loading the map (ING: check more edge cases)
 
 (1) visual part
-*what it does*
-init graphical window using XML library (x)
-
-load images from XPMs-> save to t_game
+- init graphical window using XML library (O)
+- load images from XPMs-> save to t_game (O)
 	*image pixel should be 32 * 32, set to be 32 * 32 too
-draw initial game state (graphics)
+- draw initial game state (ING: call appropriated .xpm)
 
 (2)event/control part
-*what it does*
--listen for events(keyboards/window)
--update game state
--redraw the screen when required
+- listen for events(keyboards/window) (O)
+- update game state (O)
+- redraw the screen when required (O)
+
+(3)bonus part
+- blinking images, sprite
+- disp count on the window
+- add monsters
 
 [code]
     mlx_key_hook(game.winpointer, controls_working, &game);  // Keyboard input

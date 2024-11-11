@@ -23,7 +23,15 @@
 # include "../libft/ft_printf/includes/ft_printf.h"
 # include "../libft/get_next_line/includes/get_next_line.h"
 # include "../minilibx-linux/mlx.h"
-# define PIXEL 32
+
+# define CONGRATULATIONS_MSG "🎉 Congratulations! You've unlocked the next level! 🎉\n"
+# define PIXEL			64
+# define UP				1
+# define DOWN			2
+# define LEFT			3
+# define RIGHT			4
+# define CLOSE_BUTTON	17
+# define CANT_MOVE		5
 
 # if defined(__linux__)
 #  define KEY_ESC		65307
@@ -54,21 +62,31 @@
 /* to save images */
 typedef struct s_image
 {
-	void	*wall;
-	void	*floor;
-	void	*items;
-	void	*player;
-	void	*exit;
+	void			*wall;
+	void			*floor;
+	void			*item;
+	void			*player;
+	void			*exit;
 }	t_image;
+
+typedef struct s_path {
+	char	**map;
+	int		**visited;
+	int		items_found;
+	int		total_items;
+	int		exit_found;
+	// int		row;
+	// int		column;
+} t_path;
 
 typedef struct s_game
 {
-	void			*mlx_ptr;
-	void			*window_ptr;
+	void			*p_mlx;
+	void			*p_window;
 	char			**map;
 	int				map_mem_allocated;
-	unsigned int	x_player_position;
-	unsigned int	y_player_position;
+	unsigned int	x_player_pos;
+	unsigned int	y_player_pos;
 	unsigned int	steps;
 	size_t			map_row_idx;
 	size_t			map_row;
@@ -77,6 +95,7 @@ typedef struct s_game
 	size_t			map_player;
 	size_t			map_exit;
 	t_image			image;
+	t_path			path;
 }	t_game;
 
 /* init1_game.c : t_game game Initialization and Cleanup */
@@ -98,7 +117,13 @@ int		report_error(char *str);
 
 /* graphic.c : Report Error and Cleanup*/
 void	place_images_in_game(t_game *game);
+void	render_image(t_game *game, void *image, int width, int height);
 void	render_map(t_game *game);
+
+/* controls.c */
+int		move_player_to(t_game *game, int dest_x, int dest_y);
+int		handle_movement_input(t_game *game, unsigned int direction);
+int		key_control(unsigned int	command, t_game *game);
 
 /* Debug Functions - for_debug.c */ //rm
 void	print_t_game(t_game *game); //rm

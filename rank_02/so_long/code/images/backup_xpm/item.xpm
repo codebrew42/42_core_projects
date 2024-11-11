@@ -1,0 +1,52 @@
+/* XPM */
+static char *item[] = {
+/* columns rows colors chars-per-pixel */
+"32 32 14 1",
+"  c #4FA4B8", /* Base water */
+". c #87CEEB", /* Light water */
+"X c #4169E1", /* Deep water */
+"o c #FF9999", /* Salmon */
+"O c #FF8080", /* Dark salmon */
+"+ c #FFFFFF", /* Rice */
+"@ c #F5F5F5", /* Rice shadow */
+"# c #00CED1", /* Water ripple */
+"$ c #20B2AA", /* Water depth */
+"% c #48D1CC", /* Water highlight */
+"& c #2D9488", /* Nori */
+"* c #000000", /* Nori outline */
+"= c #FFA07A", /* Salmon highlight */
+"- c #FF6B6B", /* Salmon shadow */
+/* pixels */
+"#$%.#@%$#@%#$%.#@%$#@%#$%.#@%$",
+"$%.#@%$#@%#$%.#@%$#@%#$%.#@%$#",
+"%.#@%$#@%#$%.#********%.#@%$#@",
+".#@%$#@%#$%.#*++@@@@++*%.#@%$#",
+"#@%$#@%#$%.#*++@@oooo++*.#@%$#",
+"@%$#@%#$%.#@*++@@o=OOo++*@%$#@",
+"%$#@%#$%.#@*++@@o=OOOOo++*$#@%",
+"$#@%#$%.#*++@@o=OOOOOOo++*#@%$",
+"#@%#$%.#*++@@o=OOOOOOOO=++*%$#",
+"@%#$%.#*++@@o=OOOOOOOOOO=++*$#",
+"%#$%.#*++@@o=OOOOOOOOOOOO=+*#@",
+"#$%.#*++@@o=OOOOOOOOOOOOOO=*%$",
+"$%.#*++@@o=OOOOOOOOOOOOOOOO*.$",
+"%.#*++@@o=OOOOOOOOOOOOOOOO=*%#",
+".#*++@@o=OOOOOOOOOOOOOOOO=+*#@",
+"#*++@@o=OOOOOOOOOOOOOOOO=++*%$",
+"*++@@o=OOOOOOOOOOOOOOOO=++*$#@",
+"*+@@o=OOOOOOOOOOOOOOOO=++*#@%$",
+"*@@o=OOOOOOOOOOOOOOOO=++*@%$#@",
+"*&o=OOOOOOOOOOOOOOOO=++*%$#@%$",
+"*&=OOOOOOOOOOOOOOOO=++*$#@%$#@",
+"*&OOOOOOOOOOOOOOOO=++*#@%$#@%$",
+"*&OOOOOOOOOOOOOO=++*@%$#@%$#@%",
+"*&OOOOOOOOOOOO=++*%$#@%$#@%$#@",
+"*&OOOOOOOOOO=++*$#@%$#@%$#@%$#",
+"*&OOOOOOOO=++*#@%$#@%$#@%$#@%$",
+"*&OOOOOO=++*@%$#@%$#@%$#@%$#@%",
+"*&&&&&&&&**$#@%$#@%$#@%$#@%$#@",
+"********#@%$#@%$#@%$#@%$#@%$#@",
+"#@%$#@%#$%.#@%$#@%$#@%$#@%$#@%",
+"@%$#@%#$%.#@%$#@%$#@%$#@%$#@%$",
+"$#@%#$%.#@%$#@%$#@%$#@%$#@%$#@"
+};

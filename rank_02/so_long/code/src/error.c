@@ -33,7 +33,7 @@ int	clean_exit_double(int fd, t_game *game, char **str, char *msg)
 		free(str_arr);
 	}
 	if (msg)
-		ft_printf("%s", msg);
+		ft_printf("%s\n", msg);
 	return (1);
 }
 
@@ -46,13 +46,13 @@ int	clean_exit(int fd, t_game *game, char *str, char *msg)
 	if (str)
 		free(str);
 	if (msg)
-		ft_printf("%s", msg);
+		ft_printf("%s\n", msg);
 	return (1);
 }
 
 int	report_error(char *str)
 {
 	if (str)
-		ft_printf("Error: %s", str);
+		ft_printf("Error\n: %s\n", str);
 	return (1);
 }

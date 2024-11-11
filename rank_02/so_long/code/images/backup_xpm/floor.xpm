@@ -1,0 +1,48 @@
+/* XPM */
+static char *floor[] = {
+/* columns rows colors chars-per-pixel */
+"32 32 10 1",
+"  c #4FA4B8", /* Base ocean blue */
+". c #87CEEB", /* Light sparkle blue */
+"X c #4169E1", /* Royal blue waves */
+"o c #00CED1", /* Turquoise ripple */
+"O c #20B2AA", /* Sea green depth */
+"+ c #48D1CC", /* Medium turquoise highlight */
+"@ c #5F9EA0", /* Cadet blue shadow */
+"# c #B0E0E6", /* Powder blue foam */
+"$ c #E0FFFF", /* Bright sparkle */
+"% c #AFEEEE", /* Pale turquoise glow */
+/* pixels */
+"oO+.o@+$o@+oO+.o@+$o@+oO+.o@+O",
+"O+%.@+Oo@+oO+%o@+Oo@+oO+%o@+Oo",
+"+$.@+Oo@+oO+.o@+$o@+oO+.o@+$o@",
+"%.@+$o@+oO+%.@+Oo@+oO+%.@+Oo@+",
+"o@+Oo@+$O+.o@+$o@+oO+.o@+$o@+o",
+"@+$o@+oO+%.@+Oo@+$O+%.@+Oo@+oO",
+"+Oo@+$O+.o@+$o@+oO+.o@+$o@+oO+",
+"Oo@+oO+%.@+Oo@+$O+%.@+Oo@+$O+.",
+"o@+$O+.o@+$o@+oO+.o@+$o@+oO+%o",
+"@+oO+%.@+Oo@+$O+%.@+Oo@+$O+.o@",
+"+$O+.o@+$o@+oO+.o@+$o@+oO+%.@+",
+"oO+%.@+Oo@+$O+%.@+Oo@+$O+.o@+O",
+"O+.o@+$o@+oO+.o@+$o@+oO+%.@+Oo",
+"+%.@+Oo@+$O+%o@+Oo@+$O+.o@+$o@",
+".o@+$o@+oO+.o@+$o@+oO+%.@+Oo@+",
+"o@+Oo@+$O+%.@+Oo@+$O+.o@+$o@+o",
+"@+$o@+oO+.o@+$o@+oO+%.@+Oo@+oO",
+"+Oo@+$O+%.@+Oo@+$O+.o@+$o@+oO+",
+"Oo@+oO+.o@+$o@+oO+%.@+Oo@+$O+.",
+"o@+$O+%.@+Oo@+$O+.o@+$o@+oO+%o",
+"@+oO+.o@+$o@+oO+%.@+Oo@+$O+.o@",
+"+$O+%.@+Oo@+$O+.o@+$o@+oO+%.@+",
+"oO+.o@+$o@+oO+%.@+Oo@+$O+.o@+O",
+"O+%.@+Oo@+$O+.o@+$o@+oO+%.@+Oo",
+"+.o@+$o@+oO+%.@+Oo@+$O+.o@+$o@",
+".@+Oo@+$O+.o@+$o@+oO+%.@+Oo@+.",
+"@+$o@+oO+%.@+Oo@+$O+.o@+$o@+o@",
+"+Oo@+$O+.o@+$o@+oO+%.@+Oo@+oO+",
+"Oo@+oO+%.@+Oo@+$O+.o@+$o@+$O+.",
+"o@+$O+.o@+$o@+oO+%.@+Oo@+oO+%o",
+"@+oO+%.@+Oo@+$O+.o@+$o@+$O+.o@",
+"+$O+.o@+$o@+oO+%.@+Oo@+oO+%.@+"
+};

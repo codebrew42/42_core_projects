@@ -46,5 +46,5 @@ void	print_t_game(t_game *game)
 	ft_printf("Exits: %d\t", game->map_exit);
 	ft_printf("Maps: ");
 	print_map(game);
-	ft_printf("Player Pos: %d, %d", game->x_player_position, game->y_player_position);
+	ft_printf("Player Pos: %d, %d", game->x_player_pos, game->y_player_pos);
 }

@@ -11,47 +11,69 @@
 /* ************************************************************************** */
 #include "../includes/so_long.h"
 
-int	move_player_up_or_down(t_game *game, int movement)
+/**
+ * @note after moving, render_map() for each func call here
+ */
+int	move_player_to(t_game *game, int dest_x, int dest_y)
 {
+	char	dest;
 
+	dest = game->map[dest_y][dest_x];
+	if (dest == '1')
+		return (5);
+	else if (dest == 'E')
+	{
+		if (game->map_items)
+			return (5);
+		return (clean_exit(-1, game, NULL, CONGRATULATIONS_MSG));
+	}
+	else if (dest == '0' || dest == 'C')
+	{
+		game->map[game->y_player_pos][game->x_player_pos] = '0';
+		if (dest == 'C')
+			game->map_items--;
+		game->map[dest_y][dest_x] = 'P';
+		game->x_player_pos = dest_x;
+		game->y_player_pos = dest_y;
+		game->steps++;
+		render_map(game);
+	}
+	return (0);
 }
 
-int	move_player_left_or_right(t_game *game, int movement)
+int	handle_movement_input(t_game *game, unsigned int direction)
 {
-	int	i;
-	int	j;
-	int	k;
+	unsigned int	i;
 
-	i = game->x_player_position;
-	j = game->y_player_position;
-	if (movement == 0)
+	if (direction == UP)
+		i = move_player_to(game, game->x_player_pos, game->y_player_pos - 1);
+	else if (direction == DOWN)
+		i = move_player_to(game, game->x_player_pos, game->y_player_pos + 1);
+	else if (direction == LEFT)
+		i = move_player_to(game, game->x_player_pos - 1, game->y_player_pos);
+	else if (direction == RIGHT)
+		i = move_player_to(game, game->x_player_pos + 1, game->y_player_pos);
+	if (i)
+		return (1);
+	if (i != CANT_MOVE)
 	{
-		//check goal/zielgebiet
-		//if ok
-			//mv player
-				//if suc -> mv wall
+		printf("Steps Taken: %d\n", game->steps);
+		printf("Remaining items: %ld\n", game->map_items);
 	}
-	else if (movement == 2)
-	{
-
-	}
-	printf("Steps Taken: %i\n", game->steps);
-	printf("Remaining items: %i\n", game->map_items);
-	return (1);
+	return (0);
 }
 
-
-int	key_control(int	command, t_game *game)
+int	key_control(unsigned int command, t_game *game)
 {
 	if (command == KEY_ESC)
-		
+		return (clean_exit(-1, game, NULL, NULL));
 	if (command == KEY_W || command == KEY_UP)
-
+		handle_movement_input(game, UP);
 	if (command == KEY_S || command == KEY_DOWN)
-
+		handle_movement_input(game, DOWN);
 	if (command == KEY_A || command == KEY_LEFT)
-
+		handle_movement_input(game, LEFT);
 	if (command == KEY_D || command == KEY_RIGHT)
-
+		handle_movement_input(game, RIGHT);
 	return (1);
 }

@@ -8,6 +8,10 @@ https://github.com/overbound/SonicTimeTwisted
 
 ## directly related
 https://harm-smits.github.io/42docs/libs/minilibx/getting_started.html
+https://velog.io/@ronn/solong-%EC%95%84%EC%9D%B4%ED%85%9C%EC%9D%84-%EB%A8%B9%EA%B3%A0-%ED%83%88%EC%B6%9C%ED%95%98%EB%8A%94-2D-%EA%B2%8C%EC%9E%84%EC%9D%84-%EB%A7%8C%EB%93%A4%EC%9E%90
+
+https://github.com/Vpekdas/so_long
+-read it !
 
 # structure
 ## general
