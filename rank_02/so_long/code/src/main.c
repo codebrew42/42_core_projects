@@ -27,6 +27,7 @@ int	main(int ac, const char **av)
 		return (1);
 	print_t_game(game); //rm
 	place_images_in_game(game);
+	render_map(game);
 	// Add MLX loop to keep window open
 	mlx_loop(game->mlx_pointer);
 	

@@ -11,6 +11,7 @@
 # include "../libft/ft_printf/includes/ft_printf.h"
 # include "../libft/get_next_line/includes/get_next_line.h"
 # include "../minilibx-linux/mlx.h"
+# define TILE_SIZE 32
 
 /* to save images */
 typedef struct s_image
@@ -59,6 +60,7 @@ int		report_error(char *str);
 
 /* graphic.c : Report Error and Cleanup*/
 void	place_images_in_game(t_game *game);
+void	render_map(t_game *game);
 
 
 /* Debug Functions - for_debug.c */ //rm
