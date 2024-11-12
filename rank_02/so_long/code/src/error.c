@@ -47,6 +47,7 @@ int	clean_exit(int fd, t_game *game, char *str, char *msg)
 		free(str);
 	if (msg)
 		ft_printf("%s\n", msg);
+	exit(0); //terminate prog
 	return (1);
 }
 

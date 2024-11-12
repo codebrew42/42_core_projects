@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiepark <jiepark@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/11 15:31:16 by jiepark          #+#    #+#              */
-/*   Updated: 2024/11/11 15:31:16 by jiepark         ###   ########.fr        */
+/*   Created: 2024/11/12 18:55:02 by jiepark          #+#    #+#              */
+/*   Updated: 2024/11/12 18:55:02 by jiepark         ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void	place_images_in_game(t_game *game)
 			"images/item.xpm", &i, &j);
 }
 
-void	render_image(t_game *game, void *image, int width, int height)
+void	render_image(t_game *game, void *image, int x, int y)
 {
 	if (!game || !image)
 		return ;
-	mlx_put_image_to_window(game->p_mlx, game->p_window, image, width, height);
+	mlx_put_image_to_window(game->p_mlx, game->p_window, image,
+		x * PIXEL, y * PIXEL);
 }
-
 
 void	render_map(t_game *game)
 {
@@ -48,16 +48,18 @@ void	render_map(t_game *game)
 		x = 0;
 		while (x < game->map_column)
 		{
+			render_image(game, game->image.floor, x, y);
 			if (game->map[y][x] == '1')
-				render_source(game, game->image.wall, x * PIXEL, y * PIXEL);
-			else if (game->map[y][x] == '0')
-				render_source(game, game->image.floor, x * PIXEL, y * PIXEL);
-			else if (game->map[y][x] == 'P')
-				render_source(game, game->image.player, x * PIXEL, y * PIXEL);
+				render_image(game, game->image.wall, x, y);
 			else if (game->map[y][x] == 'E')
-				render_source(game, game->image.exit, x * PIXEL, y * PIXEL);
+				render_image(game, game->image.exit, x, y);
 			else if (game->map[y][x] == 'C')
-				render_source(game, game->image.item, x * PIXEL, y * PIXEL);
+				render_image(game, game->image.item, x, y);
+			else
+			{
+				render_image(game, game->image.player,
+					game->x_player_pos, game->y_player_pos);
+			}
 			x++;
 		}
 		y++;

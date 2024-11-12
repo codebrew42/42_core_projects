@@ -36,15 +36,25 @@ void	free_game(t_game *game)
 	}
 	if (game->map)
 		free(game->map);
-	if (game->p_window)
-		mlx_destroy_window(game->p_mlx, game->p_window);
-	free(game->p_mlx);
-	//free(game->p_window);
-	free(game->image.wall);
-	free(game->image.floor);
-	free(game->image.exit);
-	free(game->image.item);
-	free(game->image.player);
+	if (game->p_mlx)
+	{
+		if (game->image.wall)
+			mlx_destroy_image(game->p_mlx, game->image.wall);
+		if (game->image.floor)
+			mlx_destroy_image(game->p_mlx, game->image.floor);
+		if (game->image.item)
+			mlx_destroy_image(game->p_mlx, game->image.item);
+		if (game->image.player)
+			mlx_destroy_image(game->p_mlx, game->image.player);
+		if (game->image.exit)
+			mlx_destroy_image(game->p_mlx, game->image.exit);
+		// Destroy window if it exists
+		if (game->p_window)
+			mlx_destroy_window(game->p_mlx, game->p_window);
+		// Free MLX itself
+		mlx_destroy_display(game->p_mlx);
+		free(game->p_mlx);
+	}
 	free(game);
 }
 

@@ -117,7 +117,7 @@ int		report_error(char *str);
 
 /* graphic.c : Report Error and Cleanup*/
 void	place_images_in_game(t_game *game);
-void	render_image(t_game *game, void *image, int width, int height);
+void	render_image(t_game *game, void *image, int x, int y);
 void	render_map(t_game *game);
 
 /* controls.c */
