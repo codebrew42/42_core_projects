@@ -20,7 +20,7 @@ int	main(int ac, const char **av)
 	t_game	*game;
 
 	if (ac != 2)
-		return (report_error("Usage: ./so_long map.ber"));
+		return (g("Usage: ./so_long map.ber"));
 	if (init_game(&game) || is_valid_map(game, av[1]) || read_map(game, av[1]))
 		return (1);
 	if (init_pointers(game)) //here: put has_valid_map(game);
