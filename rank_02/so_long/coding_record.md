@@ -56,12 +56,29 @@ reading the map -> core_dump
 - pixel : set as 64*64 (128*128 didnt solve .xpm issue)
 
 ### to do
-- A1. solve valgrind issue :  check free-game()
+- A1. solve valgrind issue :  check free-game() (O)
 - A2. validate map_path 
 - B0. https://github.com/Vpekdas/so_long
-- B1. right .xpm files update
+- B1. right .xpm files update (O)
 - B2. see K-blog on so_long
 - B3. if(have time){bonus}
+
+
+## 241112
+### what i did
+- valgrind issue (fixed)
+- updated .xpm files
+
+### what i learned
+- on termination (suc&fail) ; if not exit(0), it causes leak
+
+### what to do
+- A2. validate map_path *till wednesday*
+-> Thursday, get eval!, freez from friday?
+- B1. see K-blog on so_long
+- B2. if(have time){bonus}
+: https://github.com/Vpekdas/so_long
+
 
 ## basic plan
 (0) getting ready
