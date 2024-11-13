@@ -12,6 +12,14 @@
 
 #include "../includes/so_long.h"
 
+
+int	free_path_and_clean_exit(t_path *path, t_game *game, char *msg)
+{
+	free_path(path, game->map_row);
+	clean_exit(-1, game, NULL, msg);
+	return (1);
+}
+
 int	clean_exit_double(int fd, t_game *game, char **str, char *msg)
 {
 	char	**str_arr;

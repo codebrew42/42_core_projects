@@ -10,7 +10,7 @@ HEADER := -Iincludes -I$(LIBFT_DIR)/includes
 # Source files
 SRC :=	src/init1_game.c	src/init2_map.c		src/init3_path_check.c\
 		src/error.c			src/graphic.c		src/control.c\
-		src/main.c			src/for_debug.c #//rm
+		src/main.c			src/free.c			src/for_debug.c #//rm
 
 # Object files
 OBJ := $(SRC:.c=.o)

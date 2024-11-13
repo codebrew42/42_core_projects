@@ -11,11 +11,55 @@
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
+#include <stdio.h> 
 
-/**
- * @note 
- * 
- */
+void	print_path_data(t_path *path)
+{
+	printf("\nprintf path data\n");
+	printf("x_prev, y_prev: %zu, %zu\n", path->x_prev, path->y_prev);
+	printf("it_found, exit_found: %zu, %zu\n", path->items_found, path->exit_found);
+
+}
+
+void	print_game_map(t_game *game)
+{
+	   for (size_t row = 0; row < game->map_row; row++) {
+       for (size_t col = 0; col < game->map_column; col++) {
+           printf("p[%zu,%zu]%c \n", row, col, game->map[row][col]);
+       }
+   }
+}
+
+void	print_int_map(int **map, t_game *game)
+{
+	int	i;
+	int j;
+	int	rows = game->map_row;
+	int	cols = game->map_column;
+
+
+	i = 0;
+	ft_printf("\npath finding map\n");
+	while (i < rows)
+	{
+		j = 0;
+		while (j < cols)
+		{
+			if (map[i][j] >= 0)
+				printf("+%d ", map[i][j]);
+				//printf("(%d,%d)+%d ", i, j, map[i][j]);
+			else
+				printf("%d ", map[i][j]);
+				//printf("(%d,%d)%d ", i, j, map[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+	ft_printf("\nFinished printing map\n");
+}
+
+
 void	print_map(t_game *game)
 {
 	int	i;

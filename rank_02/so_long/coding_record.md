@@ -79,6 +79,15 @@ reading the map -> core_dump
 - B2. if(have time){bonus}
 : https://github.com/Vpekdas/so_long
 
+# 241113
+## what I did
+- init3_path_check.c (ING)
+-> DSF < BSF (more understandable)
+
+## what to do
+1. init3_ : finish
+2. check eval sheet 
+
 
 ## basic plan
 (0) getting ready

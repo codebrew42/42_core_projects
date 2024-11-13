@@ -17,45 +17,11 @@ int	init_pointers(t_game *game)
 	game->p_mlx = mlx_init();
 	if (!game->p_mlx)
 		return (clean_exit(-1, game, NULL, "Error\n: MLX init failed"));
-	game->p_window = mlx_new_window(game->p_mlx,
-			game->map_column * PIXEL, game->map_row * PIXEL, "so_long");
+	game->p_window = mlx_new_window(game->p_mlx, (game->map_column - 1) * PIXEL,
+			(game->map_row + 1) * PIXEL, "so_long");
 	if (!game->p_window)
 		return (clean_exit(-1, game, NULL, "Error\n: Window creation failed"));
 	return (0);
-}
-
-void	free_game(t_game *game)
-{
-	if (!game)
-		return ;
-	game->map_row_idx = 0;
-	while (game->map_mem_allocated && game->map_row_idx < game->map_row)
-	{
-		free(game->map[game->map_row_idx]);
-		game->map_row_idx++;
-	}
-	if (game->map)
-		free(game->map);
-	if (game->p_mlx)
-	{
-		if (game->image.wall)
-			mlx_destroy_image(game->p_mlx, game->image.wall);
-		if (game->image.floor)
-			mlx_destroy_image(game->p_mlx, game->image.floor);
-		if (game->image.item)
-			mlx_destroy_image(game->p_mlx, game->image.item);
-		if (game->image.player)
-			mlx_destroy_image(game->p_mlx, game->image.player);
-		if (game->image.exit)
-			mlx_destroy_image(game->p_mlx, game->image.exit);
-		// Destroy window if it exists
-		if (game->p_window)
-			mlx_destroy_window(game->p_mlx, game->p_window);
-		// Free MLX itself
-		mlx_destroy_display(game->p_mlx);
-		free(game->p_mlx);
-	}
-	free(game);
 }
 
 /**

@@ -28,9 +28,9 @@ int	main(int ac, const char **av)
 
 	if (ac != 2)
 		return (report_error("Usage: ./so_long map.ber"));
-	if (init_game(&game) || is_valid_map(game, av[1]) || read_map(game, av[1]))
+	if (init_game(&game) || invalid_map(game, av[1]) || read_map(game, av[1]))
 		return (1);
-	if (init_pointers(game)) //here: put has_valid_map(game);
+	if (init_pointers(game) || has_no_valid_path(game))
 		return (1);
 	place_images_in_game(game);
 	render_map(game);
@@ -38,5 +38,6 @@ int	main(int ac, const char **av)
 	mlx_hook(game->p_window, CLOSE_BUTTON, 0, handle_close, game);
 	mlx_loop(game->p_mlx);
 	free_game(game);
+
 	return (0);
 }

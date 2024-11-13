@@ -105,13 +105,12 @@ int	ct_row(t_game *game, const char *map_path)
 	return (0);
 }
 
-
 /**
  * @brief checks validaty(1.file ".ber" 2.valid wall),
  * updates max_row and column, sets cur_row to 0 for later use
  * @return 0 on error, 1 on success
  */
-int	is_valid_map(t_game *game, const char *map)
+int	invalid_map(t_game *game, const char *map)
 {
 	int		fd;
 	char	*line;

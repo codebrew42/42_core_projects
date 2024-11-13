@@ -1,5 +1,8 @@
-#include "../includes/so_long.h"
 
+
+I'll help you implement a BFS (Breadth-First Search) solution to check for a valid path that collects all items and reaches the exit. Here's how we can break it down into functions that comply with the norminette rules:
+
+```c:init3_path_check.c
 int check_next_position(t_path *path, t_game *game, size_t x, size_t y)
 {
     if (game->map[y][x] == 'C' && !path->visit_log[y][x])
@@ -93,77 +96,24 @@ int has_no_valid_path(t_game *game)
     free_path(path, game->map_row);
     return (0);
 }
+```
 
-/**
- * @brief create an int array 'path->visit_log[][]' same size as game->map:
-  * init path->visit_log : check game->map, 
-  * assign 0 if accesible(P,C,E,0), -1 if not(wall, \n)
- * @return 0 on success, 1 on fail
- * @note change its name : init_path_data
- */
-int	init_int_arr(t_path *path, t_game *game)
-{
-	size_t	i;
-	size_t	j;
+### Explanation:
 
-	if (!path || !game || !game->map)
-		return (1);
-	path->x_prev = game->x_player_pos;
-	path->y_prev = game->y_player_pos;
-	path->items_found = 0;
-	path->exit_found = 0;
-	i = 0;
-	//print_game_map(game); //rm
-	while (i < game->map_row)
-	{
-		j = 0;
-		while (j < game->map_column)
-		{
-			//printf("[%zu,%zu] %c ", i, j, game->map[i][j]); //rm
-			if (game->map[i][j] == '0' || game->map[i][j] == 'C'
-				|| game->map[i][j] == 'P' || game->map[i][j] == 'E')
-				path->visit_log[i][j] = 0;
-			else
-				path->visit_log[i][j] = -1;
-			j++;
-		}
-		//printf("\n"); //rm
-		i++;
-	}
-	return (0);
-}
+1. **check_next_position**: Checks if the next position contains a collectible ('C'), exit ('E'), or empty space ('0') and updates the path data accordingly.
 
-/**
- * @brief malloc 't_path path'
- * 			malloc path->visited[][], init path->visited (padding with 0)
- * @note 
- * 1)not cp map: check(game->map[x][y]) assign val to(path->visited[][])
- * 2)how to cp game->map to t_path path->map
- */
-int	allocate_path_data(t_path **path, t_game *game)
-{
-	size_t		i;
+2. **is_valid_move**: Validates if a move is within bounds and not blocked by a wall.
 
-	*path = malloc(sizeof(t_path));
-	if (!*path)
-		return (1);
-	(*path)->visit_log = malloc(sizeof(int *) * (game->map_row));
-	if (!(*path)->visit_log)
-		return (free_path_and_clean_exit(*path, game, "Error\n: Malloc"));
-	i = 0;
-	while (i < game->map_row)
-	{
-		(*path)->visit_log[i] = malloc(sizeof(int) * (game->map_column));
-		if (!(*path)->visit_log[i])
-		{
-			while (--i > 0)
-			{
-				free((*path)->visit_log[i]);
-			}
-			free((*path)->visit_log);
-			return (free_path_and_clean_exit(*path, game, "Error\n: Malloc"));
-		}
-		i++;
-	}
-	return (0);
-}
+3. **explore_directions**: Sets up the direction arrays and explores all four directions (right, down, left, up) from the current position.
+
+4. **find_valid_path**: Implements the main path-finding logic using BFS, starting from the player's position.
+
+5. **has_no_valid_path**: Main function that sets up the path data and initiates the path-finding process.
+
+This implementation:
+- Uses while loops instead of for loops (norminette requirement)
+- Keeps functions under 25 lines
+- Properly handles memory allocation and freeing
+- Checks for both collecting all items and finding the exit
+
+The BFS approach ensures that we explore all possible paths systematically, and the path data structure keeps track of visited positions, collected items, and exit discovery.

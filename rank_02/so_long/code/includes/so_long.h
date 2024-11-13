@@ -25,7 +25,7 @@
 # include "../minilibx-linux/mlx.h"
 
 # define CONGRATULATIONS_MSG "🎉 Congratulations! You've unlocked the next level! 🎉\n"
-# define PIXEL			64
+# define PIXEL			32
 # define UP				1
 # define DOWN			2
 # define LEFT			3
@@ -60,6 +60,13 @@
 # endif
 
 /* to save images */
+
+typedef struct s_point
+{
+	int x;
+	int y;
+} t_point;
+
 typedef struct s_image
 {
 	void			*wall;
@@ -69,14 +76,17 @@ typedef struct s_image
 	void			*exit;
 }	t_image;
 
-typedef struct s_path {
-	char	**map;
-	int		**visited;
-	int		items_found;
-	int		total_items;
-	int		exit_found;
-	// int		row;
-	// int		column;
+typedef struct s_path
+{
+	//char		**map;
+	int			**visit_log;
+	// size_t		map_row;
+	// size_t		map_column;
+	// size_t		total_items;
+	size_t		x_prev;
+	size_t		y_prev;
+	size_t		items_found;
+	size_t		exit_found;
 } t_path;
 
 typedef struct s_game
@@ -95,22 +105,39 @@ typedef struct s_game
 	size_t			map_player;
 	size_t			map_exit;
 	t_image			image;
-	t_path			path;
 }	t_game;
 
-/* init1_game.c : t_game game Initialization and Cleanup */
-int		init_pointers(t_game *game);
+/*free.c : norm (OK)*/
 void	free_game(t_game *game);
+void	free_images_window_and_mlx_ptr(t_game *game);
+void	free_path(t_path *path, size_t rows);
+
+/* init1_game.c : norm (X: rm notes) */
+int		init_pointers(t_game *game);
 int		init_game(t_game **game);
 
 /* init2_map.c : Map Initialization and Validation  */
 int		validate_map_characters(t_game *game, char *line);
 int		has_invalid_wall(t_game *game, char *line, int fd);
 int		ct_row(t_game *game, const char *param);
-int		is_valid_map(t_game *game, const char *map);
+int		invalid_map(t_game *game, const char *map);
 int		read_map(t_game *game, const char *param);
 
+/* init3. has_path_check.c */
+//backup
+ int		init_int_arr(t_path *path, t_game *game);
+ int		allocate_path_data(t_path **path, t_game *game);
+// //int	find_any_valid_path(t_path *path, t_game *game);
+// int		has_no_valid_path(t_game *game);
+
+int check_next_position(t_path *path, t_game *game, size_t x, size_t y);
+int is_valid_move(t_path *path, t_game *game, size_t x, size_t y);
+int explore_directions(t_path *path, t_game *game, size_t x, size_t y);
+int find_valid_path(t_path *path, t_game *game);
+int has_no_valid_path(t_game *game);
+
 /* error.c : Report Error and Cleanup*/
+int		free_path_and_clean_exit(t_path *path, t_game *game, char *msg);
 int		clean_exit_double(int fd, t_game *game, char **str, char *msg);
 int		clean_exit(int fd, t_game *game, char *str, char *msg);
 int		report_error(char *str);
@@ -126,6 +153,9 @@ int		handle_movement_input(t_game *game, unsigned int direction);
 int		key_control(unsigned int	command, t_game *game);
 
 /* Debug Functions - for_debug.c */ //rm
+void	print_path_data(t_path *path);
+void	print_game_map(t_game *game);
+void	print_int_map(int **map, t_game *game); //rm
 void	print_t_game(t_game *game); //rm
 void	print_map(t_game *game); //rm
 
