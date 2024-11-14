@@ -9,6 +9,7 @@
 /*   Updated: 2024/11/11 15:52:36 by jiepark         ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../includes/so_long.h"
 
 /**
@@ -25,6 +26,7 @@ int	move_player_to(t_game *game, int dest_x, int dest_y)
 	{
 		if (game->map_items)
 			return (5);
+		ft_printf("\nTotal steps: %u\n", game->steps);
 		return (clean_exit(-1, game, NULL, CONGRATULATIONS_MSG));
 	}
 	else if (dest == '0' || dest == 'C')

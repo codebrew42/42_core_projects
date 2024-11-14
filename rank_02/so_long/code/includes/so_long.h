@@ -87,6 +87,8 @@ typedef struct s_path
 	size_t		y_prev;
 	size_t		items_found;
 	size_t		exit_found;
+	int			dx[4];
+	int			dy[4];
 } t_path;
 
 typedef struct s_game
@@ -138,6 +140,7 @@ int		clean_exit(int fd, t_game *game, char *str, char *msg);
 int		report_error(char *str);
 
 /* graphic.c : Report Error and Cleanup*/
+void	display_steps(t_game *g);
 void	place_images_in_game(t_game *game);
 void	render_image(t_game *game, void *image, int x, int y);
 void	render_map(t_game *game);

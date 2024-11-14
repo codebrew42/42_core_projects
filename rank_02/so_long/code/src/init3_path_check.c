@@ -1,41 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init3_path_check.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jiepark <jiepark@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/14 19:44:15 by jiepark          #+#    #+#              */
+/*   Updated: 2024/11/14 19:44:15 by jiepark         ###   ########.fr        */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/so_long.h"
-
-// void next_is_only_path_at_start(t_path *path, t_game *game)
-// {
-//     size_t x;
-//     size_t y;
-
-//     y = 0;
-//     while (y < game->map_row)
-//     {
-//         x = 0;
-//         while (x < game->map_column)
-//         {
-//             if (game->map[y][x] == 'C' || game->map[y][x] == 'E')
-//                 path->visited[y][x] = 0;  // Reset visited status for collectibles and exit
-//             x++;
-//         }
-//         y++;
-//     }
-// }
 
 /**
  * @return	depends on the next position
  * 	returns 
  * 		 1, "Stop searching" on success(Exit found, All items found)
  * 		 2, "Keep searching" (valid position: C, 0, P)
- * 		 0, "Stop searching" (out of map, already visited, encounters wall, exit found but not all items found)
+ * 		 0, "Stop searching" (out of map, already visited, encounters wall, 
+ * exit found but not all items found)
  * 		-1, "Stop seraching" undefined or 'P'(invalid)
   */
 int	check_next_position(t_path *path, t_game *game, size_t x, size_t y)
 {
 	char	next;
 
-	if (y >= game->map_row || x >= game->map_column)
+	if (y >= game->map_row || x >= game->map_column || path->visited[y][x] != 0)
 		return (0);
 	next = game->map[y][x];
-	if (path->visited[y][x] != 0)
-		return (0);
 	path->visited[y][x] = 1;
 	if (path->exit_found == 1 && game->map_items == path->items_found)
 		return (1);
@@ -58,7 +50,6 @@ int	check_next_position(t_path *path, t_game *game, size_t x, size_t y)
 	return (-1);
 }
 
-
 /**
  * @return 0 if valid path not found, 1 if any found
  */
@@ -68,17 +59,14 @@ int	path_finder(t_path *path, t_game *game, int x, int y)
 	size_t	next_y;
 	int		i;
 	int		res;
-	int		dx[4];
-	int		dy[4];
 
-	init_direction(dx, dy);
+	init_direction(path->dx, path->dy);
 	i = 0;
 	while (i < 4)
 	{
-		next_x = x + dx[i];
-		next_y = y + dy[i];
+		next_x = x + path->dx[i];
+		next_y = y + path->dy[i];
 		res = check_next_position(path, game, next_x, next_y);
-		//printf("%d call) res : %d", i, res); //rm
 		if (res == 1)
 			return (1);
 		if (res == 2)
@@ -125,15 +113,6 @@ int	allocate_path_data(t_path **path, t_game *game)
 	}
 	return (0);
 }
-// Add this debug function
-void debug_path_state(t_path *path, t_game *game)
-{
-    ft_printf("Debug:\n");
-    ft_printf("Items found: %d/%d\n", path->items_found, game->map_items);
-    ft_printf("Exit found: %d\n", path->exit_found);
-    ft_printf("Player pos: (%d, %d)\n", game->x_player_pos, game->y_player_pos);
-}
-
 
 int	has_no_valid_path(t_game *game)
 {
@@ -143,21 +122,9 @@ int	has_no_valid_path(t_game *game)
 		return (clean_exit(-1, game, NULL, "Error\n: has_no_valid_path1"));
 	if (init_int_arr(path, game))
 		return (free_path_and_clean_exit(path, game, "Error\n: init_int_arr"));
-
-    // Add debug print before path finding
-    ft_printf("Starting path check:\n");
-    ft_printf("Total items needed: %d\n", game->map_items);
-    ft_printf("Starting position: (%d, %d)\n", game->x_player_pos, game->y_player_pos);
-    
-    path->visited[game->y_player_pos][game->x_player_pos] = 1;
-    if (!path_finder(path, game, game->x_player_pos, game->y_player_pos))
-    {
-        // Add debug print on failure
-        debug_path_state(path, game);
-        return (free_path_and_clean_exit(path, game, "Error\n: no_valid_path2"));
-    }
-	//if (!path_finder(path, game, game->x_player_pos, game->y_player_pos))
-//		return (free_path_and_clean_exit(path, game, "Error\n: no_valid_path2"));
+	path->visited[game->y_player_pos][game->x_player_pos] = 1;
+	if (!path_finder(path, game, game->x_player_pos, game->y_player_pos))
+		return (free_path_and_clean_exit(path, game, "Error\n: no_valid_path"));
 	free_path(path, game->map_row);
 	return (0);
 }

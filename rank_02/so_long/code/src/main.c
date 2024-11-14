@@ -38,6 +38,5 @@ int	main(int ac, const char **av)
 	mlx_hook(game->p_window, CLOSE_BUTTON, 0, handle_close, game);
 	mlx_loop(game->p_mlx);
 	free_game(game);
-
 	return (0);
 }

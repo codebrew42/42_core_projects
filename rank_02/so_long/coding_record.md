@@ -92,11 +92,14 @@ reading the map -> core_dump
 
 ## what I did
 - init3_path_check.c (O)
+- norminette(OK)
+- checked all maps(group 1-4) (O)
+- Bonus: display_score (O)
 
 ## what to do
-1. check eval
-2. norminette
-3. bonus?
+1. check eval sheet
+: if ctrl+c exit -> free : have to? then how?
+2. bonus
 
 ## basic plan
 (0) getting ready

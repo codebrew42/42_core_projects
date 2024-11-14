@@ -57,4 +57,3 @@ void	free_game(t_game *game)
 		free_images_window_and_mlx_ptr(game);
 	free(game);
 }
-
