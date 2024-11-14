@@ -88,6 +88,15 @@ reading the map -> core_dump
 1. init3_ : finish
 2. check eval sheet 
 
+# 241114
+
+## what I did
+- init3_path_check.c (O)
+
+## what to do
+1. check eval
+2. norminette
+3. bonus?
 
 ## basic plan
 (0) getting ready
