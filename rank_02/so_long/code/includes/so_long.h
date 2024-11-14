@@ -79,14 +79,14 @@ typedef struct s_image
 typedef struct s_path
 {
 	//char		**map;
-	int			**visit_log;
+	int			**visited;
 	// size_t		map_row;
 	// size_t		map_column;
 	// size_t		total_items;
 	size_t		x_prev;
 	size_t		y_prev;
 	size_t		items_found;
-	size_t		exit_found;
+	size_t		exit_found; //rm
 } t_path;
 
 typedef struct s_game
@@ -107,11 +107,6 @@ typedef struct s_game
 	t_image			image;
 }	t_game;
 
-/*free.c : norm (OK)*/
-void	free_game(t_game *game);
-void	free_images_window_and_mlx_ptr(t_game *game);
-void	free_path(t_path *path, size_t rows);
-
 /* init1_game.c : norm (X: rm notes) */
 int		init_pointers(t_game *game);
 int		init_game(t_game **game);
@@ -129,12 +124,16 @@ int		read_map(t_game *game, const char *param);
  int		allocate_path_data(t_path **path, t_game *game);
 // //int	find_any_valid_path(t_path *path, t_game *game);
 // int		has_no_valid_path(t_game *game);
+int		check_next_position(t_path *path, t_game *game, size_t x, size_t y);
+int		is_valid_move(t_path *path, t_game *game, size_t x, size_t y);
+int		explore_directions(t_path *path, t_game *game, size_t x, size_t y);
+int		find_valid_path(t_path *path, t_game *game);
+int		has_no_valid_path(t_game *game);
 
-int check_next_position(t_path *path, t_game *game, size_t x, size_t y);
-int is_valid_move(t_path *path, t_game *game, size_t x, size_t y);
-int explore_directions(t_path *path, t_game *game, size_t x, size_t y);
-int find_valid_path(t_path *path, t_game *game);
-int has_no_valid_path(t_game *game);
+/*free.c : norm (OK)*/
+void	free_game(t_game *game);
+void	free_images_window_and_mlx_ptr(t_game *game);
+void	free_path(t_path *path, size_t rows);
 
 /* error.c : Report Error and Cleanup*/
 int		free_path_and_clean_exit(t_path *path, t_game *game, char *msg);

@@ -12,8 +12,8 @@
 #include "../includes/so_long.h"
 
 /**
- * @brief create an int array 'path->visit_log[][]' same size as game->map:
-  * init path->visit_log : check game->map, 
+ * @brief create an int array 'path->visited[][]' same size as game->map:
+  * init path->visited : check game->map, 
   * assign 0 if accesible(P,C,E,0), -1 if not(wall, \n)
  * @return 0 on success, 1 on fail
  * @note change its name : init_path_data
@@ -39,9 +39,9 @@ int	init_int_arr(t_path *path, t_game *game)
 			//printf("[%zu,%zu] %c ", i, j, game->map[i][j]); //rm
 			if (game->map[i][j] == '0' || game->map[i][j] == 'C'
 				|| game->map[i][j] == 'P' || game->map[i][j] == 'E')
-				path->visit_log[i][j] = 0;
+				path->visited[i][j] = 0;
 			else
-				path->visit_log[i][j] = -1;
+				path->visited[i][j] = -1;
 			j++;
 		}
 		//printf("\n"); //rm
@@ -64,20 +64,20 @@ int	allocate_path_data(t_path **path, t_game *game)
 	*path = malloc(sizeof(t_path));
 	if (!*path)
 		return (1);
-	(*path)->visit_log = malloc(sizeof(int *) * (game->map_row));
-	if (!(*path)->visit_log)
+	(*path)->visited = malloc(sizeof(int *) * (game->map_row));
+	if (!(*path)->visited)
 		return (free_path_and_clean_exit(*path, game, "Error\n: Malloc"));
 	i = 0;
 	while (i < game->map_row)
 	{
-		(*path)->visit_log[i] = malloc(sizeof(int) * (game->map_column));
-		if (!(*path)->visit_log[i])
+		(*path)->visited[i] = malloc(sizeof(int) * (game->map_column));
+		if (!(*path)->visited[i])
 		{
 			while (--i > 0)
 			{
-				free((*path)->visit_log[i]);
+				free((*path)->visited[i]);
 			}
-			free((*path)->visit_log);
+			free((*path)->visited);
 			return (free_path_and_clean_exit(*path, game, "Error\n: Malloc"));
 		}
 		i++;
@@ -110,7 +110,7 @@ int	find_any_valid_path(t_path *path, t_game *game)
 	dy[3] = 0;
 	dx[3] = -1;
 	dy[2] = -1;
-	path->visit_log[path->x_prev][path->y_prev] = 1;
+	path->visited[path->x_prev][path->y_prev] = 1;
 	//print_path_data(path); //rm
 	while(1)
 	{
@@ -118,12 +118,12 @@ int	find_any_valid_path(t_path *path, t_game *game)
 		x_cur = path->x_prev;
 		y_cur = path->y_prev;
 		i = find_target('C', path, path->x_prev, path->y_prev);//-1:not found
-		if (i >= 0 && i <= 4 && !path->visit_log[x_cur + dx[i]][y_cur + dy[i]])
+		if (i >= 0 && i <= 4 && !path->visited[x_cur + dx[i]][y_cur + dy[i]])
 		{
 			x_cur = path->x_prev + dx[i];
 			y_cur = path->y_prev + dy[i];
 			path->items_found++;
-			path->visit_log[x_cur][y_cur] = 1;
+			path->visited[x_cur][y_cur] = 1;
 		}
 		i = find_target('E', path, path->x_prev, path->y_prev); 
 
@@ -148,7 +148,7 @@ int	find_any_valid_path(t_path *path, t_game *game)
 
 /**
  * @brief init path_data
- * (1)init path->visit_log : check game->map, 
+ * (1)init path->visited : check game->map, 
  * assign 0 if accesible(P,C,E,0), -1 if not(wall) 
  */
 int	has_no_valid_path(t_game *game)
@@ -161,7 +161,7 @@ int	has_no_valid_path(t_game *game)
 		return (clean_exit(-1, game, NULL, "Error\n: has_no_valid_path"));
 	if (init_int_arr(path, game))
 		return (free_path_and_clean_exit(path, game, "Error\n: Malloc"));
-	print_int_map(path->visit_log, game); //rm
+	print_int_map(path->visited, game); //rm
 // start dfs from player pos
 // if all items found, exit_found : free_path -> return()
 	if (!find_any_valid_path(path, game))

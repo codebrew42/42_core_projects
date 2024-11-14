@@ -18,8 +18,8 @@ void	free_path(t_path *path, size_t rows)
 
 	i = 0;
 	while (i < rows)
-		free(path->visit_log[i++]);
-	free(path->visit_log);
+		free(path->visited[i++]);
+	free(path->visited);
 	free(path);
 }
 
