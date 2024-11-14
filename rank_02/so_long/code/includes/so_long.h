@@ -108,6 +108,8 @@ typedef struct s_game
 }	t_game;
 
 /* init1_game.c : norm (X: rm notes) */
+int		init_int_arr(t_path *path, t_game *game);
+void	init_direction(int *dx, int *dy);
 int		init_pointers(t_game *game);
 int		init_game(t_game **game);
 
@@ -119,15 +121,9 @@ int		invalid_map(t_game *game, const char *map);
 int		read_map(t_game *game, const char *param);
 
 /* init3. has_path_check.c */
-//backup
- int		init_int_arr(t_path *path, t_game *game);
- int		allocate_path_data(t_path **path, t_game *game);
-// //int	find_any_valid_path(t_path *path, t_game *game);
-// int		has_no_valid_path(t_game *game);
 int		check_next_position(t_path *path, t_game *game, size_t x, size_t y);
-int		is_valid_move(t_path *path, t_game *game, size_t x, size_t y);
-int		explore_directions(t_path *path, t_game *game, size_t x, size_t y);
-int		find_valid_path(t_path *path, t_game *game);
+int		path_finder(t_path *path, t_game *game, int x, int y);
+int		allocate_path_data(t_path **path, t_game *game);
 int		has_no_valid_path(t_game *game);
 
 /*free.c : norm (OK)*/
@@ -152,12 +148,12 @@ int		handle_movement_input(t_game *game, unsigned int direction);
 int		key_control(unsigned int	command, t_game *game);
 
 /* Debug Functions - for_debug.c */ //rm
-void	print_path_data(t_path *path);
-void	print_game_map(t_game *game);
+void	print_path_data(t_path *path); //rm
+void	print_game_map(t_game *game); //rm
 void	print_int_map(int **map, t_game *game); //rm
 void	print_t_game(t_game *game); //rm
 void	print_map(t_game *game); //rm
-
+void debug_path_state(t_path *path, t_game *game);
 /* Game Window and Events - utils_window.c */
 /*
 int		init_window(t_game *game);

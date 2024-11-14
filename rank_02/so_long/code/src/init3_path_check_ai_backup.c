@@ -57,7 +57,7 @@ int explore_directions(t_path *path, t_game *game, size_t x, size_t y)
     return (0);
 }
 
-int valid_path_found(t_path *path, t_game *game)
+int path_finder(t_path *path, t_game *game)
 {
     size_t  x;
     size_t  y;
@@ -85,7 +85,7 @@ int has_no_valid_path(t_game *game)
     if (init_int_arr(path, game))
         return (free_path_and_clean_exit(path, game, "Error\n: Malloc"));
     
-    if (!valid_path_found(path, game))
+    if (!path_finder(path, game))
     {
         free_path(path, game->map_row);
         return (clean_exit(-1, game, NULL, "Error\n: No valid path found"));

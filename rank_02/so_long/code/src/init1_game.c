@@ -12,6 +12,58 @@
 
 #include "../includes/so_long.h"
 
+/**
+ * @brief used in "init3.c"
+ */
+void	init_direction(int *dx, int *dy)
+{
+	dx[0] = 1;
+	dx[1] = 0;
+	dx[2] = -1;
+	dx[3] = 0;
+	dy[0] = 0;
+	dy[1] = 1;
+	dy[2] = 0;
+	dy[3] = -1;
+}
+
+/**
+ * @brief used in "init3.c"
+  * creates an int array 'path->visited[][]' same size as game->map:
+  * init path->visited : check game->map, 
+  * assign 0 if accesible(P,C,E,0), -1 if not(wall, \n)
+ * @return 0 on success, 1 on fail
+ * @note change its name : init_path_data
+ */
+int	init_int_arr(t_path *path, t_game *game)
+{
+	size_t	i;
+	size_t	j;
+
+	if (!path || !game || !game->map)
+		return (1);
+	path->x_prev = game->x_player_pos;
+	path->y_prev = game->y_player_pos;
+	path->items_found = 0;
+	path->exit_found = 0;
+	i = 0;
+	while (i < game->map_row)
+	{
+		j = 0;
+		while (j < game->map_column)
+		{
+			if (game->map[i][j] == '0' || game->map[i][j] == 'C'
+				|| game->map[i][j] == 'P' || game->map[i][j] == 'E')
+				path->visited[i][j] = 0;
+			else
+				path->visited[i][j] = -1;
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	init_pointers(t_game *game)
 {
 	game->p_mlx = mlx_init();
@@ -35,6 +87,11 @@ int	init_game(t_game **game)
 		return (report_error("Malloc failed"));
 	(*game)->p_mlx = NULL;
 	(*game)->p_window = NULL;
+	(*game)->image.floor = NULL;
+	(*game)->image.wall = NULL;
+	(*game)->image.player = NULL;
+	(*game)->image.item = NULL;
+	(*game)->image.exit = NULL;
 	(*game)->map = NULL;
 	(*game)->map_mem_allocated = 0;
 	(*game)->x_player_pos = 0;
