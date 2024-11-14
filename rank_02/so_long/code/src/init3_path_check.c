@@ -1,5 +1,24 @@
 #include "../includes/so_long.h"
 
+// void next_is_only_path_at_start(t_path *path, t_game *game)
+// {
+//     size_t x;
+//     size_t y;
+
+//     y = 0;
+//     while (y < game->map_row)
+//     {
+//         x = 0;
+//         while (x < game->map_column)
+//         {
+//             if (game->map[y][x] == 'C' || game->map[y][x] == 'E')
+//                 path->visited[y][x] = 0;  // Reset visited status for collectibles and exit
+//             x++;
+//         }
+//         y++;
+//     }
+// }
+
 /**
  * @return	depends on the next position
  * 	returns 
@@ -18,10 +37,18 @@ int	check_next_position(t_path *path, t_game *game, size_t x, size_t y)
 	if (path->visited[y][x] != 0)
 		return (0);
 	path->visited[y][x] = 1;
-	if (next == 'E' && game->map_items == path->items_found)
+	if (path->exit_found == 1 && game->map_items == path->items_found)
 		return (1);
 	else if (next == 'E' || next == '1')
+	{
+		if (next == 'E')
+		{
+			path->exit_found = 1;
+			if (game->map_items == path->items_found)
+				return (1);
+		}
 		return (0);
+	}
 	else if (next == 'C' || next == '0' || next == 'P')
 	{
 		if (next == 'C')
@@ -31,40 +58,6 @@ int	check_next_position(t_path *path, t_game *game, size_t x, size_t y)
 	return (-1);
 }
 
-// int check_next_position(t_path *path, t_game *game, size_t x, size_t y)
-// {
-//     char    next;
-
-//     if (y >= game->map_row || x >= game->map_column)
-//         return (0);
-//     next = game->map[y][x];
-//     if (path->visited[y][x] != 0)
-//         return (0);
-//     path->visited[y][x] = 1;
-    
-//     // Handle collectibles first
-//     if (next == 'C')
-//     {
-//         path->items_found++;
-//         return (2);
-//     }
-//     // Check exit condition
-//     if (next == 'E')
-//     {
-//         path->exit_found = 1;
-//         if (path->items_found == game->map_items)
-//             return (1);
-//         return (0);
-//     }
-//     // Handle valid movement spaces
-//     if (next == '0' || next == 'P')
-//         return (2);
-//     // Handle walls
-//     if (next == '1')
-//         return (0);
-//     // Handle invalid characters
-//     return (-1);
-// }
 
 /**
  * @return 0 if valid path not found, 1 if any found
@@ -85,6 +78,7 @@ int	path_finder(t_path *path, t_game *game, int x, int y)
 		next_x = x + dx[i];
 		next_y = y + dy[i];
 		res = check_next_position(path, game, next_x, next_y);
+		//printf("%d call) res : %d", i, res); //rm
 		if (res == 1)
 			return (1);
 		if (res == 2)

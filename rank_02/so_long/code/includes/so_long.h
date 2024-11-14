@@ -86,7 +86,7 @@ typedef struct s_path
 	size_t		x_prev;
 	size_t		y_prev;
 	size_t		items_found;
-	size_t		exit_found; //rm
+	size_t		exit_found;
 } t_path;
 
 typedef struct s_game
