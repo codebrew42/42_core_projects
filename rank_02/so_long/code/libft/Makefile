@@ -36,7 +36,7 @@ OBJS		= $(SRCS:.c=.o)
 
 # Header file
 HEADER		= includes/libft.h get_next_line/includes/get_next_line.h ft_printf/includes/ft_printf.h
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -fPIE
 CC			= cc
 RM			= rm -f
 AR			= ar rcs

@@ -17,13 +17,13 @@ OBJ := $(SRC:.c=.o)
 
 # Compiler options
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror $(HEADER)
+CFLAGS = -Wall -Wextra -Werror $(HEADER) -fPIE
 
 # Others
 .PHONY: all clean fclean libft re
 
 # libraries
-LIB			:= -L$(LIBFT_DIR) -l$(LIBFT_DIR) 
+LIB		:= -L$(LIBFT_DIR) -l$(LIBFT_DIR) 
 MINILIBX	:= -L$(MINILIBX_DIR) -lmlx -lXext -lX11 -lm -lz
 
 # Default target

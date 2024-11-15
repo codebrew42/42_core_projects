@@ -59,14 +59,6 @@
 #  error "Unsupported platform"
 # endif
 
-/* to save images */
-
-typedef struct s_point
-{
-	int x;
-	int y;
-} t_point;
-
 typedef struct s_image
 {
 	void			*wall;
@@ -78,17 +70,13 @@ typedef struct s_image
 
 typedef struct s_path
 {
-	//char		**map;
-	int			**visited;
-	// size_t		map_row;
-	// size_t		map_column;
-	// size_t		total_items;
-	size_t		x_prev;
-	size_t		y_prev;
-	size_t		items_found;
-	size_t		exit_found;
-	int			dx[4];
-	int			dy[4];
+	int				**visited;
+	size_t			x_prev;
+	size_t			y_prev;
+	size_t			items_found;
+	size_t			exit_found;
+	int				dx[4];
+	int				dy[4];
 } t_path;
 
 typedef struct s_game
@@ -116,7 +104,7 @@ int		init_pointers(t_game *game);
 int		init_game(t_game **game);
 
 /* init2_map.c : Map Initialization and Validation  */
-int		validate_map_characters(t_game *game, char *line);
+int		validate_map_characters(t_game *game, char *line, int fd);
 int		has_invalid_wall(t_game *game, char *line, int fd);
 int		ct_row(t_game *game, const char *param);
 int		invalid_map(t_game *game, const char *map);
@@ -134,6 +122,7 @@ void	free_images_window_and_mlx_ptr(t_game *game);
 void	free_path(t_path *path, size_t rows);
 
 /* error.c : Report Error and Cleanup*/
+int		is_valid_map_char(char c);
 int		free_path_and_clean_exit(t_path *path, t_game *game, char *msg);
 int		clean_exit_double(int fd, t_game *game, char **str, char *msg);
 int		clean_exit(int fd, t_game *game, char *str, char *msg);
@@ -150,18 +139,12 @@ int		move_player_to(t_game *game, int dest_x, int dest_y);
 int		handle_movement_input(t_game *game, unsigned int direction);
 int		key_control(unsigned int	command, t_game *game);
 
-/* Debug Functions - for_debug.c */ //rm
+/* Debug Functions - for_debug.c  //rm
 void	print_path_data(t_path *path); //rm
 void	print_game_map(t_game *game); //rm
 void	print_int_map(int **map, t_game *game); //rm
 void	print_t_game(t_game *game); //rm
 void	print_map(t_game *game); //rm
-void debug_path_state(t_path *path, t_game *game);
-/* Game Window and Events - utils_window.c */
-/*
-int		init_window(t_game *game);
-int		handle_keypress(int keysym, t_game *game);
-int		handle_window_close(t_game *game);
-*/
+void	debug_path_state(t_path *path, t_game *game);*/
 
 #endif
