@@ -47,6 +47,7 @@ int	handle_movement_input(t_game *game, unsigned int direction)
 {
 	unsigned int	i;
 
+	i = 0;
 	if (direction == UP)
 		i = move_player_to(game, game->x_player_pos, game->y_player_pos - 1);
 	else if (direction == DOWN)
