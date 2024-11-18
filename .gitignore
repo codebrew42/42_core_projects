@@ -11,7 +11,9 @@ Thumbs.db
 *.class
 *.exe
 
-!rank_02/so_long/code/minilibx-linux/
+# executible
+a.out
+
 
 # Dependency Directories
 node_modules/
