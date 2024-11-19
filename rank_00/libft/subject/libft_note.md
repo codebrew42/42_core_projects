@@ -105,8 +105,8 @@ To optimize your `ft_memcpy` function, you can consider a few improvements based
 4. **Avoid Overlapping Memory Areas**: Ensure that the function is only used when the source and destination do not overlap, as overlapping areas should use `memmove`.
 
 Here’s an updated version of your `ft_memcpy` with some of these optimizations:
-
-````c:42_core_projects/rank_00/libft/code_2nd_practice/ft_memcpy.c
+- to read : https://github.com/bminor/glibc/blob/master/string/memcpy.c
+````c
 #include "includes/libft.h"
 
 /**
