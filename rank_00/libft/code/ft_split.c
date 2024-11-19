@@ -69,6 +69,13 @@ static char	**cp_words(char **dest, const char *s, char c)
 	return (dest);
 }
 
+/**
+ * @brief Splits a string into an array of strings based on a delimiter.
+ * 
+ * @param s The string to be split.
+ * @param c The delimiter character.
+ * @return A NULL-terminated array of strings, or NULL if memory allocation fails or if the input string is NULL.
+ */
 char	**ft_split(const char *s, char c)
 {
 	char	**dest;
