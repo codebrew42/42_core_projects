@@ -12,6 +12,12 @@
 
 #include "../includes/so_long.h"
 
+int	is_valid_map_char(char c)
+{
+	return (c == '0' || c == '1' || c == 'P'
+		|| c == 'E' || c == 'C' || c == '\n');
+}
+
 int	free_path_and_clean_exit(t_path *path, t_game *game, char *msg)
 {
 	free_path(path, game->map_row);

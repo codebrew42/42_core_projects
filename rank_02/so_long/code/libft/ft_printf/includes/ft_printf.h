@@ -30,4 +30,4 @@ int		print_char(char c);
 int		print_ptr(unsigned long long int nb, int base);
 int		print_hexadigit(unsigned long long int nb, int base, char c);
 
-# endif
+#endif

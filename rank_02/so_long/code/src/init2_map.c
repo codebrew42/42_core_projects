@@ -21,29 +21,31 @@
  * 
  * @return 0 on success, 1 on error
  */
-int	validate_map_characters(t_game *game, char *line)
+int	validate_map_characters(t_game *game, char *line, int fd)
 {
 	size_t		i;
 
 	i = 0;
 	while (line[i])
 	{
+		if (!is_valid_map_char(line[i]))
+			return (clean_exit(fd, game, NULL, "Error\n: Invalid char"));
 		if (line[i] == 'C')
 			game->map_items++;
-		if (line[i] == 'P')
+		else if (line[i] == 'P')
 		{
 			game->map_player++;
 			game->x_player_pos = i;
 			game->y_player_pos = game->map_row_idx;
 		}
-		if (line[i] == 'E')
+		else if (line[i] == 'E')
 			game->map_exit++;
 		i++;
 	}
 	if (game->map_row_idx == game->map_row - 1)
 	{
 		if (game->map_player != 1 || game->map_exit != 1 || game->map_items < 1)
-			return (clean_exit(-1, game, NULL, "Error\n: wrong P, E or C"));
+			return (clean_exit(fd, game, NULL, "Error\n: wrong P, E or C"));
 	}
 	return (0);
 }
@@ -163,8 +165,9 @@ int	read_map(t_game *game, const char *map_path)
 		if (!game->map[i])
 			return (clean_exit_double(fd, game, NULL, "Error\n: Malloc"));
 		game->map_row_idx = i;
-		if (validate_map_characters(game, game->map[i]))
-			return (clean_exit(fd, NULL, NULL, NULL));
+		game->map[i + 1] = NULL;
+		if (validate_map_characters(game, game->map[i], fd))
+			return (1);
 		i++;
 	}
 	game->map[i] = NULL;

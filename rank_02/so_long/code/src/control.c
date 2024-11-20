@@ -26,7 +26,7 @@ int	move_player_to(t_game *game, int dest_x, int dest_y)
 	{
 		if (game->map_items)
 			return (5);
-		ft_printf("\nTotal steps: %u\n", game->steps);
+		ft_printf("\nTotal steps: %u\n", game->steps + 1);
 		return (clean_exit(-1, game, NULL, CONGRATULATIONS_MSG));
 	}
 	else if (dest == '0' || dest == 'C')
@@ -47,7 +47,6 @@ int	handle_movement_input(t_game *game, unsigned int direction)
 {
 	unsigned int	i;
 
-	i = 0;
 	if (direction == UP)
 		i = move_player_to(game, game->x_player_pos, game->y_player_pos - 1);
 	else if (direction == DOWN)

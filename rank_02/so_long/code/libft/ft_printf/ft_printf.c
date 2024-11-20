@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jiepark <jiepark@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/15 10:32:01 by jiepark           #+#    #+#             */
+/*   Updated: 2024/11/15 10:32:02 by jiepark          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "includes/ft_printf.h"
 
 int	print_formatted(const char c, va_list *args)
@@ -18,7 +30,6 @@ int	print_formatted(const char c, va_list *args)
 		return (print_char('%'));
 	return (-1);
 }
-
 
 int	ft_printf(const char *s, ...)
 {

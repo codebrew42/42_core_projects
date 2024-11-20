@@ -25,7 +25,7 @@ char	*update_stash(char *stash)
 	k = 0;
 	while (stash[k] != '\n' && stash[k])
 		k++;
-	if (stash[k] == '\0'|| stash[k + 1] == '\0')
+	if (stash[k] == '\0' || stash[k + 1] == '\0')
 		return (free(stash), NULL);
 	k++;
 	dest = ft_calloc(ft_strlen(stash) - k + 1, 1);
@@ -118,4 +118,3 @@ char	*get_next_line(int fd)
 	stash = update_stash(stash);
 	return (line);
 }
-

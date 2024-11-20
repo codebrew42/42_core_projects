@@ -1,30 +1,44 @@
-NAME = so_long
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jiepark <jiepark@student.42berlin.de>      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/11/15 10:19:39 by jiepark           #+#    #+#              #
+#    Updated: 2024/11/15 10:19:41 by jiepark          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+NAME		= so_long
 
 # Directories
-LIBFT_DIR = libft
-MINILIBX_DIR := minilibx-linux
+LIBFT_DIR	= libft
+MINILIBX_DIR	= minilibx-linux
 
 # Header
-HEADER := -Iincludes -I$(LIBFT_DIR)/includes 
+HEADER		= -Iincludes -I$(LIBFT_DIR)/includes 
 
 # Source files
-SRC :=	src/init1_game.c	src/init2_map.c		src/init3_path_check.c\
-		src/error.c			src/graphic.c		src/control.c\
-		src/main.c			src/free.c			src/for_debug_to_remove/for_debug.c #//rm
+SRC		= src/init1_game.c \
+		src/init2_map.c \
+		src/init3_path_check.c \
+		src/error.c \
+		src/graphic.c \
+		src/control.c \
+		src/main.c \
+		src/free.c
 
 # Object files
-OBJ := $(SRC:.c=.o)
+OBJ		= $(SRC:.c=.o)
 
 # Compiler options
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror $(HEADER)
+CC		= gcc
+CFLAGS		= -Wall -Wextra -Werror $(HEADER) -fPIE
 
-# Others
-.PHONY: all clean fclean libft re
-
-# libraries
-LIB			:= -L$(LIBFT_DIR) -l$(LIBFT_DIR) 
-MINILIBX	:= -L$(MINILIBX_DIR) -lmlx -lXext -lX11 -lm -lz
+# Libraries
+LIB		= -L$(LIBFT_DIR) -l$(LIBFT_DIR)
+MINILIBX	= -L$(MINILIBX_DIR) -lmlx -lXext -lX11 -lm -lz
 
 # Default target
 all: $(NAME)
@@ -33,15 +47,12 @@ $(NAME): libft/liblibft.a $(OBJ)
 	make -C $(MINILIBX_DIR)
 	$(CC) $(CFLAGS) $(OBJ) $(LIB) $(MINILIBX) -o $(NAME)
 
-# Compilation rule for object files in the main program
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Build libft
 $(LIBFT_DIR)/liblibft.a:
 	$(MAKE) -C $(LIBFT_DIR)
 
-# Cleaning
 clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
 	rm -f $(OBJ)
@@ -49,5 +60,6 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-# Rebuild
 re: fclean all
+
+.PHONY: all clean fclean re libft
