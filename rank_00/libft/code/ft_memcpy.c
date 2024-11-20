@@ -13,9 +13,9 @@
 #include "includes/libft.h"
 
 /**
- * @brief	Copies `n` bytes(copy bytes by bytes) from the source memory area to the destination memory area.
+ * @brief	Copies `n` bytes bytes by bytes from the source mem area to the destination mem area.
  * 
- * when the source and destination memory areas don't overlap. If so, use 'memmove'
+ * when the source and destination memory areas don't overlap. If they overlap, use 'memmove'
  *
  * @pre		The function does not check whether dest has enough allocated memory for  the n bytes. 
  * @pre		It only checks if dest or src is NULL. 

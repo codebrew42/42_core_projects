@@ -1,9 +1,104 @@
-# issue 1: reading unitialized static var
+# content
+- algorithm
+- edge cases
+- issue 1: reading unitialized static var
+- issue 2: how to free extracted line while returning that line
+- issue 3 : seg fault
+
+# algorithm
+- use "static char *stash" for holding the data on the next function call
+
+- gnl reading concept
+: " only it reads till \n or eof, it extact line to be returned. "
+
+- gnl struct
+1) alloc memory and read new string
+	malloc 'temp' //to save date read by read()
+	bytes_read = read(fd, temp, BUFF_SIZE)
+
+2) early return : bytes_read <= 0
+	if read_err (bytes_read <0)
+		free(temp)
+		return (NULL)?
+	if eof (bytes_read =0)
+		free(temp)
+		return (ft_strdup(stash))
+
+3) update stash : with new string read
+	stash = ft_strjoin(stash, temp)
+
+4) recursive call
+	if !ft_strchr(stash, '\n')
+		call gnl (recursive)
+
+5) return condition (else: ft_strchr(stash, '\n'))
+	line = parse
+	stash = update
+	return (line)
+
+```c
+char	*get_next_line(int fd)
+{
+	static char	*stash;
+	char		*temp;
+	char		*line;
+
+	temp = malloc();
+	if (!temp)
+	{}
+	bytes_read = read(fd, temp, BUF_SIZE);
+	if (bytes_read <= 0) //err or eof
+		temp = NULL;
+		return (ft_strdup(stash));
+	stash = ft_strjoin(stash, temp);
+	free(temp);
+	line = get_next_line(fd);
+	if (!ft_strchr(stash, '\n'))
+	{
+		return (get_next_line(fd));
+	}
+	line = extract_line(stash);
+	stash = update_stash(stash);
+	return (line);
+}
+```
+
+```txt
+	a\n
+	bb\n
+	ccc
+```
+3.
+
+
+# edge cases
+## invalid file descriptor
+1. fd < 0
+2. fd > 255
+## BUFFER_SIZE
+1. BUFFER_SIZE <= 0
+2. BUFFER_SIZE > INT_MAX
+## file
+1. empty file
+2. newline
+	2.1. file with only one newline
+	2.2. file with multiple newlines
+	2.3. no newline
+3. newline at the end
+	3.1. file with newline at the end
+	3.2. no newline at the end
+4. single line
+5. very large file
+
+
+
+# issues to consider
+## issue 1: reading unitialized static var
 - static var is initialized to NULL by default, I didn't explicitlyinitialize it and tried to read it 
 : read(fd, stash, BUFFER_SIZE)
 - so, it caused error.(bad address)
 
-## code
+### code
 ```c
 char	*get_next_line(int fd)
 {
@@ -33,7 +128,7 @@ int	main(void)
 }
 ```
 
-# issue 2: how to free extracted line while returning that line
+## issue 2: how to free extracted line while returning that line
 ```c
 char	*get_next_line(int fd)
 {

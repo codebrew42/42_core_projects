@@ -14,21 +14,21 @@
 # define GET_NEXT_LINE_H
 # define BUFFER_SIZE 10
 
-#include <unistd.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <errno.h>
-#include <limits.h>
-#include <stdlib.h>
-#include "../../../../rank_00/libft/code/includes/libft.h"
+# include <unistd.h>
+# include <stdio.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <limits.h>
+# include <stdlib.h>
+# include "../../../../rank_00/libft/code/includes/libft.h"
 
-char	*update_stash(char *stash);
-char	*extract_line(char *src);
-char	*get_next_line(int fd);
+char		*update_stash(char *stash);
+char		*extract_line(char *src);
+char		*get_next_line(int fd);
 
 //libft
-void	*ft_memcpy(void *dst, const void *src, size_t n);
-char	*ft_strchr(const char *s, int c);
-size_t	ft_strlen(const char *s);
+void		*ft_memcpy(void *dst, const void *src, size_t n);
+char		*ft_strchr(const char *s, int c);
+size_t		ft_strlen(const char *s);
 
 #endif

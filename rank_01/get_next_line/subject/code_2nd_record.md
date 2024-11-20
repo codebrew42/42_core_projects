@@ -37,3 +37,16 @@ ft_memcpy(void *dest, const void *src, size_t n)
 ```
 - to copy byte by byte, create (const) unsigned char *
 - and return (dest) itself
+
+## 241120
+
+## what i did
+- update : ft_strjoin
+- gnl algorithm
+	: read -> strjoin to stash(prev) -> if \n found -> stop reading
+	: -> if \n exist, parsing, return (parsed line)
+	: -> if not, return (line)
+-> seg fault
+
+## to do
+seg fault

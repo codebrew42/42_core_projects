@@ -15,7 +15,7 @@
 void	display_steps(t_game *g)
 {
 	char	*steps_str;
-	char	*prev_s;
+	//char	*prev_s;
 	int		x;
 	int		y;
 
@@ -24,17 +24,17 @@ void	display_steps(t_game *g)
 		return ;
 	x = (g->map_column * PIXEL) / 2 - (48 / 2);
 	y = (g->map_row * PIXEL) + 10;
-	if (g->steps == 0)
-		mlx_string_put(g->p_mlx, g->p_window, x + 40, y, 0x000000, "0");
-	else
-	{
-		prev_s = ft_itoa(g->steps - 1);
-		if (prev_s)
-		{
-			mlx_string_put(g->p_mlx, g->p_window, x + 40, y, 0x000000, prev_s);
-			free(prev_s);
-		}
-	}
+	// if (g->steps == 0)
+	// 	mlx_string_put(g->p_mlx, g->p_window, x + 40, y, 0x000000, "0");
+	// else
+	// {
+	// 	prev_s = ft_itoa(g->steps - 1);
+	// 	if (prev_s)
+	// 	{
+	// 		mlx_string_put(g->p_mlx, g->p_window, x + 40, y, 0x000000, prev_s);
+	// 		free(prev_s);
+	// 	}
+	// }
 	mlx_string_put(g->p_mlx, g->p_window, x, y, 0XFFF100, "Steps: ");
 	mlx_string_put(g->p_mlx, g->p_window, x + 40, y, 0XFFF100, steps_str);
 	free(steps_str);

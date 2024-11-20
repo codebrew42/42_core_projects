@@ -12,11 +12,19 @@
 
 #include "includes/libft.h"
 
+/**
+ * @brief concatenates two strings, if any of the strings is NULL, returns NULL
+ * @return (if successful) pointer to the new string
+ * @return (else) NULL
+ * @note 	need to be updated
+ */
 char	*ft_strjoin(const char *s1, const char *s2)
 {
 	int		total_len;
 	char	*dest;
 
+	if (!s1 && !s2)
+		return (NULL);
 	total_len = ft_strlen(s1) + ft_strlen(s2);
 	dest = ft_calloc(total_len + 1, 1);
 	if (!dest)
