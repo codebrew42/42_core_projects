@@ -13,7 +13,7 @@
 #include "includes/libft.h"
 
 /**
- * @brief concatenates two strings, if any of the strings is NULL, returns NULL
+ * @brief malloc and concatenates two strings, if any of the strings is NULL, returns NULL
  * @return (if successful) pointer to the new string
  * @return (else) NULL
  * @note 	need to be updated
