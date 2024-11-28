@@ -13,9 +13,12 @@
 #include "includes/get_next_line.h"
 
 char	*extract_line(char *s);
-char	*build_single_line(int fd, char **stash);
 int		get_next_newline_idx(char *s);
 
+/**
+ * @brief	move pointer to the next position of the first newline, if it exists
+ * 			or make pointer point to NULL, if it does not exist
+ */
 char	*update_stash(char *s)
 {
 	int		i;
@@ -28,6 +31,10 @@ char	*update_stash(char *s)
 	return (s + i + 1);
 }
 
+/**
+ * @brief	copy untill the first newline symbol of the string, if it exists
+ * 			or untill end of the string, if it doesn't exist
+ */
 char	*extract_line(char *s)
 {
 	int		len;
@@ -41,33 +48,11 @@ char	*extract_line(char *s)
 		len = ft_strlen(s);
 	res = malloc(len + 1);
 	if (len)
-		res = ft_memcpy(res, s, len);
+		len++;
 	else
-		res =ft_memcpy(res, s, ft_strlen(s));
+		len =  ft_strlen(s);
+	res = ft_memcpy(res, s, len);
 	res[len] = '\0';
-	return (res);
-}
-
-char	*build_single_line(int fd, char **stash)
-{
-	int		bytes_read;
-	char	*buff;
-	char	*res;
-
-	res = NULL;
-	buff = malloc(BUFFER_SIZE + 1);
-	if (!buff)
-		return (NULL);
-	bytes_read = read(fd, buff, BUFFER_SIZE);
-	if (bytes_read <= 0)
-	{
-		free(buff);
-		if (!bytes_read)
-			return (*stash);
-		return (NULL);
-	}
-	buff[BUFFER_SIZE] = '\0';
-	res = ft_strjoin(*stash, buff);
 	return (res);
 }
 
@@ -86,27 +71,68 @@ int	get_next_newline_idx(char *s)
 	}
 	return (len);
 }
+/**
+ * @brief read a line untill it encounters EOF or /n from a file
+ * @return 0 on error
+ * @return 1 if it encounters end of file(EOF)
+ */
+int		read_to_stash(int fd, char **stash)
+{
+	int		bytes_read;
+	char	*buff;
+	char	*temp;
+
+	buff = malloc(BUFFER_SIZE + 1);
+	if (!buff)
+		return (0);
+	while (1)
+	{
+		bytes_read = read(fd, buff, BUFFER_SIZE);
+		if (bytes_read < 0)
+		{
+			free(buff);
+			free(*stash);
+			return (0);
+		}
+		if (bytes_read == 0)
+		{
+			free(buff);
+			break ;
+		}
+		buff[bytes_read] = '\0';
+		temp = ft_strjoin(*stash, buff);
+		free(buff);
+		free(*stash);
+		*stash = temp;
+		if (!*stash)
+			return (0);
+		if (get_next_newline_idx(*stash))
+			break ;
+	}
+	return (1);
+}
+
 
 char	*get_next_line(int fd)
 {
 	char			*res;
 	static char		*stash = NULL;
+	int				flag;
 
 	if (BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX)
 		return (NULL);
-	while (!stash || !get_next_newline_idx(stash))
+	while (1)
 	{
-		res = build_single_line(fd, &stash);
-		if (!res)
-			return (NULL);
-		if (get_next_newline_idx(res) || !stash)
+		flag = read_to_stash(fd, &stash);
+		if (!flag)
+		{
+
+		}
+		if (flag || get_next_newline_idx(stash))
 			break ;
 	}
-	if (get_next_newline_idx(res))
-	{
-		res = extract_line(res);
-		stash = update_stash(res);
-	}
+	res = extract_line(res);
+	stash = update_stash(stash);
 	return (res);
 }
 
