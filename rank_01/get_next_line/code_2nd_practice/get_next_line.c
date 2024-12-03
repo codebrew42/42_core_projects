@@ -117,19 +117,20 @@ char	*get_next_line(int fd)
 {
 	char			*res;
 	static char		*stash = NULL;
-	int				flag;
+	//int				flag;
 
-	if (BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX)
+
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX)
 		return (NULL);
 	while (1)
 	{
-		flag = read_to_stash(fd, &stash);
-		if (!flag)
-		{
+		// flag = read_to_stash(fd, &stash);
+		// if (!flag)
+		// {
 
-		}
-		if (flag || get_next_newline_idx(stash))
-			break ;
+		// }
+		// if (flag || get_next_newline_idx(stash))
+		// 	break ;
 	}
 	res = extract_line(res);
 	stash = update_stash(stash);
