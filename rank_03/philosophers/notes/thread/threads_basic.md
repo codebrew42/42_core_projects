@@ -113,3 +113,10 @@ pthread_mutex_destroy(&mutex); //clean up
 - without joining a thread, it may continue running even after main has finished, which might lead to resource leaks or undefined behavior.
 
 - so all the thread should be "pthread_join"ed to safely terminate the main program.
+
+## compile
+```
+gcc -g -fsanitize=thread -o threads_prac1 threads_prac1.c -lpthread
+gcc -g -pthread main.c -o main
+```
+- without flag it will not work

@@ -17,8 +17,6 @@ typedef	struct s_arg
 	size_t		time_to_sleep;
 }	t_arg;
 
-
-
 typedef	struct s_philo
 {
 	int			id;

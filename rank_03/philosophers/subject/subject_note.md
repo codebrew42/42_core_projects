@@ -6,17 +6,50 @@ pthread_detach, pthread_join, pthread_mutex_init,
 pthread_mutex_destroy, pthread_mutex_lock,
 pthread_mutex_unlock
 
+## visualizer
+https://nafuka11.github.io/philosophers-visualizer/
+
+
+## to execute
+```
+make
+./philo <number_of_philosophers> <time_to_die> <time_to_eat> <time_to_sleep> [number_of_times_each_philosopher_must_eat]
+```
+- for example, `valgrind --tool=helgrind ./philo 5 800 200 300  5`
+- [number_of_times_each_philosopher_must_eat] : if each **phil** eats 5 times, simulation stops
+	- what's helgrind?
+		- a tool for checking multithreaded programs for data races and other concurrency bugs
+	- -g : for debugging information
+	- -fsanitize=thread: for checking data races
+
+
+### result
+- [phil_result](./phil_result.png)
 
 ## philosophers
-### characters
+### definition
 - each has a number (1 to **number_of_philosophers**)
 - **phil(1)** sits next to **phil(**number_of_philosophers**)**
 - **phil(N)** sits btw **phil(N-1)** and **phil(N+1)**  
 (except **phil(1)** and **phil(N)**)
+- cases
+	- **number_of_philosophers** is 1
+	- **number_of_philosophers** is even
+	- **number_of_philosophers** is odd
+
+### threads
+- every **phil** is on other thread
+- additional threads
+	- why needed? since **phils** are not allowed to communicate with each other
+	- need one additional thread : constantly checking if any **phil** dies (using **flag**)
+	- might add one more thread : to check if all **phil**s have eaten enough (using **flag**)
+
 
 ### behaviors
 - alternatively eat, think, or sleep
 - while eating, not thinking nor sleeping and so on.
+- taking forks : 
+	- all **phils** take from right fork, except the last **phil**(**phil(N)**)
 
 ### rules : do
 - every *phil* should eat
@@ -31,7 +64,7 @@ pthread_mutex_unlock
 - a bowl of spagetti
 - *forks*
 	- as many as phil. (be careful: 1 *phil*, 1 *fork*)
-	- phil. takes therir right and left forks
+	- phil. takes their right and left forks
 	- To prevent *phil*s from duplicating forks, you should protect the forks state
 with a mutex for each of them.
 	- meaning that you should lock the mutex when a *phil* takes a fork and unlock it when done
@@ -46,6 +79,9 @@ with a mutex for each of them.
 ### must have arguments
 1. **number_of_philosophers** : nbr of *phil*s and *fork*s
 2. **time_to_die** (in millisec.): if *phil*s didnt start eating in *time_to_die* since the beginning of their last meal or beginning of the simulation, they die
+	- if the **phil**s number is even : time_to_die = time_to_eat + time_to_sleep + 10 (millisec)
+	- if odd : time_to_die = time_to_eat * 2 + time_to_sleep + 10 (millisec)
+		- at least double time_to_eat
 3. **time_to_eat** (in millisec.) : the time it takes for *phil*s to eat. *phil*s hold two *fork*s during this time 
 4. **time_to_sleep** (in millisec.) : the time *phil*s spend sleeping
 5. [**number_of_times_each_philosopher_must_eat**] (optional) : if all *phil*s hav eaten at least *number_of_times_each_philosopher_must_eat* times, simulation stops. (if not specified, the simulation stops when a *phil* dies)

@@ -1,8 +1,44 @@
 # thread scheduling
 
 ## why some functions are executed earlier?
-### code
+### code1
+```c
+void	*routine(void *arg)
+{
+	printf("Hello from thread no. %s\n", (char *)arg);
+	sleep(3);
+	printf("Ends %s\n", (char *)arg);
+	return (NULL);
+}
+
+int	main(int ac, char *av[])
+{
+	pthread_t		t1;
+	pthread_t		t2;
+
+
+	pthread_create(&t1, NULL, routine, "1");
+	pthread_create(&t2, NULL, routine, "2");
+
+	pthread_join(t1, NULL);
+	pthread_join(t2, NULL);
+
+	return (0);
+
+}
 ```
+### result
+```
+c4b12c2% ./threads_prac2                                
+Hello from thread no. 1
+Hello from thread no. 2
+Ends 1
+Ends 2
+```
+- it is not like : hello -> ends, hello -> ends, but printing hello from each thread first.
+
+### code2
+```c
 void	func_ver3(void)
 {
 	pthread_t	t1;
@@ -23,6 +59,7 @@ void	func_ver3(void)
 		exit(1);
 	if (pthread_join(t3, NULL))
 		exit(1);
+}
 ```
 
 ### result

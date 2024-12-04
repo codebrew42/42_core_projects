@@ -4,7 +4,7 @@
 #include <signal.h> //for usleep
 #include <stdlib.h>
 #define MAX 10
-#define MAX_2 100
+#define MAX_2 10000000
 
 void	*print_hi(void	*arg)
 {
@@ -105,6 +105,8 @@ void	func_ver4(void)
 	if (n == NULL)
 		exit(1);
 	*n = 0;
+	printf("BEFORE JOINING, NUM: %d\n", *n);
+
 	if (pthread_create(&t1, NULL, routine, n))
 		exit_on_error(n, 2);
 	if (pthread_create(&t2, NULL, routine, n))
@@ -114,7 +116,7 @@ void	func_ver4(void)
 		exit_on_error(n, 3);
 	if (pthread_join(t2, NULL))
 		exit_on_error(n, 3);
-	printf("NUM: %d\n", *n);
+	printf("AFTER JOINING, NUM: %d\n", *n);
 }
 
 
