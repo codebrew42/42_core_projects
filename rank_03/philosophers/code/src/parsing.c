@@ -1,25 +1,11 @@
 #include "../includes/philo.h"
 
-/**
- * @return 0-9 converted from param 'c', -1 if invalid
- */
-int		digit_to_int(char c)
-{
-	int		res;
-
-	if (c >= 48 && c <= 57)
-		res = c - 48;
-	else
-		res = -1;
-	return (res);
-}
-
 int		is_space(char c)
 {
 	return (c == 32);
 }
 
-void	save_to_arg(t_arg arg, int count, char *src, int src_len)
+void	save_to_arg(t_arg arg, int flag, char *src, int src_len)
 {
 	int		i;
 	int		res;
@@ -28,49 +14,58 @@ void	save_to_arg(t_arg arg, int count, char *src, int src_len)
 	i = 0;
 	while (src[i] && i < src_len)
 	{
-		temp = digit_to_int(src[i]);
+		temp = char_to_int(src[i]);
 		res = res * 10 + temp;
 		i++;
 	}
-	if (count == 0)
-		arg.number_of_philosophers = res;
-	else if (count == 1)
-		arg.time_to_die = res;
-	else if (count == 2)
-		arg.time_to_eat = res;
-	else if (count == 3)
-		arg.time_to_sleep = res;
+}
+
+/**
+ * @return 1 on error and invalid arg, 0 on success
+ */
+int	validate_args(int	*arr)
+{
+	int		i;
+	int		len;
+
+	if (!arr)
+		return (1);
+	if (arr[0] <= 0)
+		exit_on_error("av[1] equl to 0");
+	if (arr[0] > 200)
+		display_warning("Number of philo greater than 200");
+	i = 1;
+	while (i <= 3)
+	{
+		if (arr[i] <= 0)
+			exit_on_error("av[2]-av[4] equl to 0");
+		if (arr[i] < 60)
+			display_warning("Time shorter than 60ms");
+		i++;
+	}
+	return (0);
 }
 
 /**
  * @brief copy each string, convert it to int, and save it to 't_arg'
- * 
+ * @return 1 on error, 0 on success
  */
-int	get_args(t_arg	arg, char *s)
+int	get_args(t_arg	*arg, char **s)
 {
-	int		i;
-	int		len;
-	int		count;
+	int		flag;
+	int		res;
+	int		arr[4];
 
-	if (!s)
-		return (1);
-	i = 0;
-	len = 0;
-	count = 0;
-	while (s[i])
+	flag = 1;
+	while (flag <= 4)
 	{
-		len = 0;
-		while (digit_to_int(s[i]) >= 0)
-		{
-			len++;
-			i++;
-		}
-		if (len > 0 && (is_space(s[i]) || !s[i]))
-		{
-			save_to_arg(arg, count, s[i - len], len);
-			count++;
-		}
-		i++;
+		arr[flag - 1] = ft_simple_atoi(s[flag]);
+		flag++;
 	}
+	validate_args(arr);
+	arg->number_of_philosophers = arr[0];
+	arg->time_to_die = arr[1];
+	arg->time_to_eat = arr[2];
+	arg->time_to_sleep = arr[3];
 	return (0);
 }

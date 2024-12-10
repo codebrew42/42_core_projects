@@ -132,3 +132,59 @@ hi
 
 ### Conclusion:
 In summary, the order of thread execution is not strictly determined by the order of their creation. The operating system's thread scheduler plays a crucial role in deciding which thread runs at any given time, and factors like the tight loop in `print_name`, scheduling policies, and thread priorities can lead to the observed behavior where `print_name` outputs its results before the other threads. This is a common characteristic of multi-threaded programming and can lead to non-deterministic output.
+
+
+## need of joining?
+### code
+```c
+void	*display_id(void *i)
+{
+	int		nbr;
+
+	nbr = *(int *)i;
+	printf("thread no.[%d] is created\n", nbr);
+	sleep(3);
+	return (NULL);
+}
+
+t_philo		*init_philo(t_arg *arg)
+{
+	int				i;
+	int				n_philos;
+	t_philo			*philos;
+	t_philo			*current;
+
+	i = 1;
+	n_philos = arg->number_of_philosophers;
+	philos = malloc(n_philos * sizeof(t_philo));
+	if (!philos)
+		exit_on_error("Malloc failed");
+	current = philos;
+	while (current && i <= n_philos)
+	{
+		current->id = i;
+		pthread_create(&current->thread, NULL, display_id, &current->id);
+		if (i < n_philos)
+			current->next_philo = current + 1;
+		else
+			current->next_philo = philos;
+		current++;
+		i++;
+	}
+	return (philos);
+}
+
+int main()
+{
+	t_philo *p;
+
+	p = init_philo;
+}
+```
+- without joining, some result of the display function will be missing,
+it's because the caller(main) terminates without checking all the threads
+are terminated.
+
+### result
+thread no.[10] is created
+thread no.[7] is created

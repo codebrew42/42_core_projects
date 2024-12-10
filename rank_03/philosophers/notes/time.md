@@ -1,9 +1,5 @@
-
-
-
-
-## gettimeofday
-### things to know
+# gettimeofday
+## things to know
 - 1 sec = 1 000 000 microsec
 - 1 sec = 1 000 millisec
 

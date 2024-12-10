@@ -9,6 +9,9 @@ pthread_mutex_unlock
 ## visualizer
 https://nafuka11.github.io/philosophers-visualizer/
 
+## example code
+https://github.com/MarkosComK/42-Philosophers
+https://en.wikipedia.org/wiki/Dining_philosophers_problem
 
 ## to execute
 ```
@@ -63,7 +66,7 @@ make
 ## table
 - a bowl of spagetti
 - *forks*
-	- as many as phil. (be careful: 1 *phil*, 1 *fork*)
+	- as many as phil. (be careful: 1 *phil* also 1 *fork*)
 	- phil. takes their right and left forks
 	- To prevent *phil*s from duplicating forks, you should protect the forks state
 with a mutex for each of them.
@@ -128,3 +131,17 @@ timestamp_in_ms		phil_id		state
 		- avoid them waiting forever
 	- data races
 		- using proper synchronization
+
+
+## arguments
+### Number of Philosophers
+- Minimum: Not explicitly stated, but implied to be at least 1
+- Maximum: Should not exceed 200 philosophers1
+
+### Time Arguments (time_to_die, time_to_eat, time_to_sleep)
+- Minimum: Should not be lower than 60 ms1
+- Maximum: INT_MAX (2147483647)2
+
+### Additional Guidelines
+- All arguments must be positive integers2
+- The arguments should be between 0 and INT_MAX, representing time in milliseconds2
