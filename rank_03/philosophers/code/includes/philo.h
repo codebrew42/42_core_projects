@@ -12,10 +12,10 @@
 typedef	struct s_arg
 {
 	int					number_of_philosophers;
-	int					number_of_times_each_philosopher_must_eat;
 	int					time_to_die;	//time_to_*: in millisec
 	int					time_to_eat;
 	int					time_to_sleep;
+	int					number_of_times_each_philosopher_must_eat;
 }	t_arg;
 
 typedef	struct s_philo
@@ -25,6 +25,13 @@ typedef	struct s_philo
 	pthread_t			thread;
 	struct s_philo		*next_philo;
 }	t_philo;
+
+typedef struct s_table
+{
+	pthread_mutex_t		*forks;
+	t_philo				*philos;
+	t_arg				*args;
+}	t_table;
 
 //for [table/backup]
 // typedef struct s_forks
@@ -42,18 +49,13 @@ typedef	struct s_philo
 // 	t_arg				*args;
 // }	t_table;
 
-typedef struct s_table
-{
-	pthread_mutex_t		*forks;
-	t_philo				*philos;
-	t_arg				*args;
-}	t_table;
-
 //src/philo.c
 t_philo		*init_philo(t_arg *arg);
 
 //src/table.c
-
+void		cleanup_table(t_table *t);
+void		init_mutex(t_table *t, int n_forks, t_arg *a, t_philo *p);
+t_table		*init_table(t_arg *a, t_philo *p);
 
 
 //src/table.c [backup]

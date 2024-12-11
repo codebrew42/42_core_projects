@@ -27,27 +27,6 @@ void		validate_forks(t_forks *f, t_arg *a)
 }
 
 
-void		cleanup_table(t_table *t)
-{
-	int			i;
-	int			n_forks;
-	t_forks		*cur;
-
-	if (!t)
-		return ;
-	n_forks = t->args->number_of_philosophers;
-	i = 0;
-	while (i < n_forks && cur)
-	{
-		cur = t->forks->next_fork;
-		pthread_mutex_destroy(&t->forks->fork);
-		i++;
-	}
-	free(t->philos);
-	free(t->args);
-	free(t->forks);
-	free(t);
-}
 
 t_table		*init_table(t_arg *arg, t_philo *p)
 {

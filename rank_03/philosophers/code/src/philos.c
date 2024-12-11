@@ -20,7 +20,8 @@ t_philo		*init_philo(t_arg *arg)
 	t_philo			*current;
 
 	i = 1;
-	n_philos = arg->number_of_philosophers;
+	if (arg)
+		n_philos = arg->number_of_philosophers;
 	philos = malloc(n_philos * sizeof(t_philo));
 	if (!philos)
 		exit_on_error("Malloc failed");
