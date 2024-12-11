@@ -16,13 +16,20 @@ int	main(int ac, char **av)
 		exit_on_error("Malloc for arg in main failed");
 	get_args(arg, av);
 
-	//[2] init philo 
-	philos = init_philo(arg);
+	//[2] init table 
+	table = init_table(arg);
 
-	//[3] init table & check "a", "p"
-	table = init_table(arg, philos);
+	//[3] init and simulate dining 
+	start_dining_simulation(table);
 
-
+	//[5] debug
 	check_functions(arg, philos); //rm
+
+	// [5] join
+	join_threads(table);
+
+	//[6] terminate
 	cleanup_table(table);
+
+	display_status("is eating", 1);
 }

@@ -1,5 +1,21 @@
 #include "../includes/philo.h"
 
+void		join_threads(t_table *t)
+{
+	int				i;
+	int				n_philos;
+	t_philo			*current;
+
+	n_philos = t->args->number_of_philosophers;
+	i = 0;
+	current = t->philos;
+	while (i <= n_philos && current)
+	{
+		pthread_join(current->thread, NULL);
+		current = current->next_philo;
+	}
+}
+
 /**
  * @note char(48) = 0, char(57) = 9
  * @return -1, if invalid <=> 0-9, if converted

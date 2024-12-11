@@ -1,9 +1,5 @@
 #include "../includes/philo.h"
 
-int		is_space(char c)
-{
-	return (c == 32);
-}
 
 void	save_to_arg(t_arg arg, int flag, char *src, int src_len)
 {

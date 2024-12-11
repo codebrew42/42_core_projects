@@ -1,5 +1,32 @@
 #include "../includes/philo.h"
 
+t_philo		*init_philo(t_arg *arg)
+{
+	int				n_philos;
+	t_philo			*philos_head;
+	t_philo			*current;
+	int				i;
+
+	if (!arg)
+		exit_on_error("Arguments are not properly savd");
+	n_philos = arg->number_of_philosophers;
+	philos_head = malloc(n_philos * sizeof(t_philo));
+	if (!philos_head)
+		exit_on_error("Malloc failed");
+	current = philos_head;
+	while (current && i <= n_philos)
+	{
+		current->id = i;
+		current->last_meal_time = 0;
+		if (i < n_philos)
+			current->next_philo = current + 1;
+		else
+			current->next_philo = philos_head;
+		current++;
+		i++;
+	}
+	return (philos_head);
+}
 
 void		cleanup_table(t_table *t)
 {
@@ -14,16 +41,14 @@ void		cleanup_table(t_table *t)
 	//to fix
 	while (i < n_forks && current)
 	{
-		current = t->forks[i];
-		pthread_mutex_destroy(&t->forks->fork);
+		pthread_mutex_destroy(&t->forks[i]);
 		i++;
 	}
-	free(t->philos);
 	free(t->args);
 	free(t->forks);
 }
 
-void		init_mutex(t_table *t, int n_forks, t_arg *a, t_philo *p)
+void		init_mutex(t_table *t, int n_forks, t_arg *a)
 {
 	int		i;
 
@@ -36,14 +61,13 @@ void		init_mutex(t_table *t, int n_forks, t_arg *a, t_philo *p)
 				pthread_mutex_destroy(&t->forks[i]);
 			free(t->forks);
 			free(a);
-			free(p);
 			exit_on_error("Mutex initialization failed");
 		}
 		i++;
 	}
 }
 
-t_table		*init_table(t_arg *a, t_philo *p)
+t_table		*init_table(t_arg *a)
 {
 	int					n_forks;
 	int					i;
@@ -51,18 +75,14 @@ t_table		*init_table(t_arg *a, t_philo *p)
 
 	if (!a)
 		exit_on_error("Arguments not properly saved");
-	if (!p)
-		exit_on_error("Philos not properly saved");
 	n_forks = a->number_of_philosophers;
 	t->forks = malloc(n_forks * sizeof(pthread_mutex_t));
 	if (!t->forks)
 	{
 		free(a);
-		free(p);
 		exit_on_error("Malloc in table.c failed");
 	}
-	init_mutex(t, n_forks, a, p);
+	init_mutex(t, n_forks, a);
 	t->args = a;
-	t->philos = p;
 	return (t);
 }

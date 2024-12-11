@@ -33,7 +33,6 @@
 
 ## what I did
 - parsing, init philo, init table(ing, almost finished)
-
 - parsing.c [ok]
 - philos.c [ok]
 - table.c [ing] 
@@ -76,3 +75,19 @@ void *philosopher(void *arg)
 }
 
 ```
+
+# 241211
+
+## what I did
+- init and cleanup table[ok]
+
+## to do
+- learn how to write (c42_new, c42_update)
+- simulate dining
+- try visualizing
+- write makefile
+
+## to learn. think about 
+- how to display status? with usleep
+- is it necessary to have s_table to store or the pointers?
+- Makefile

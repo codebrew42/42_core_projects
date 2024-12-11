@@ -33,53 +33,34 @@ typedef struct s_table
 	t_arg				*args;
 }	t_table;
 
-//for [table/backup]
-// typedef struct s_forks
-// {
-// 	pthread_mutex_t		fork;
-// 	int					id;
-// 	int					in_use;
-// 	struct s_forks		*next_fork;
-// }	t_forks;
+//philo.c
 
-// typedef struct s_table
-// {
-// 	t_forks				*forks;
-// 	t_philo				*philos;
-// 	t_arg				*args;
-// }	t_table;
-
-//src/philo.c
+//table.c
 t_philo		*init_philo(t_arg *arg);
-
-//src/table.c
 void		cleanup_table(t_table *t);
-void		init_mutex(t_table *t, int n_forks, t_arg *a, t_philo *p);
-t_table		*init_table(t_arg *a, t_philo *p);
+void		init_mutex(t_table *t, int n_forks, t_arg *a);
+t_table		*init_table(t_arg *a);
 
+//parsing.c
+void		save_to_arg(t_arg arg, int flag, char *src, int src_len);
+int			get_args(t_arg	*arg, char **s);
+int			validate_args(int *arr);
 
-//src/table.c [backup]
-// void		cleanup_table(t_table *t);
-// t_table		*init_table(t_arg *arg, t_philo *p);
-// void		validate_forks(t_forks *f, t_arg *a);
+//display.c
+void		display_status(char *s, int philo_id, int time);
+void		exit_on_error(char *s);
+void		display_warning(char *s);
 
-//src/parsing.c
-int		char_to_int(char c);
-int		is_space(char c);
-void	save_to_arg(t_arg arg, int flag, char *src, int src_len);
-int		get_args(t_arg	*arg, char **s);
-int		validate_args(int *arr);
+//utils.c
+void		join_threads(t_table *t);
+int			char_to_int(char c);
+int			ft_strlen(char *s);
+int			ft_simple_atoi(char *s);
 
-//src/error.c
-void	exit_on_error(char *s);
-void	display_warning(char *s);
-int		ft_strlen(char *s);
-int		ft_simple_atoi(char *s);
-
-//src/debuc.c  //rm
-void	*display_id(void *i); //maybe no need to rm!
-void	print_arg(t_arg *arg);
-void	print_arr(int *arr);
-void	check_functions(t_arg *arg, t_philo *p);
+//debuc.c  //rm
+void		*display_id(void *i); //maybe no need to rm!
+void		print_arg(t_arg *arg);
+void		print_arr(int *arr);
+void		check_functions(t_arg *arg, t_philo *p);
 
 #endif
