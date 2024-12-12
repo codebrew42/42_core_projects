@@ -26,10 +26,10 @@ int	main(int ac, char **av)
 	check_functions(arg, philos); //rm
 
 	// [5] join
-	join_threads(table);
+	//join_threads(table);
 
 	//[6] terminate
 	cleanup_table(table);
 
-	display_status("is eating", 1, 500);
+	display_status("is eating", 1, get_current_time(table));
 }

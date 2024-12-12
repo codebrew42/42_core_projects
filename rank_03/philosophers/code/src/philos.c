@@ -12,22 +12,70 @@
 
 #include "../includes/philo.h"
 
+int			simulation_should_continue(t_table *t)
+{
+	int					i;
+	struct timeval		tv;
+	t_philo				*p;
 
+	i = 1;
+	p = t->philos;
+	while (i <= t->args->number_of_philosophers && p)
+	{
+		get_current_time(t);
+		if (tv.tv_sec - p->last_meal_time >= t->args->time_to_die)
+		{
+			display_status("died", p->id, get_current_time(t));
+			cleanup_table(t);
+			exit_on_error(NULL);
+		}
+		p = p->next_philo;
+	}
+	return (1);
+}
 
-// int			simulation_should_continue(t_philo *p)
-// {
-// 	return (1);
-// }
+int			take_forks(t_philo *p, t_table *t)
+{
+	int			id;
+	int			n_philos;
+	
+	id = p->id;
+	n_philos = t->args->number_of_philosophers;
+	if (id != n_philos)
+	{
+		pthread_mutex_lock(&t->forks[LEFT(id, n_philos)]);
+		display_status("has taken a fork", p->id, get_current_time(t)); //what to put? 10?
+		pthread_mutex_lock(&t->forks[RIGHT(id, n_philos)]);
+		display_status("has taken a fork", p->id, get_current_time(t)); //what to put? 10?
+	}
+	else
+	{
+		pthread_mutex_lock(&t->forks[RIGHT(id, n_philos)]);
+		display_status("has taken a fork", p->id, get_current_time(t)); //what to put? 10?
+		pthread_mutex_lock(&t->forks[LEFT(id, n_philos)]);
+		display_status("has taken a fork", p->id, get_current_time(t)); //what to put? 10?
+	}
+	return (1);
+}
 
-// int		take_forks(t_philo *p, t_table *t)
-// {
-// 	return (0);
-// }
-
-// void		put_down_forks(t_philo *p, t_table *t)
-// {
-// 	return ;
-// }
+void		put_down_forks(t_philo *p, t_table *t)
+{
+	int			id;
+	int			n_philos;
+	
+	id = p->id;
+	n_philos = t->args->number_of_philosophers;
+	if (id != n_philos)
+	{
+		pthread_mutex_unlock(&t->forks[LEFT(id, n_philos)]);
+		pthread_mutex_unlock(&t->forks[RIGHT(id, n_philos)]);
+	}
+	else
+	{
+		pthread_mutex_unlock(&t->forks[RIGHT(id, n_philos)]);
+		pthread_mutex_unlock(&t->forks[LEFT(id, n_philos)]);
+	}
+}
 /**
 void	simulate_philo(t_philo *philo) 
 	while (!simulation_should_stop())  //condition (!)
@@ -37,23 +85,26 @@ void	simulate_philo(t_philo *philo)
 			put_down_forks(philo);
 			sleep_philo(philo);
 }*/
-void		simulate_philo(t_philo *p, t_table *t) //or just arg instead of t_table
+void		*simulate_philo(t_philo *p, t_table *t) //or just arg instead of t_table
 {
-	while (simulation_should_continue(p))
+	int		id;
+
+	id = p->id;
+
+	while (simulation_should_continue(t))
 	{
-		display_status("is thinking", p->id, 100); //change 100
+		display_status("is thinking", id, get_current_time(t)); //change 500
+		if (take_forks(p, t))
+		{
+			display_status("is eating", id, get_current_time(t));
+			usleep(t->args->time_to_eat);
+			put_down_forks(p, t);
+			display_status("is sleeping", id, get_current_time(t));
+			usleep(t->args->time_to_sleep);
+		}
 	}
-	if (take_forks(p, t))
-	{
-		display_status("is eating", p->id, t->args->time_to_eat); //change 100
-		put_down_forks(p, t);
-		display_status("is sleeping", p->id, t->args->time_to_sleep); //change 100
-	}.
-
-	then -> check_all_ate & check_any_death
-
+	return (NULL);
 }
-
 
 void		start_dining_simulation(t_table *t)
 {
@@ -72,8 +123,9 @@ void		start_dining_simulation(t_table *t)
 	n_forks = t->args->number_of_philosophers;
 	while (i <= n_forks)
 	{
-		pthread_create(&current->thread, NULL, simulate_philo, &current);
+		pthread_create(&current->thread, NULL, &simulate_philo, &current); // only one param
 		current = current->next_philo;
 		i++;
 	}
+	join_threads(t);
 }

@@ -18,6 +18,7 @@ t_philo		*init_philo(t_arg *arg)
 	{
 		current->id = i;
 		current->last_meal_time = 0;
+		current->has_died = 0;
 		if (i < n_philos)
 			current->next_philo = current + 1;
 		else
