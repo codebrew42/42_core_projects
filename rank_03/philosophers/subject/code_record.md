@@ -91,3 +91,14 @@ void *philosopher(void *arg)
 - how to display status? with usleep
 - is it necessary to have s_table to store or the pointers?
 - Makefile
+
+
+# 241212
+
+## what I did
+- changed .h (struct) -> adjust other .c files [ing]
+why? since only one param is allowed in the pthread_create
+
+## things to remember
+- when you use a new func like "pthread_create", u need to check
+param in advance, so that you don't need to adjust/change .h or structure!

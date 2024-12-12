@@ -11,16 +11,14 @@
 
 #define LEFT(id, n) (id)
 #define RIGHT(id, n) ((id + 1) % n)
-typedef	struct s_data
+typedef	struct s_arg
 {
 	int					number_of_philosophers;
 	int					time_to_die;	//time_to_*: in millisec
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					number_of_times_each_philosopher_must_eat;
-	pthread_mutex_t		*forks;
-	t_philo				*philos;
-}	t_data;
+}	t_arg;
 
 typedef	struct s_philo
 {
@@ -32,6 +30,14 @@ typedef	struct s_philo
 	struct s_philo		*next_philo;
 }	t_philo;
 
+typedef struct s_table
+{
+	pthread_mutex_t		*forks;
+	t_philo				*philos;
+	t_arg				*args;
+}	t_table;
+
+//philo.c
 
 //table.c
 t_philo			*init_philo(t_arg *arg);

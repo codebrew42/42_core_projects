@@ -36,8 +36,11 @@
 
 int			simulation_should_continue(t_philo *p)
 {
+	int					i;
 	long long			current_time;
+	t_philo				*p;
 
+	i = 1;
 	if (!p)
 		return (0);
 	current_time = get_current_time();
@@ -49,39 +52,46 @@ int			simulation_should_continue(t_philo *p)
 	return (1);
 }
 
-int take_forks(t_philo *p, t_data *d)
+int			take_forks(t_philo *p, t_table *t)
 {
-    int id = p->id;
-    int n_philos = d->number_of_philosophers;
-
-    if (id != n_philos)
-    {
-        pthread_mutex_lock(&data->forks[LEFT(id, n_philos)]);
-        display_status("has taken a fork", p->id, get_current_time());
-        pthread_mutex_lock(&data->forks[RIGHT(id, n_philos)]);
-        display_status("has taken a fork", p->id, get_current_time());
-    }
-    else
-    {
-        pthread_mutex_lock(&data->forks[RIGHT(id, n_philos)]);
-        display_status("has taken a fork", p->id, get_current_time());
-        pthread_mutex_lock(&data->forks[LEFT(id, n_philos)]);
-        display_status("has taken a fork", p->id, get_current_time());
-    }
-    return (1);
-}
-
-void		put_down_forks(t_philo *p, int id, int n_philos)
-{	
+	int			id;
+	int			n_philos;
+	
+	id = p->id;
+	n_philos = t->args->number_of_philosophers;
 	if (id != n_philos)
 	{
-		pthread_mutex_unlock(&d->forks[LEFT(id, n_philos)]);
-		pthread_mutex_unlock(&d->forks[RIGHT(id, n_philos)]);
+		pthread_mutex_lock(&t->forks[LEFT(id, n_philos)]);
+		display_status("has taken a fork", p->id, get_current_time());
+		pthread_mutex_lock(&t->forks[RIGHT(id, n_philos)]);
+		display_status("has taken a fork", p->id, get_current_time());
 	}
 	else
 	{
-		pthread_mutex_unlock(&d->forks[RIGHT(id, n_philos)]);
-		pthread_mutex_unlock(&d->forks[LEFT(id, n_philos)]);
+		pthread_mutex_lock(&t->forks[RIGHT(id, n_philos)]);
+		display_status("has taken a fork", p->id, get_current_time());
+		pthread_mutex_lock(&t->forks[LEFT(id, n_philos)]);
+		display_status("has taken a fork", p->id, get_current_time());
+	}
+	return (1);
+}
+
+void		put_down_forks(t_philo *p, t_table *t)
+{
+	int			id;
+	int			n_philos;
+	
+	id = p->id;
+	n_philos = t->args->number_of_philosophers;
+	if (id != n_philos)
+	{
+		pthread_mutex_unlock(&t->forks[LEFT(id, n_philos)]);
+		pthread_mutex_unlock(&t->forks[RIGHT(id, n_philos)]);
+	}
+	else
+	{
+		pthread_mutex_unlock(&t->forks[RIGHT(id, n_philos)]);
+		pthread_mutex_unlock(&t->forks[LEFT(id, n_philos)]);
 	}
 }
 /**
@@ -98,10 +108,11 @@ void		*simulate_philo(t_philo *p) //or just arg instead of t_table
 	int		id;
 
 	id = p->id;
+
 	while (simulation_should_continue(p))
 	{
 		display_status("is thinking", id, get_current_time()); //change 500
-		if (take_forks(p, id, n_philos))
+		if (take_forks(p, t))
 		{
 			display_status("is eating", id, get_current_time());
 			usleep(t->args->time_to_eat);
@@ -113,7 +124,7 @@ void		*simulate_philo(t_philo *p) //or just arg instead of t_table
 	return (NULL);
 }
 
-void		start_dining_simulation(t_data *d)
+void		start_dining_simulation(t_table *t)
 {
 	t_philo			*p;
 	t_philo			*current;
@@ -121,12 +132,13 @@ void		start_dining_simulation(t_data *d)
 	int				n_forks;
 
 	//[3] init philo & check "a", "p"
-	p = init_philo(d);
+	p = init_philo(t->args);
 	if (!p)
 		exit_on_error("Malloc in philos.c failed");
+	t->philos = p;
 	i = 1;
-	current = d->philos;
-	n_forks = d->number_of_philosophers;
+	current = p;
+	n_forks = t->args->number_of_philosophers;
 	while (i <= n_forks)
 	{
 		pthread_create(&current->thread, NULL, &simulate_philo, &current); // only one param

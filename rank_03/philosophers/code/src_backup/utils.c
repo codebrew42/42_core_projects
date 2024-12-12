@@ -1,14 +1,14 @@
 #include "../includes/philo.h"
 
-void		join_threads(t_data *d)
+void		join_threads(t_table *t)
 {
 	int				i;
 	int				n_philos;
 	t_philo			*current;
 
-	n_philos = d->number_of_philosophers;
+	n_philos = t->args->number_of_philosophers;
 	i = 0;
-	current = d->philos;
+	current = t->philos;
 	while (i <= n_philos && current)
 	{
 		pthread_join(current->thread, NULL);
