@@ -14,20 +14,20 @@
 
 
 
-int			simulation_should_continue(t_philo *p)
-{
-	return (1);
-}
+// int			simulation_should_continue(t_philo *p)
+// {
+// 	return (1);
+// }
 
-int		take_forks(t_philo *p, t_table *t)
-{
-	return (0);
-}
+// int		take_forks(t_philo *p, t_table *t)
+// {
+// 	return (0);
+// }
 
-void		put_down_forks(t_philo *p, t_table *t)
-{
-	return ;
-}
+// void		put_down_forks(t_philo *p, t_table *t)
+// {
+// 	return ;
+// }
 /**
 void	simulate_philo(t_philo *philo) 
 	while (!simulation_should_stop())  //condition (!)
@@ -48,9 +48,9 @@ void		simulate_philo(t_philo *p, t_table *t) //or just arg instead of t_table
 		display_status("is eating", p->id, t->args->time_to_eat); //change 100
 		put_down_forks(p, t);
 		display_status("is sleeping", p->id, t->args->time_to_sleep); //change 100
-	}
+	}.
 
-	//then -> check_all_ate & check_any_death
+	then -> check_all_ate & check_any_death
 
 }
 
@@ -70,7 +70,7 @@ void		start_dining_simulation(t_table *t)
 	i = 1;
 	current = p;
 	n_forks = t->args->number_of_philosophers;
-	while (i < n_forks)
+	while (i <= n_forks)
 	{
 		pthread_create(&current->thread, NULL, simulate_philo, &current);
 		current = current->next_philo;

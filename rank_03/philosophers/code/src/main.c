@@ -4,7 +4,7 @@
 int	main(int ac, char **av)
 {
 	t_arg		*arg;
-	t_philo		*philos;
+	t_philo		*philos = NULL;
 	t_table		*table;
 
 	if (ac != 5)
@@ -20,7 +20,7 @@ int	main(int ac, char **av)
 	table = init_table(arg);
 
 	//[3] init and simulate dining 
-	start_dining_simulation(table);
+	// start_dining_simulation(table);
 
 	//[5] debug
 	check_functions(arg, philos); //rm
@@ -31,5 +31,5 @@ int	main(int ac, char **av)
 	//[6] terminate
 	cleanup_table(table);
 
-	display_status("is eating", 1);
+	display_status("is eating", 1, 500);
 }
