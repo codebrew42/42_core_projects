@@ -102,3 +102,15 @@ why? since only one param is allowed in the pthread_create
 ## things to remember
 - when you use a new func like "pthread_create", u need to check
 param in advance, so that you don't need to adjust/change .h or structure!
+
+
+## 241216
+
+## what I did
+- try to understnad mutex, thread and their role
+
+## to do
+- to write .c files again considering mutex lock and unlock
+
+## ref
+https://github.com/dpetrosy/42-Philosophers/tree/master

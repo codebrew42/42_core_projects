@@ -10,7 +10,7 @@ void	*display_id(void *i)
 	return (NULL);
 }
 
-void	print_arg(t_arg *arg)
+void	print_arg(t_data *arg)
 {
 	printf("arg[1] nbr_of_phi: %d\n", arg->number_of_philosophers);
 	//printf("number_of_times_each...: %zu\n", arg.number_of_times_each_philosopher_must_eat);
@@ -30,7 +30,7 @@ void	print_arr(int *arr)
 	}
 }
 
-void	check_functions(t_arg *arg, t_philo *p)
+void	check_functions(t_data *arg, t_philo *p)
 {
 	int		i;
 	t_philo	*tmp;

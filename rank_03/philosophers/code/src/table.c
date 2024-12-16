@@ -1,32 +1,31 @@
 #include "../includes/philo.h"
 
-t_philo		*init_philo(t_data *d)
+//check
+void		init_philo(t_philo **philos_head, t_data *d, int n_philos)
 {
-	int				n_philos;
-	t_philo			*philos_head;
 	t_philo			*current;
 	int				i;
 
-	n_philos = d->number_of_philosophers;
-	philos_head = malloc(n_philos * sizeof(t_philo));
+	*philos_head = malloc(n_philos * sizeof(t_philo));
 	if (!philos_head)
 		exit_on_error("Malloc failed");
-	d->philos = philos_head;
-	current = philos_head;
+	d->philos = *philos_head;
+	current = *philos_head;
+	i = 1;
 	while (current && i <= n_philos)
 	{
+		current->data = d;
 		current->id = i;
 		current->last_meal_time = 0;
 		current->has_died = 0;
-		current->time_to_die = d->time_to_die;
+		current->death_timestamp = d->time_to_die;
 		if (i < n_philos)
 			current->next_philo = current + 1;
 		else
-			current->next_philo = philos_head;
+			current->next_philo = NULL;
 		current++;
 		i++;
 	}
-	return (philos_head);
 }
 
 void		cleanup_table(t_data *d)
@@ -72,10 +71,10 @@ void		init_table(t_data *d)
 	int					n_forks;
 	int					i;
 
-    d->philos = init_philo(d);
-    d->forks = malloc(sizeof(pthread_mutex_t) * d->number_of_philosophers);
-    if (!d->forks)
-        exit_on_error("Malloc for forks failed");
+	d->philos = init_philo(d, d->number_of_philosophers);
+	d->forks = malloc(sizeof(pthread_mutex_t) * d->number_of_philosophers);
+	if (!d->forks)
+		exit_on_error("Malloc for forks failed");
 	i = 0;
 	while (i < d->number_of_philosophers)
 	{

@@ -123,3 +123,12 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
+int main()
+{
+	while (1)
+	{
+		get_next_line(fd)
+	}
+
+}
+

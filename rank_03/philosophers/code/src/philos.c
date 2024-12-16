@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jiepark <jiepark@student.42berlin.de>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 18:56:43 by jiepark           #+#    #+#             */
-/*   Updated: 2024/12/10 18:56:44 by jiepark          ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   init.c											 :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: jiepark <jiepark@student.42berlin.de>	  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2024/12/10 18:56:43 by jiepark		   #+#	#+#			 */
+/*   Updated: 2024/12/10 18:56:44 by jiepark		  ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
@@ -41,7 +41,7 @@ int			simulation_should_continue(t_philo *p)
 	if (!p)
 		return (0);
 	current_time = get_current_time();
-	if (current_time - p->last_meal_time >= p->time_to_die)
+	if (current_time - (long long)p->last_meal_time >= (long long)p->time_to_die)
 	{
 		display_status("died", p->id, get_current_time());
 		return (0);
@@ -51,24 +51,28 @@ int			simulation_should_continue(t_philo *p)
 
 int take_forks(t_philo *p, t_data *d)
 {
-    int id = p->id;
-    int n_philos = d->number_of_philosophers;
+	int id;
+	int n_philos;
+	t_data	*t;
 
-    if (id != n_philos)
-    {
-        pthread_mutex_lock(&data->forks[LEFT(id, n_philos)]);
-        display_status("has taken a fork", p->id, get_current_time());
-        pthread_mutex_lock(&data->forks[RIGHT(id, n_philos)]);
-        display_status("has taken a fork", p->id, get_current_time());
-    }
-    else
-    {
-        pthread_mutex_lock(&data->forks[RIGHT(id, n_philos)]);
-        display_status("has taken a fork", p->id, get_current_time());
-        pthread_mutex_lock(&data->forks[LEFT(id, n_philos)]);
-        display_status("has taken a fork", p->id, get_current_time());
-    }
-    return (1);
+	id = p->id;
+	n_philos = p->data->number_of_philosophers
+	d = p->data;
+	if (id != n_philos)
+	{
+		pthread_mutex_lock(&d->forks[LEFT(id, n_philos)]);
+		display_status("has taken a fork", p->id, get_current_time());
+		pthread_mutex_lock(&d->forks[RIGHT(id, n_philos)]);
+		display_status("has taken a fork", p->id, get_current_time());
+	}
+	else
+	{
+		pthread_mutex_lock(&d->forks[RIGHT(id, n_philos)]);
+		display_status("has taken a fork", p->id, get_current_time());
+		pthread_mutex_lock(&d->forks[LEFT(id, n_philos)]);
+		display_status("has taken a fork", p->id, get_current_time());
+	}
+	return (1);
 }
 
 void		put_down_forks(t_philo *p, int id, int n_philos)
@@ -93,19 +97,23 @@ void	simulate_philo(t_philo *philo)
 			put_down_forks(philo);
 			sleep_philo(philo);
 }*/
-void		*simulate_philo(t_philo *p) //or just arg instead of t_table
+void		*simulate_philo(void *arg) //or just arg instead of t_table
 {
-	int		id;
+	int			id;
+	int			n_philos;
+	t_philo		*p;
 
+	p = (t_philo *)arg;
 	id = p->id;
+	n_philos = p->data->number_of_philosophers;
 	while (simulation_should_continue(p))
 	{
 		display_status("is thinking", id, get_current_time()); //change 500
-		if (take_forks(p, id, n_philos))
+		if (take_forks(p, id))
 		{
 			display_status("is eating", id, get_current_time());
 			usleep(t->args->time_to_eat);
-			put_down_forks(p, t);
+			put_down_forks(p, id);
 			display_status("is sleeping", id, get_current_time());
 			usleep(t->args->time_to_sleep);
 		}
@@ -133,5 +141,5 @@ void		start_dining_simulation(t_data *d)
 		current = current->next_philo;
 		i++;
 	}
-	join_threads(t);
+	join_threads(d);
 }

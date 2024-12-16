@@ -33,19 +33,19 @@ int	validate_args(int	*arr)
  */
 int get_args(t_data *data, char **s)
 {
-    int flag;
-    int arr[4];
+	int flag;
+	int arr[4];
 
-    flag = 1;
-    while (flag <= 4)
-    {
-        arr[flag - 1] = ft_simple_atoi(s[flag]);
-        flag++;
-    }
-    validate_args(arr);
-    data->number_of_philosophers = arr[0];
-    data->time_to_die = arr[1];
-    data->time_to_eat = arr[2];
-    data->time_to_sleep = arr[3];
-    return (0);
+	flag = 1;
+	while (flag <= 4)
+	{
+		arr[flag - 1] = ft_simple_atoi(s[flag]);
+		flag++;
+	}
+	validate_args(arr);
+	data->number_of_philosophers = arr[0];
+	data->time_to_die = arr[1];
+	data->time_to_eat = arr[2];
+	data->time_to_sleep = arr[3];
+	return (0);
 }

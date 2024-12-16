@@ -1,13 +1,15 @@
 #include "../includes/philo.h"
 
-long long		get_current_time(void)
+uint64_t get_time(void)
 {
-	struct timeval		tv;
-	long long			res;
+	struct timeval tv;
 
-	gettimeofday(&tv, NULL);
-	res = tv.tv_sec * 1000LL + tv.tv_usec * 1000;
-	return (res);
+	if (gettimeofday(&tv, NULL))
+	{
+		exit_on_error("gettimeofday() failed");
+		return (0);
+	}
+	return ((tv.tv_sec * (u_int64_t)1000) + (tv.tv_usec / 1000));
 }
 
 void			display_status(char *status, int philo_id, long long timestamp)
