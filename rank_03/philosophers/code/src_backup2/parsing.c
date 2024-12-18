@@ -1,13 +1,11 @@
 #include "../includes/philo.h"
 
-
 /**
  * @return 1 on error and invalid arg, 0 on success
  */
 int	validate_args(int	*arr)
 {
 	int		i;
-	int		len;
 
 	if (!arr)
 		return (1);
@@ -43,9 +41,9 @@ int get_args(t_data *data, char **s)
 		flag++;
 	}
 	validate_args(arr);
-	data->number_of_philosophers = arr[0];
-	data->time_to_die = arr[1];
-	data->time_to_eat = arr[2];
-	data->time_to_sleep = arr[3];
+	data->number_of_philosophers = (size_t)arr[0];
+	data->time_to_die = (size_t)arr[1];
+	data->time_to_eat = (size_t)arr[2];
+	data->time_to_sleep = (size_t)arr[3];
 	return (0);
 }

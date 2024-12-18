@@ -114,3 +114,9 @@ param in advance, so that you don't need to adjust/change .h or structure!
 
 ## ref
 https://github.com/dpetrosy/42-Philosophers/tree/master
+
+# 241218
+## ref
+https://raidho.tistory.com/141
+
+https://jiwon.oopy.io/2c8294ad-8bd9-4ad6-a2e0-ab62e79801fd\
