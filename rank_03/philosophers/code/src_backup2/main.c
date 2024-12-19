@@ -14,7 +14,7 @@ int main(int ac, char **av)
 		exit_on_error("Malloc for data in main failed");
 	get_args(data, av);
 
-	//[2] init philosophers and mutexes
+	//[2]                             init philosophers and mutexes
 	//init_table(data);
 
     //[3] init and simulate dining 

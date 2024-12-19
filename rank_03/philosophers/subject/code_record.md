@@ -120,3 +120,11 @@ https://github.com/dpetrosy/42-Philosophers/tree/master
 https://raidho.tistory.com/141
 
 https://jiwon.oopy.io/2c8294ad-8bd9-4ad6-a2e0-ab62e79801fd\
+
+
+# 241219
+## what I did
+- rewriting again
+
+## to do
+- to print result on the terminal
