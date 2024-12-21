@@ -1,5 +1,11 @@
 #include "../includes/philo.h"
 
+int			ft_strlen(char *s);
+uint64_t	str_to_uint64(char *s);
+void		init_philo_elements(t_data **d, int n_philos);
+void		allocate_memory(t_data **d, int n_philos);
+void		clean_data(t_data **d);
+void		init_data(char **s, t_data **d);
 
 int		ft_strlen(char *s)
 {
@@ -7,9 +13,7 @@ int		ft_strlen(char *s)
 
 	len = 0;
 	while (s[len])
-	{
 		len++;
-	}
 	return (len);
 }
 
@@ -37,52 +41,71 @@ uint64_t		str_to_uint64(char *s)
 	return ((uint64_t)res);
 }
 
-int		init_philo_and_pthread(t_data **d, int n_philos)
+//to avoid memleak, use "(*d)->philos[i].*"
+void init_philo_elements(t_data **d, int n_philos)
 {
-	int	i;
+    int         i;
+    t_philo     *p;
+    t_philo     *first;
 
-	pthread_mutex_init(&(*d)->death_lock, NULL);
-	(*d)->forks = malloc(sizeof(pthread_mutex_t) * n_philos);
-	(*d)->philos = malloc(sizeof(pthread_mutex_t) * n_philos);
-	(*d)->routine_thread = malloc(sizeof(pthread_t) * n_philos);
-		(*d)->philos = malloc(sizeof(t_philo) * n_philos);
-
-	if (!(*d)->forks || !(*d)->philos || !(*d)->routine_thread || !(*d)->philos)
-		exit_on_error("Malloc failed.", 0);
-	i = 0;
-	while (i < n_philos)
-	{
-		pthread_mutex_init(&(*d)->forks[i], NULL);
-		pthread_mutex_init(&(*d)->philos[i], NULL);
-		i++;
-	}
-	if (!(*d)->philos)
-		exit_on_error("Malloc failed.", 0);
-
-
-	return (0);
-
+    i = 0;
+    p = (*d)->philos;
+    first = p;  // Save the first philosopher
+    
+    while (i < n_philos)
+    {
+        pthread_mutex_init(&(*d)->forks[i], NULL);
+        p[i].id = i;
+        p[i].has_died = 0;
+        p[i].meal_count = 0;
+        p[i].last_meal_time = 0;
+        p[i].death_timestamp = 0;
+        // Link to next philosopher (circular)
+        p[i].next_philo = (i + 1 < n_philos) ? &p[i + 1] : &p[0];
+        i++;
+    }
 }
 
-int		init_data(char **s, t_data **d)
+void		allocate_memory(t_data **d, int n_philos)
+{
+	(*d)->forks = malloc(sizeof(pthread_mutex_t) * n_philos);
+	(*d)->philos = malloc(sizeof(t_philo) * n_philos);
+	(*d)->routine_thread = malloc(sizeof(pthread_t) * n_philos);
+	if (!(*d)->forks || !(*d)->philos || !(*d)->routine_thread)
+	{
+		clean_data(d);
+		exit_on_error("Malloc failed.", 1);
+	}
+}
+
+void		clean_data(t_data **d)
+{
+	if (!d || !*d)
+		return ;
+	free((*d)->forks);
+	free((*d)->philos);
+	free((*d)->routine_thread);
+	free(*d);
+	*d = NULL;
+}
+
+void		init_data(char **s, t_data **d)
 {
 	int			n_philos;
 
 	*d = malloc(sizeof(t_data));
 	if (!*d)
-		exit_on_error("Malloc failed.");
+		exit_on_error("Malloc failed.", 1);
 	(*d)->number_of_philosophers = (size_t)str_to_uint64(s[0]);
 	n_philos = (*d)->number_of_philosophers;
+	if (n_philos > 200)
+		display_warning_message("Number of philosophers is greater than 200");
 	(*d)->time_to_die = str_to_uint64(s[1]);
 	(*d)->time_to_eat = str_to_uint64(s[2]);
 	(*d)->time_to_sleep = str_to_uint64(s[3]);
 	(*d)->number_of_times_each_philosopher_must_eat = str_to_uint64(s[4]);
 	(*d)->every_philo_has_eaten = 0;
 	(*d)->any_philo_dead = 0;
-	if (init_philo_and_pthread(d, n_philos))
-	{
-		free_data(d);
-		exit(1);
-	}
-	return (0);
+	allocate_memory(d, n_philos);
+	init_philo_elements(d, n_philos);
 }

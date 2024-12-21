@@ -23,7 +23,7 @@ typedef struct s_data
 	int						any_philo_dead;
 	pthread_mutex_t			death_lock;
 	pthread_mutex_t			*forks;
-	struct s_philo			*philos;
+	struct s_philo			*philos; 
 	pthread_t				*routine_thread;
 }	t_data;
 
@@ -32,7 +32,7 @@ typedef struct s_philo
 	int					id;
 	int					has_died;
 	int					meal_count;
-	int					is_eating;
+	//int					is_eating;
 	uint64_t			last_meal_time;
 	uint64_t			death_timestamp;
 	pthread_t			sub_routine_thread;
@@ -40,11 +40,14 @@ typedef struct s_philo
 }	t_philo;
 
 
-//	init
-/**
- * 1. init data
- * 2. init philo
- */
+//	init.c
+void		init_data(char **s, t_data **d);
+void		init_philo_elements(t_data **d, int n_philos);
+void		allocate_memory(t_data **d, int n_philos);
+void		clean_data(t_data **d);
 
+//	main.c
+void		display_warning_message(char *s);
+int			exit_on_error(char *s, int exit_flag);
 
 #endif

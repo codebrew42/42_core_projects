@@ -1,12 +1,10 @@
 #include "../includes/philo.h"
+void	display_warning_message(char *s);
+int		exit_on_error(char *s, int exit_flag);
 
-
-void	free_data(t_data *d)
+void	display_warning_message(char *s)
 {
-	if (!d)
-		return ;
-	
-
+	printf("Warning: %s\n", s);
 }
 
 int		exit_on_error(char *s, int exit_flag)
@@ -16,18 +14,15 @@ int		exit_on_error(char *s, int exit_flag)
 		exit(1);
 	return (1);
 }
-
 int		main(int ac, char **av)
 {
 	t_data		*d;
 
-	if (ac != 5)
-		return (exit_on_error("Number of arguments should be 5"));
+	if (ac != 6)
+		return (exit_on_error("Number of arguments should be 5", 1));
 
 	//init var
-	if (init_data(av[1], &d))
-		return (free_data(d));
-
+	init_data(&av[1], &d);
 
 	//launch thread
 
