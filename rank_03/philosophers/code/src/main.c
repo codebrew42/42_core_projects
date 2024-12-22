@@ -25,7 +25,7 @@ int		main(int ac, char **av)
 	init_data(&av[1], &d);
 
 	//launch thread
-
+	launch_threads(d);
 
 	//free and destroy
 

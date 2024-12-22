@@ -21,7 +21,8 @@ typedef struct s_data
 	size_t					number_of_times_each_philosopher_must_eat;
 	int						every_philo_has_eaten;
 	int						any_philo_dead;
-	pthread_mutex_t			death_lock;
+	pthread_mutex_t			death_lock;		//protects access to any_philo_dead
+	pthread_mutex_t			print_lock;		//protects access to printf in philo_routine
 	pthread_mutex_t			*forks;
 	struct s_philo			*philos; 
 	pthread_t				*routine_thread;
@@ -35,16 +36,19 @@ typedef struct s_philo
 	//int					is_eating;
 	uint64_t			last_meal_time;
 	uint64_t			death_timestamp;
-	pthread_t			sub_routine_thread;
-	struct s_philo		*next_philo;
+	pthread_mutex_t		meal_lock; //protects access to meal_count&last_meal_time
+	pthread_t			monitor_thread;
 }	t_philo;
 
 
 //	init.c
-void		init_data(char **s, t_data **d);
-void		init_philo_elements(t_data **d, int n_philos);
+int			ft_strlen(char *s);
+uint64_t	str_to_uint64(char *s);
+void		init_elements(t_data **d, int n_philos);
 void		allocate_memory(t_data **d, int n_philos);
 void		clean_data(t_data **d);
+void		init_data(char **s, t_data **d);
+
 
 //	main.c
 void		display_warning_message(char *s);

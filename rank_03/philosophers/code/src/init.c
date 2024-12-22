@@ -2,7 +2,7 @@
 
 int			ft_strlen(char *s);
 uint64_t	str_to_uint64(char *s);
-void		init_philo_elements(t_data **d, int n_philos);
+void		init_elements(t_data **d, int n_philos);
 void		allocate_memory(t_data **d, int n_philos);
 void		clean_data(t_data **d);
 void		init_data(char **s, t_data **d);
@@ -11,6 +11,8 @@ int		ft_strlen(char *s)
 {
 	int	len;
 
+	if (!s)
+		return (0);
 	len = 0;
 	while (s[len])
 		len++;
@@ -42,28 +44,26 @@ uint64_t		str_to_uint64(char *s)
 }
 
 //to avoid memleak, use "(*d)->philos[i].*"
-void init_philo_elements(t_data **d, int n_philos)
+void init_elements(t_data **d, int n_philos)
 {
-    int         i;
-    t_philo     *p;
-    t_philo     *first;
+	int		 i;
+	t_philo	 *p;
+	t_philo	 *first;
 
-    i = 0;
-    p = (*d)->philos;
-    first = p;  // Save the first philosopher
-    
-    while (i < n_philos)
-    {
-        pthread_mutex_init(&(*d)->forks[i], NULL);
-        p[i].id = i;
-        p[i].has_died = 0;
-        p[i].meal_count = 0;
-        p[i].last_meal_time = 0;
-        p[i].death_timestamp = 0;
-        // Link to next philosopher (circular)
-        p[i].next_philo = (i + 1 < n_philos) ? &p[i + 1] : &p[0];
-        i++;
-    }
+	i = 0;
+	p = (*d)->philos;
+	first = p;
+	while (i < n_philos)
+	{
+		pthread_mutex_init(&(*d)->forks[i], NULL);
+		p[i].id = i;
+		p[i].has_died = 0;
+		p[i].meal_count = 0;
+		p[i].last_meal_time = 0;
+		p[i].death_timestamp = 0;
+		pthread_mutex_init(&p[i].meal_lock, NULL);
+		i++;
+	}
 }
 
 void		allocate_memory(t_data **d, int n_philos)
@@ -106,6 +106,8 @@ void		init_data(char **s, t_data **d)
 	(*d)->number_of_times_each_philosopher_must_eat = str_to_uint64(s[4]);
 	(*d)->every_philo_has_eaten = 0;
 	(*d)->any_philo_dead = 0;
+	pthread_mutex_init(&(*d)->death_lock, NULL);
+	pthread_mutex_init(&(*d)->print_lock, NULL);
 	allocate_memory(d, n_philos);
-	init_philo_elements(d, n_philos);
+	init_elements(d, n_philos);
 }
