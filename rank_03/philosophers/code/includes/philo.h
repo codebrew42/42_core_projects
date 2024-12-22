@@ -46,12 +46,20 @@ int			ft_strlen(char *s);
 uint64_t	str_to_uint64(char *s);
 void		init_elements(t_data **d, int n_philos);
 void		allocate_memory(t_data **d, int n_philos);
-void		clean_data(t_data **d);
 void		init_data(char **s, t_data **d);
 
+//	threads.c
+void		*monitor(void *arg);
+void		*routine(void *arg);
+void		launch_threads(t_data *d);
+void		join_threads(t_data *d, int n_philo);
 
 //	main.c
 void		display_warning_message(char *s);
 int			exit_on_error(char *s, int exit_flag);
+
+//	cleanup.c
+void		free_data(t_data **d);
+void		destroy_mutex(t_data *d);
 
 #endif

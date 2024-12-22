@@ -28,6 +28,8 @@ int		main(int ac, char **av)
 	launch_threads(d);
 
 	//free and destroy
-
+	join_threads(d, d->number_of_philosophers);
+	destroy_mutex(d);
+	free_data(&d);
 
 }

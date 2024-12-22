@@ -4,7 +4,6 @@ int			ft_strlen(char *s);
 uint64_t	str_to_uint64(char *s);
 void		init_elements(t_data **d, int n_philos);
 void		allocate_memory(t_data **d, int n_philos);
-void		clean_data(t_data **d);
 void		init_data(char **s, t_data **d);
 
 int		ft_strlen(char *s)
@@ -73,21 +72,11 @@ void		allocate_memory(t_data **d, int n_philos)
 	(*d)->routine_thread = malloc(sizeof(pthread_t) * n_philos);
 	if (!(*d)->forks || !(*d)->philos || !(*d)->routine_thread)
 	{
-		clean_data(d);
+		free_data(d);
 		exit_on_error("Malloc failed.", 1);
 	}
 }
 
-void		clean_data(t_data **d)
-{
-	if (!d || !*d)
-		return ;
-	free((*d)->forks);
-	free((*d)->philos);
-	free((*d)->routine_thread);
-	free(*d);
-	*d = NULL;
-}
 
 void		init_data(char **s, t_data **d)
 {

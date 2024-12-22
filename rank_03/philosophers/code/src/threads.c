@@ -1,5 +1,10 @@
 #include "../includes/philo.h"
 
+void	*monitor(void *arg);
+void	*routine(void *arg);
+void	join_threads(t_data *d, int n_philo);
+void	launch_threads(t_data *d);
+
 void	*monitor(void *arg)
 {
 	t_philo			*p;
@@ -20,7 +25,7 @@ void	*routine(void *arg)
 	while (1)
 	{
 		//lock forks
-
+		pthread_mutex_lock
 		//eating
 
 		//unlock forks
@@ -40,17 +45,16 @@ void	join_threads(t_data *d, int n_philo)
 	{
 		if (pthread_join(&d->routine_thread[i], NULL))
 		{
-			clean_data(d);
+			free_data(d);
 			exit_on_error("pthread_join failed", 1);
 		}
 		if (pthread_join(&d->philos[i].monitor_thread, NULL))
 		{
-			clean_data(d);
+			free_data(d);
 			exit_on_error("pthread_join failed", 1);
 		}
 		i++;
 	}
-	
 }
 
 void	launch_threads(t_data *d)
@@ -64,16 +68,15 @@ void	launch_threads(t_data *d)
 	{
 		if (pthread_create(&d->routine_thread[i], NULL, routine, &d->philos[i]))
 		{
-			clean_data(d);
+			free_data(d);
 			exit_on_error("pthread_create failed");
 		}
 		if (pthread_create(&d->philos[i].monitor_thread, NULL, monitor, &d->philos[i]))
 		{
-			clean_data(d);
+			free_data(d);
 			exit_on_error("pthread_create failed");
 		}
 		i++;
 	}
 	join_threads(d, n_philo);
-
 }
