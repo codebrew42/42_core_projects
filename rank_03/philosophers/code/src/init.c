@@ -94,7 +94,7 @@ void		init_data(char **s, t_data **d)
 	(*d)->time_to_sleep = str_to_uint64(s[3]);
 	(*d)->number_of_times_each_philosopher_must_eat = str_to_uint64(s[4]);
 	(*d)->every_philo_has_eaten = 0;
-	(*d)->any_philo_dead = 0;
+	(*d)->dead_philo_id = -1;
 	pthread_mutex_init(&(*d)->death_lock, NULL);
 	pthread_mutex_init(&(*d)->print_lock, NULL);
 	allocate_memory(d, n_philos);

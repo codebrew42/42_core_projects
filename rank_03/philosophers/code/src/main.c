@@ -17,7 +17,7 @@ int		exit_on_error(char *s, int exit_flag)
 int		main(int ac, char **av)
 {
 	t_data		*d;
-
+	int			n_philo;
 	if (ac != 6)
 		return (exit_on_error("Number of arguments should be 5", 1));
 
@@ -25,10 +25,11 @@ int		main(int ac, char **av)
 	init_data(&av[1], &d);
 
 	//launch thread
-	launch_threads(d);
+	n_philo = d->number_of_philosophers;
+	launch_threads(d, n_philo);
 
 	//free and destroy
-	join_threads(d, d->number_of_philosophers);
+	join_threads(d, n_philo);
 	destroy_mutex(d);
 	free_data(&d);
 

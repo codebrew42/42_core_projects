@@ -20,8 +20,8 @@ typedef struct s_data
 	uint64_t				time_to_sleep;
 	size_t					number_of_times_each_philosopher_must_eat;
 	int						every_philo_has_eaten;
-	int						any_philo_dead;
-	pthread_mutex_t			death_lock;		//protects access to any_philo_dead
+	int						dead_philo_id;
+	pthread_mutex_t			death_lock;		//protects access to dead_philo_id
 	pthread_mutex_t			print_lock;		//protects access to printf in philo_routine
 	pthread_mutex_t			*forks;
 	struct s_philo			*philos; 
@@ -51,7 +51,7 @@ void		init_data(char **s, t_data **d);
 //	threads.c
 void		*monitor(void *arg);
 void		*routine(void *arg);
-void		launch_threads(t_data *d);
+int			launch_threads(t_data *d, int n_philo);
 void		join_threads(t_data *d, int n_philo);
 
 //	main.c
