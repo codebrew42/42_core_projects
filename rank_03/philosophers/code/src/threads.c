@@ -1,12 +1,22 @@
 #include "../includes/philo.h"
 
+void	*monitor(void *arg)
+{
+	t_philo			*p;
+
+	p = (t_philo *)arg;
+
+
+}
+
 /** @note always void *func(void *arg)
  * 
  */
 void	*routine(void *arg)
 {
-	t_philo *p = (t_philo *)arg;
+	t_philo			*p;
 
+	p = (t_philo *)arg;
 	while (1)
 	{
 		//lock forks
@@ -21,9 +31,25 @@ void	*routine(void *arg)
 	return (NULL);
 }
 
-void	join_threads(t_data *d)
+void	join_threads(t_data *d, int n_philo)
 {
+	int		i;
 
+	i = 0;
+	while (i < n_philo)
+	{
+		if (pthread_join(&d->routine_thread[i], NULL))
+		{
+			clean_data(d);
+			exit_on_error("pthread_join failed", 1);
+		}
+		if (pthread_join(&d->philos[i].monitor_thread, NULL))
+		{
+			clean_data(d);
+			exit_on_error("pthread_join failed", 1);
+		}
+		i++;
+	}
 	
 }
 
@@ -36,8 +62,18 @@ void	launch_threads(t_data *d)
 	i = 0;
 	while (i < n_philo)
 	{
-		pthread_create(&d->routine_thread[i], NULL, routine, &d->philos[i]);
+		if (pthread_create(&d->routine_thread[i], NULL, routine, &d->philos[i]))
+		{
+			clean_data(d);
+			exit_on_error("pthread_create failed");
+		}
+		if (pthread_create(&d->philos[i].monitor_thread, NULL, monitor, &d->philos[i]))
+		{
+			clean_data(d);
+			exit_on_error("pthread_create failed");
+		}
 		i++;
 	}
+	join_threads(d, n_philo);
 
 }
