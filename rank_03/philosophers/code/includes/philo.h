@@ -11,7 +11,6 @@
 
 #define LEFT(id, n) (id)
 #define RIGHT(id, n) ((id + 1) % n)
-
 typedef struct s_data
 {
 	size_t					number_of_philosophers;
@@ -38,6 +37,7 @@ typedef struct s_philo
 	uint64_t			death_timestamp;
 	pthread_mutex_t		meal_lock; //protects access to meal_count&last_meal_time
 	pthread_t			monitor_thread;
+	struct s_data		*data;
 }	t_philo;
 
 

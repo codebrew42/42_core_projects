@@ -4,7 +4,7 @@ int		exit_on_error(char *s, int exit_flag);
 
 void	display_warning_message(char *s)
 {
-	printf("Warning: %s\n", s);
+	printf("Warning: %s\n", s); 
 }
 
 int		exit_on_error(char *s, int exit_flag)

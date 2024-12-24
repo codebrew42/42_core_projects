@@ -47,11 +47,9 @@ void init_elements(t_data **d, int n_philos)
 {
 	int		 i;
 	t_philo	 *p;
-	t_philo	 *first;
 
 	i = 0;
 	p = (*d)->philos;
-	first = p;
 	while (i < n_philos)
 	{
 		pthread_mutex_init(&(*d)->forks[i], NULL);
@@ -61,6 +59,7 @@ void init_elements(t_data **d, int n_philos)
 		p[i].last_meal_time = 0;
 		p[i].death_timestamp = 0;
 		pthread_mutex_init(&p[i].meal_lock, NULL);
+		p[i].data = *d;
 		i++;
 	}
 }
