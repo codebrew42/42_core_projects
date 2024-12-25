@@ -128,3 +128,27 @@ https://jiwon.oopy.io/2c8294ad-8bd9-4ad6-a2e0-ab62e79801fd\
 
 ## to do
 - to print result on the terminal
+
+
+# 241225
+
+## what I did
+- wrote threads.c
+
+## todo
+- understand more about 
+	- mutex
+	- deadlock prevention
+	- race condition
+	- thread scheduling
+	- CPU usage optimization with this code
+
+- improve my code
+	- proper error handling
+	- clean shutdown, check all the cases
+	- debuggin capabilities
+	- proper termination mechanism
+
+-check valgrind with edge cases
+
+- test with diff numbers of philos (edge cases: 1 phio, 200 philos)

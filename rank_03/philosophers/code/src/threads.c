@@ -1,29 +1,31 @@
 #include "../includes/philo.h"
 
-void		display_status(char *s, int p_id);
-uint64_t	get_current_time(void);
-void	*monitor(void *arg);
-void	*routine(void *arg);
-void	join_threads(t_data *d, int n_philo);
-int		launch_threads(t_data *d, int n_philo);
+void		eating(t_philo *p, int p_id, int n_philo);
+void		*monitor(void *arg);
+void		*routine(void *arg);
+int			launch_monitor_threads(t_data *d, int n_philo);
+int			launch_routine_threads(t_data *d, int n_philo);
 
-void		display_status(char *s, int p_id)
+
+void	eating(t_philo *p, int p_id, int n_philo)
 {
-	uint64_t	current_t;
+	pthread_mutex_lock(&p->data->forks[RIGHT(p_id, n_philo)]);
+	display_status("has taken a fork", p_id);
+	pthread_mutex_lock(&p->data->forks[LEFT(p_id, n_philo)]);
+	display_status("has taken a fork", p_id);
 
-	current_t = get_current_time();
-	printf("%u %d %s", current_t, p_id, s);
+	pthread_mutex_lock(&p->meal_lock);
+	p->last_meal_time = get_current_time();
+	display_status("is eating", p_id);
+	p->meal_count++;
+	usleep(p->data->time_to_eat * 1000);
+	pthread_mutex_unlock(&p->meal_lock);
+
+	pthread_mutex_unlock(&p->data->forks[RIGHT(p_id, n_philo)]);
+	pthread_mutex_unlock(&p->data->forks[LEFT(p_id, n_philo)]);
 }
 
-uint64_t	get_current_time(void)
-{
-	struct timeval		tv;
-
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-}
-
-/** @brief "{time} {id} died" should be displayed in 10 seconds if a philosopher dies
+/** @brief "{time} {id} died" should be displayed in 10 sec if a philo dies
  *  @return id of the dead philosopher, -1 if no philosopher dies
  */
 void	*monitor(void *arg)
@@ -33,7 +35,7 @@ void	*monitor(void *arg)
 	int				n_philo;
 
 	d = (t_data *)arg;
-	n_philo = d->nbr_of_philosophers;
+	n_philo = d->nbr_of_philos;
 	i = 0;
 	while (i < n_philo && !d->dead_philo_id)
 	{
@@ -57,79 +59,68 @@ void	*routine(void *arg)
 {
 	t_philo			*p;
 	int				n_philo;
+	int				p_id;
 
 	p = (t_philo *)arg;
-	n_philo = p->data->nbr_of_philosophers;
+	n_philo = p->data->nbr_of_philos;
 	while (1)
 	{
-		//{1}lock forks
-		pthread_mutex_lock(&p->data->forks[RIGHT(p->id, n_philo)]);
-		pthread_mutex_lock(&p->data->forks[LEFT(p->id, n_philo)]);
-		//{2}eat
-		pthread_mutex_lock(&p->meal_lock);
-			//should i check again? if any philo died?
-		p->last_meal_time = get_current_time();
-		p->meal_count++;
-		display_status("is eating", p->id);
-		usleep();
-		pthread_mutex_unlock(&p->meal_lock);
-		//{3}unlock forks
-		pthread_mutex_unlock(&p->data->forks[RIGHT(p->id, n_philo)]);
-		pthread_mutex_unlock(&p->data->forks[LEFT(p->id, n_philo)]);
+		p_id = p->id;
+		eating(p, p_id, n_philo);
+ 
+		display_status("is sleeping", p_id);
+		usleep(p->data->time_to_sleep * 1000);
 
-		//{4}sleep
+		display_status("is thinking", p_id);
+		usleep(1000); //check time
 	}
 	return (NULL);
-}
-
-void	join_threads(t_data *d, int n_philo)
-{
-	int		i;
-
-	i = 0;
-	while (i < n_philo)
-	{
-		if (pthread_join(&d->routine_thread[i], NULL))
-		{
-			free_data(d);
-			exit_on_error("pthread_join failed", 1);
-		}
-		if (pthread_join(&d->philos[i].monitor_thread, NULL))
-		{
-			free_data(d);
-			exit_on_error("pthread_join failed", 1);
-		}
-		i++;
-	}
 }
 
 /**
  * @return 1 if an error occurs, 0 if no error 
  */
-int	launch_threads(t_data *d, int n_philo)
+int	launch_routine_threads(t_data *d, int n_philo)
 {
 	int		i;
-	int		dead_philo_id;
 
-	i = 0;
-	while (i < n_philo)
-	{
-		if (pthread_create(&d->philos[i].monitor_thread, NULL, monitor, &d->philos[i]))
-			exit_on_error("pthread_create failed", 0);
-		dead_philo_id = d->dead_philo_id;
-		if (dead_philo_id != -1)
-		{
-			display_status("died", dead_philo_id);
-			return (1);
-		}
-		i++;
-	}
 	i = 0;
 	while (i < n_philo)
 	{
 		if (pthread_create(&d->routine_thread[i], NULL, routine, &d->philos[i]))
 			exit_on_error("pthread_create failed", 0);
 		i++;
+	}
+	return (0);
+}
+
+/**
+ * @return 1 if an error occurs, 0 if no error 
+ */
+int	launch_monitor_threads(t_data *d, int n_philo)
+{
+	int		i;
+	int		dead_philo_id;
+
+	while(!d->dead_philo_id)
+	{
+		i = 0;
+		while (i < n_philo)
+		{
+			if (pthread_create(&d->philos[i].monitor_thread, NULL, monitor, &d->philos[i]))
+				exit_on_error("pthread_create failed", 0);
+			pthread_mutex_lock(&d->death_lock);
+			dead_philo_id = d->dead_philo_id;
+			pthread_mutex_unlock(&d->death_lock);
+			if (dead_philo_id != -1)
+			{
+				display_status("died", dead_philo_id);
+				return (1);
+			}
+			if (d->every_philo_has_eaten == 1)
+				return (1);
+			i++;
+		}
 	}
 	return (0);
 }

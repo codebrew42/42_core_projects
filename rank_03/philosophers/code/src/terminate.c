@@ -12,8 +12,30 @@
 
 #include "../includes/philo.h"
 
+void		join_threads(t_data *d, int n_philo);
 void		free_data(t_data **d);
 void		destroy_mutex(t_data *d);
+
+void	join_threads(t_data *d, int n_philo)
+{
+	int		i;
+
+	i = 0;
+	while (i < n_philo)
+	{
+		if (pthread_join(&d->routine_thread[i], NULL))
+		{
+			free_data(d);
+			exit_on_error("pthread_join failed", 1);
+		}
+		if (pthread_join(&d->philos[i].monitor_thread, NULL))
+		{
+			free_data(d);
+			exit_on_error("pthread_join failed", 1);
+		}
+		i++;
+	}
+}
 
 void	free_data(t_data **d)
 {

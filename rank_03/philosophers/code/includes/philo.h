@@ -47,7 +47,7 @@ typedef struct s_philo
 	int					meal_count;
 	//int					is_eating;
 	uint64_t			last_meal_time;
-	uint64_t			death_timestamp;
+	uint64_t			death_timestamp; //maybe remove
 	pthread_mutex_t		meal_lock; //protects access to meal_count&last_meal_time
 	pthread_t			monitor_thread;
 	struct s_data		*data;
