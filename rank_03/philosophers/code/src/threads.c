@@ -6,7 +6,6 @@ void		*routine(void *arg);
 int			launch_monitor_threads(t_data *d, int n_philo);
 int			launch_routine_threads(t_data *d, int n_philo);
 
-
 void	eating(t_philo *p, int p_id, int n_philo)
 {
 	pthread_mutex_lock(&p->data->forks[RIGHT(p_id, n_philo)]);

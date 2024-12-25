@@ -12,21 +12,6 @@
 
 #include "../includes/philo.h"
 
-void	display_warning_message(char *s);
-int		exit_on_error(char *s, int exit_flag);
-
-void	display_warning_message(char *s)
-{
-	printf("Warning: %s", s);
-}
-
-int	exit_on_error(char *s, int exit_flag)
-{
-	printf("Error: %s", s);
-	if (exit_flag == 1)
-		exit(1);
-	return (1);
-}
 
 int	main(int ac, char **av)
 {
