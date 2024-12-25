@@ -33,7 +33,7 @@ void	*monitor(void *arg)
 	int				n_philo;
 
 	d = (t_data *)arg;
-	n_philo = d->number_of_philosophers;
+	n_philo = d->nbr_of_philosophers;
 	i = 0;
 	while (i < n_philo && !d->dead_philo_id)
 	{
@@ -59,7 +59,7 @@ void	*routine(void *arg)
 	int				n_philo;
 
 	p = (t_philo *)arg;
-	n_philo = p->data->number_of_philosophers;
+	n_philo = p->data->nbr_of_philosophers;
 	while (1)
 	{
 		//{1}lock forks

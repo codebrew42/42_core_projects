@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jiepark <jiepark@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/25 20:07:35 by jiepark          #+#    #+#              */
+/*   Updated: 2024/12/25 20:07:35 by jiepark         ###   ########.fr        */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #ifndef		PHILO_H
 # define	PHILO_H
 #include <pthread.h> //pthread*
@@ -13,11 +26,11 @@
 #define RIGHT(id, n) ((id + 1) % n)
 typedef struct s_data
 {
-	size_t					number_of_philosophers;
+	size_t					nbr_of_philos;
 	uint64_t				time_to_die;	//time*: millisec
 	uint64_t				time_to_eat;
 	uint64_t				time_to_sleep;
-	size_t					number_of_times_each_philosopher_must_eat;
+	size_t					nbr_of_times_each_philo_must_eat;
 	int						every_philo_has_eaten;
 	int						dead_philo_id;
 	pthread_mutex_t			death_lock;		//protects access to dead_philo_id
