@@ -1,54 +1,36 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jiepark <jiepark@student.42berlin.de>      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/12/12 10:18:32 by jiepark           #+#    #+#              #
-#    Updated: 2024/12/12 10:18:33 by jiepark          ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME		:=	philo
 
-SRC			:=	src/main.c		\
-				src/display.c	\
-				src/philos.c	\
-				src/parsing.c	\
-				src/table.c		\
-				src/utils.c		\
-				src/rm_debug.c
+SRC			:=	src/display.c \
+				src/init.c \
+				src/main.c \
+				src/terminate.c \
+				src/threads.c
 
 OBJ_DIR		:= obj
-OBJ			:=	$(SRC:src/%.c=$(OBJ_DIR)/%.o)
 
+OBJ			:= $(SRC:src/%.c=$(OBJ_DIR)/%.o)
 
-CC			:= clang
-CFLAGS		:= -Wall -Wextra -Werror -Iincludes
-LDFLAGS		:= -pthread
+CC			:= gcc
+CFLAG		:= -Wall -Wextra -Werror -I includes
+RM			:= rm -f
 
-#default target
-all:		$(NAME)
+$(NAME)		: $(OBJ_DIR) $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(OBJ_DIR)/$(NAME)
 
-#linking
-$(NAME):	$(OBJ)
-			@echo "\t\tLinking..."
-			$(CC) $(OBJ) $(LDFLAGS) -o $(NAME)
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
-#compiling
-$(OBJ_DIR)/%.o:		src/%.c
-			@echo "\t\tCompiling $<..."
-			$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)/%.o	: src/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-clean:
-			@echo "\t\tCleaning object files..."
-			rm -f $(OBJ)
+clean			:
+	$(RM) $(OBJ_DIR)
 
-fclean:		clean
-			@echo "\t\tCleaning object files and executable..."
-			rm -f $(NAME)
+fclean			: clean
+	$(RM) $(NAME)
 
-re:			fclean	all
+re				: fclean all
 
-.PHONY:		all		clean		fclean		re
+all				: $(NAME)
+
+.PHONY			: all clean fclean re

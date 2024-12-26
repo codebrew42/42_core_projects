@@ -1,7 +1,7 @@
 #include "../includes/philo.h"
 
 
-int	main(int ac, char **av)
+int	main(int ac, char **av)W
 {
 	t_arg		*arg;
 	t_philo		*philos = NULL;

@@ -8,20 +8,29 @@ int			launch_routine_threads(t_data *d, int n_philo);
 
 void	eating(t_philo *p, int p_id, int n_philo)
 {
+	int		i;
+
 	pthread_mutex_lock(&p->data->forks[RIGHT(p_id, n_philo)]);
 	display_status("has taken a fork", p_id);
 	pthread_mutex_lock(&p->data->forks[LEFT(p_id, n_philo)]);
 	display_status("has taken a fork", p_id);
-
 	pthread_mutex_lock(&p->meal_lock);
 	p->last_meal_time = get_current_time();
 	display_status("is eating", p_id);
 	p->meal_count++;
 	usleep(p->data->time_to_eat * 1000);
 	pthread_mutex_unlock(&p->meal_lock);
-
 	pthread_mutex_unlock(&p->data->forks[RIGHT(p_id, n_philo)]);
 	pthread_mutex_unlock(&p->data->forks[LEFT(p_id, n_philo)]);
+	i = 0;
+	while (i < n_philo)
+	{
+		if (p->data->philos[i].meal_count != p->data->nbr_of_times_each_philo_must_eat)
+			break ;
+		i++;
+	}
+	if (i == n_philo - 1)
+		p->data->every_philo_has_eaten = 1;
 }
 
 /** @brief "{time} {id} died" should be displayed in 10 sec if a philo dies
@@ -66,7 +75,7 @@ void	*routine(void *arg)
 	{
 		p_id = p->id;
 		eating(p, p_id, n_philo);
- 
+
 		display_status("is sleeping", p_id);
 		usleep(p->data->time_to_sleep * 1000);
 
