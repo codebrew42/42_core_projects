@@ -12,7 +12,7 @@ OBJ			:= $(SRC:src/%.c=$(OBJ_DIR)/%.o)
 
 CC			:= gcc
 CFLAG		:= -Wall -Wextra -Werror -I includes
-RM			:= rm -f
+RM			:= rm -rf
 
 $(NAME)		: $(OBJ_DIR) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(OBJ_DIR)/$(NAME)
@@ -27,7 +27,7 @@ clean			:
 	$(RM) $(OBJ_DIR)
 
 fclean			: clean
-	$(RM) $(NAME)
+	$(RM) $(OBJ_DIR)/$(NAME)
 
 re				: fclean all
 

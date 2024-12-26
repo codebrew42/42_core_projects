@@ -152,3 +152,10 @@ https://jiwon.oopy.io/2c8294ad-8bd9-4ad6-a2e0-ab62e79801fd\
 -check valgrind with edge cases
 
 - test with diff numbers of philos (edge cases: 1 phio, 200 philos)
+
+#241226
+## what I did
+- compile : possible
+
+## todo
+- result(compiled philo) : not seen -> fix it

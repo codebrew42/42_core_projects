@@ -10,7 +10,7 @@ uint64_t	display_status(char *s, int p_id)
 	uint64_t	current_t;
 
 	current_t = get_current_time();
-	printf("%u %d %s", current_t, p_id, s);
+	printf("%llu %d %s", current_t, p_id, s);
 	return (current_t);
 }
 
