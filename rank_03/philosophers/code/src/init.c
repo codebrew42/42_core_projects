@@ -51,7 +51,7 @@ uint64_t	str_to_uint64(char *s)
 		res = res * 10 + temp;
 		i++;
 	}
-	if (res > INT_MAX)
+	if (res > INT_MAX || res == 0)
 		return (0);
 	return ((uint64_t)res);
 }
@@ -105,12 +105,14 @@ void	init_data(char **s, t_data **d)
 	(*d)->time_to_eat = str_to_uint64(s[2]);
 	(*d)->time_to_sleep = str_to_uint64(s[3]);
 	(*d)->nbr_of_times_each_philo_must_eat = str_to_uint64(s[4]);
-	if (!((*d)->nbr_of_philos) || !((*d)->time_to_sleep) || !((*d)->time_to_eat)
-		|| !((*d)->nbr_of_times_each_philo_must_eat) || !((*d)->time_to_die))
+	if ((*d)->nbr_of_philos == 0 || (*d)->time_to_die == 0
+	|| (*d)->time_to_eat == 0 || (*d)->time_to_sleep == 0
+	|| (*d)->nbr_of_times_each_philo_must_eat == 0)
 	{
 		free_data(d);
 		exit_on_error("Invalid input.", 1);
 	}
+	(*d)->start_time = get_current_time();
 	(*d)->every_philo_has_eaten = 0;
 	(*d)->dead_philo_id = -1;
 	pthread_mutex_init(&(*d)->death_lock, NULL);

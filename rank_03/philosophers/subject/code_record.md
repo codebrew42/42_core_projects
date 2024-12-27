@@ -159,3 +159,7 @@ https://jiwon.oopy.io/2c8294ad-8bd9-4ad6-a2e0-ab62e79801fd\
 
 ## todo
 - result(compiled philo) : not seen -> fix it
+
+#241227
+## what I am writing
+- monitor function in threads.c

@@ -30,11 +30,13 @@ typedef struct s_data
 	uint64_t				time_to_die;	//time*: millisec
 	uint64_t				time_to_eat;
 	uint64_t				time_to_sleep;
+	uint64_t				start_time;
 	size_t					nbr_of_times_each_philo_must_eat;
 	int						every_philo_has_eaten;
 	int						dead_philo_id;
 	pthread_mutex_t			death_lock;		//protects access to dead_philo_id
 	pthread_mutex_t			print_lock;		//protects access to printf in philo_routine
+	pthread_t				monitor_thread;
 	pthread_mutex_t			*forks;
 	struct s_philo			*philos; 
 	pthread_t				*routine_thread;
@@ -49,7 +51,6 @@ typedef struct s_philo
 	uint64_t			last_meal_time;
 	uint64_t			death_timestamp; //maybe remove
 	pthread_mutex_t		meal_lock; //protects access to meal_count&last_meal_time
-	pthread_t			monitor_thread;
 	struct s_data		*data;
 }	t_philo;
 
@@ -74,7 +75,7 @@ void		free_data(t_data **d);
 void		destroy_mutex(t_data *d);
 
 //	display.c
-uint64_t	display_status(char *s, int p_id);
+uint64_t	display_status(t_data *d, char *s, int p_id);
 uint64_t	get_current_time(void);
 void		display_warning_message(char *s);
 int			exit_on_error(char *s, int exit_flag);
