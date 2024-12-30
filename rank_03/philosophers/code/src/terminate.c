@@ -28,23 +28,28 @@ void	join_threads(t_data *d, int n_philo)
 			free_data(&d);
 			exit_on_error("pthread_join failed", 1);
 		}
-		if (pthread_join(d->philos[i].monitor_thread, NULL))
-		{
-			free_data(&d);
-			exit_on_error("pthread_join failed", 1);
-		}
 		i++;
 	}
+	if (pthread_join(d->monitor_thread, NULL))
+	{
+		free_data(&d);
+		exit_on_error("pthread_join failed", 1);
+	}
 }
+
 
 void	free_data(t_data **d)
 {
 	if (!d || !*d)
 		return ;
-	free((*d)->forks);
-	free((*d)->philos);
-	free((*d)->routine_thread);
-	free(*d);
+	if ((*d)->forks)
+		free((*d)->forks);
+	if ((*d)->philos)
+		free((*d)->philos);
+	if ((*d)->routine_thread)
+		free((*d)->routine_thread);
+	if (*d)
+		free(*d);
 	*d = NULL;
 }
 

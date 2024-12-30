@@ -163,3 +163,11 @@ https://jiwon.oopy.io/2c8294ad-8bd9-4ad6-a2e0-ab62e79801fd\
 #241227
 ## what I am writing
 - monitor function in threads.c
+
+#241230
+## what I did
+- improved threads.c but not finished
+
+## todo
+- fix threads.c : the philo[4] and philo[5] are eating at the same time
+- eating sequence is not random, it is always the same (1,3 -> 2,4,5)

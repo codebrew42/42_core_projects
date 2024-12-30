@@ -1,8 +1,9 @@
+/*
 I did not copy the actual subject. But it did go along the line 
 "fix the code" ;)
 */
 
-# include "get_next_line.h"
+# include "gnl.h"
 
 char	*ft_strchr(char *s, int c)
 {
@@ -22,6 +23,9 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	return dest;
 }
 
+/**
+ * @return length of the string, 0 if null
+ */
 size_t	ft_strlen(char *s)
 {
 	size_t ret = 0;
@@ -33,6 +37,9 @@ size_t	ft_strlen(char *s)
 	return (ret);
 }
 
+/**
+ * @return 
+ */
 int	str_append_mem(char **s1, char *s2, size_t size2)
 {
 	size_t size1 = ft_strlen(*s1);
@@ -88,13 +95,3 @@ char	*get_next_line(int fd)
 	}
 	return ret;
 }
-
-get_next_line.h
-
-#ifndef GNL
-# define GNL
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
-# endif
-char *get_next_line(int fd);
-# endif 

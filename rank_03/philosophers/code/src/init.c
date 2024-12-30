@@ -66,14 +66,22 @@ void	init_elements(t_data **d, int n_philos)
 	p = (*d)->philos;
 	while (i < n_philos)
 	{
-		pthread_mutex_init(&(*d)->forks[i], NULL);
-		p[i].id = i;
+		if (pthread_mutex_init(&(*d)->forks[i], NULL))
+		{
+			free_data(d);
+			exit_on_error("Mutex init failed", 1);
+		}
+		p[i].id = i + 1;
 		p[i].has_died = 0;
 		p[i].meal_count = 0;
 		p[i].last_meal_time = 0;
 		p[i].death_timestamp = 0;
-		pthread_mutex_init(&p[i].meal_lock, NULL);
 		p[i].data = *d;
+		if (pthread_mutex_init(&(*d)->forks[i], NULL))
+		{
+			free_data(d);
+			exit_on_error("Mutex init failed", 1);
+		}
 		i++;
 	}
 }

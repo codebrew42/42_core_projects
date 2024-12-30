@@ -63,7 +63,7 @@ void		allocate_memory(t_data **d, int n_philos);
 void		init_data(char **s, t_data **d);
 
 //	threads.c
-void		eating(t_philo *p, int p_id, int n_philo);
+void		eating(t_philo *p, t_data *d, int p_id, int n_philo);
 void		*monitor(void *arg);
 void		*routine(void *arg);
 int			launch_monitor_threads(t_data *d, int n_philo);
