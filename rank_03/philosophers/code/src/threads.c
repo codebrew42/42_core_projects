@@ -6,15 +6,15 @@ void		*routine(void *arg);
 int			launch_monitor_threads(t_data *d, int n_philo);
 int			launch_routine_threads(t_data *d, int n_philo);
 
-
 void	eating(t_philo *p, t_data *d, int p_id, int n_philo)
 {
 	int		first_fork;
 	int		second_fork;
 
+	if (d->dead_philo_id != -1 || d->every_philo_has_eaten == 1)
+		return ;
 	first_fork = RIGHT(p_id, n_philo);
 	second_fork = LEFT(p_id, n_philo);
-	
 	if (p_id == n_philo)
 	{
 		first_fork = LEFT(p_id, n_philo);
@@ -33,36 +33,87 @@ void	eating(t_philo *p, t_data *d, int p_id, int n_philo)
 	pthread_mutex_unlock(&p->data->forks[first_fork]);
 }
 
+
 /** @brief "{time} {id} died" should be displayed in 10 sec if a philo dies
  *  @return id of the dead philosopher, -1 if no philosopher dies
  */
+/*
 void	*monitor(void *arg)
 {
 	t_data			*d;
 	int				i;
 	int				n_philo;
 	int				sum;
+	int				diff;
 
 	d = (t_data *)arg;
+	n_philo = d->nbr_of_philos;
+	usleep(1000);
 	while (1)
 	{
 		sum = 0;
 		i = 0;
-		while (i < n_philo)
+		while (++i <= n_philo)
 		{
 			sum += d->philos[i].meal_count;
-			if (d->philos[i].last_meal_time + d->start_time > d->time_to_die)
+			diff = get_current_time() - d->philos[i].last_meal_time;
+			if (diff > d->time_to_die)
+			{
+				pthread_mutex_lock(&d->death_lock);
 				d->dead_philo_id = i;
-			i++;
+				pthread_mutex_unlock(&d->death_lock);
+				printf("philo[%d] current time - last_meal_time = diff: %d\n", i, diff);
+				display_status(d, "died", i);
+				return (NULL);
+			}
 		}
 		if (sum == d->nbr_of_times_each_philo_must_eat)
+		{
+			pthread_mutex_lock(&d->death_lock);
 			d->every_philo_has_eaten = 1;
-		if (d->dead_philo_id != -1 || d->every_philo_has_eaten == 1)
-			break ;
+			pthread_mutex_unlock(&d->death_lock);
+			return (NULL);
+		}
 		usleep(500);
 	}	
 	return (NULL);
 }
+*/
+void    *monitor(void *arg)
+{
+    t_data      *d = (t_data *)arg;
+    int         i;
+    uint64_t    current;
+    int         all_eaten;
+
+    while (1)
+    {
+        i = -1;
+        all_eaten = 1;
+        while (++i < d->nbr_of_philos)
+        {
+            pthread_mutex_lock(&d->philos[i].meal_lock);
+            current = get_current_time();
+            if ((current - d->philos[i].last_meal_time) > d->time_to_die)
+            {
+                display_status(d, "died", i + 1);
+                d->dead_philo_id = i + 1;
+                pthread_mutex_unlock(&d->philos[i].meal_lock);
+                return (NULL);
+            }
+            if (d->philos[i].meal_count < d->nbr_of_times_each_philo_must_eat)
+                all_eaten = 0;
+            pthread_mutex_unlock(&d->philos[i].meal_lock);
+        }
+        if (all_eaten && d->nbr_of_times_each_philo_must_eat > 0)
+        {
+            d->every_philo_has_eaten = 1;
+            return (NULL);
+        }
+        usleep(100);
+    }
+}
+
 
 /** @note always void *func(void *arg)
  * 
@@ -79,6 +130,8 @@ void	*routine(void *arg)
 	n_philo = d->nbr_of_philos;
 	while (1)
 	{
+		if (d->dead_philo_id != -1 || d->every_philo_has_eaten == 1)
+			return (NULL);
 		p_id = p->id;
 		eating(p, d, p_id, n_philo);
 

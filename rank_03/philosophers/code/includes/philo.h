@@ -22,8 +22,8 @@
 #include <limits.h>
 #include <stdint.h> //uint64_t
 
-#define LEFT(id, n) (id)
-#define RIGHT(id, n) ((id + 1) % n)
+#define LEFT(id, n) (id - 1)
+#define RIGHT(id, n) (id % n)
 typedef struct s_data
 {
 	size_t					nbr_of_philos;

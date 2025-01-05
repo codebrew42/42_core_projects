@@ -74,7 +74,7 @@ void	init_elements(t_data **d, int n_philos)
 		p[i].id = i + 1;
 		p[i].has_died = 0;
 		p[i].meal_count = 0;
-		p[i].last_meal_time = 0;
+		p[i].last_meal_time = (*d)->start_time;
 		p[i].death_timestamp = 0;
 		p[i].data = *d;
 		if (pthread_mutex_init(&(*d)->forks[i], NULL))
