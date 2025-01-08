@@ -32,7 +32,7 @@ typedef struct s_data
 	uint64_t				time_to_sleep;
 	uint64_t				start_time;
 	size_t					nbr_of_times_each_philo_must_eat;
-	int						every_philo_has_eaten;
+	int						nbr_of_philos_full;
 	int						dead_philo_id;
 	pthread_mutex_t			death_lock;		//protects access to dead_philo_id
 	pthread_mutex_t			print_lock;		//protects access to printf in philo_routine
@@ -66,8 +66,8 @@ void		init_data(char **s, t_data **d);
 void		eating(t_philo *p, t_data *d, int p_id, int n_philo);
 void		*monitor(void *arg);
 void		*routine(void *arg);
-int			launch_monitor_threads(t_data *d, int n_philo);
-int			launch_routine_threads(t_data *d, int n_philo);
+int			check_end_condition(t_data *d, int n_philo);
+int			launch_threads(t_data *d, int n_philo);
 
 //	terminate.c
 void		join_threads(t_data *d, int n_philo);

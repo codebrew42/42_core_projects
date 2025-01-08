@@ -121,8 +121,8 @@ void	init_data(char **s, t_data **d)
 		exit_on_error("Invalid input.", 1);
 	}
 	(*d)->start_time = get_current_time();
-	(*d)->every_philo_has_eaten = 0;
-	(*d)->dead_philo_id = -1;
+	(*d)->nbr_of_philos_full = 0;
+	(*d)->dead_philo_id = 0;
 	pthread_mutex_init(&(*d)->death_lock, NULL);
 	pthread_mutex_init(&(*d)->print_lock, NULL);
 	allocate_memory(d, n_philos);
