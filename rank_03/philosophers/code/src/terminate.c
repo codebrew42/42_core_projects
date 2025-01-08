@@ -12,11 +12,11 @@
 
 #include "../includes/philo.h"
 
-void		join_threads(t_data *d, int n_philo);
+int		join_threads(t_data *d, int n_philo);
 void		free_data(t_data **d);
 void		destroy_mutex(t_data *d);
 
-void	join_threads(t_data *d, int n_philo)
+int	join_threads(t_data *d, int n_philo)
 {
 	int		i;
 
@@ -26,15 +26,16 @@ void	join_threads(t_data *d, int n_philo)
 		if (pthread_join(d->routine_thread[i], NULL))
 		{
 			free_data(&d);
-			exit_on_error("pthread_join failed", 1);
+			return (exit_on_error("pthread_join failed", 0));
 		}
 		i++;
 	}
 	if (pthread_join(d->monitor_thread, NULL))
 	{
 		free_data(&d);
-		exit_on_error("pthread_join failed", 1);
+		return (exit_on_error("pthread_join failed", 0));
 	}
+	return (0);
 }
 
 
@@ -56,6 +57,7 @@ void	free_data(t_data **d)
 void	destroy_mutex(t_data *d)
 {
 	int		i;
+	int		n_philo;
 
 	pthread_mutex_destroy(&d->death_lock);
 	pthread_mutex_destroy(&d->print_lock);
@@ -66,4 +68,7 @@ void	destroy_mutex(t_data *d)
 		pthread_mutex_destroy(&d->philos[i].meal_lock);
 		i++;
 	}
+	n_philo = d->nbr_of_philos;
+	join_threads(d, n_philo);
+
 }

@@ -55,7 +55,6 @@ int	main(int ac, char **av)
 	launch_threads(d, n_philo);
 
 
-	join_threads(d, n_philo);
 	destroy_mutex(d);
 	free_data(&d);
 }

@@ -120,5 +120,9 @@ int	launch_threads(t_data *d, int n_philo)
 			return (exit_on_error("pthread_create failed", 0));
 		i++;
 	}
+	if (join_threads(d, n_philo))
+	{
+		return (1);
+	}
 	return (0);
 }

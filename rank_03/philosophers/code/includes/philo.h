@@ -70,7 +70,7 @@ int			check_end_condition(t_data *d, int n_philo);
 int			launch_threads(t_data *d, int n_philo);
 
 //	terminate.c
-void		join_threads(t_data *d, int n_philo);
+int		join_threads(t_data *d, int n_philo);
 void		free_data(t_data **d);
 void		destroy_mutex(t_data *d);
 
