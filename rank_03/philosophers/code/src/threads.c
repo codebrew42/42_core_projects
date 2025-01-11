@@ -110,6 +110,7 @@ void	*routine(void *arg)
 int	launch_threads(t_data *d, int n_philo)
 {
 	int		i;
+	int		j;
 
 	i = 0;
 	if (pthread_create(&d->monitor_thread, NULL, monitor, d))
@@ -117,12 +118,14 @@ int	launch_threads(t_data *d, int n_philo)
 	while (i < n_philo)
 	{
 		if (pthread_create(&d->routine_thread[i], NULL, routine, &d->philos[i]))
+		{
+			// Need to join already created threads before returning
+			while (i > 0)
+				pthread_join(d->routine_thread[--i], NULL);
+			pthread_join(d->monitor_thread, NULL);
 			return (exit_on_error("pthread_create failed", 0));
+		}
 		i++;
-	}
-	if (join_threads(d, n_philo))
-	{
-		return (1);
 	}
 	return (0);
 }

@@ -21,22 +21,52 @@ int	join_threads(t_data *d, int n_philo)
 	int		i;
 
 	i = 0;
+	printf("Starting to join threads. n_philo = %d\n", n_philo);
+	while (i < n_philo)
+	{
+		printf("Attempting to join routine thread %d\n", i);
+		if (pthread_join(d->routine_thread[i], NULL))
+		{
+			printf("Failed to join routine thread %d\n", i);
+			return (exit_on_error("pthread_join failed", 0));
+		}
+		printf("Successfully joined routine thread %d\n", i);
+		i++;
+	}
+	printf("Attempting to join monitor thread\n");
+	if (pthread_join(d->monitor_thread, NULL))
+	{
+		printf("Failed to join monitor thread\n");
+		return (exit_on_error("pthread_join failed", 0));
+	}
+	printf("Successfully joined monitor thread\n");
+	return (0);
+}
+
+/*
+int	join_threads(t_data *d, int n_philo)
+{
+	int		i;
+
+	i = 0;
 	while (i < n_philo)
 	{
 		if (pthread_join(d->routine_thread[i], NULL))
 		{
-			free_data(&d);
+			printf("check debugging point A: [%d]\n", i);
+			//free_data(&d);
 			return (exit_on_error("pthread_join failed", 0));
 		}
 		i++;
 	}
 	if (pthread_join(d->monitor_thread, NULL))
 	{
+		printf("check debugging point B\n");
 		free_data(&d);
 		return (exit_on_error("pthread_join failed", 0));
 	}
 	return (0);
-}
+}*/
 
 
 void	free_data(t_data **d)
@@ -59,6 +89,8 @@ void	destroy_mutex(t_data *d)
 	int		i;
 	int		n_philo;
 
+	n_philo = d->nbr_of_philos;
+	join_threads(d, n_philo);
 	pthread_mutex_destroy(&d->death_lock);
 	pthread_mutex_destroy(&d->print_lock);
 	i = 0;
@@ -69,6 +101,5 @@ void	destroy_mutex(t_data *d)
 		i++;
 	}
 	n_philo = d->nbr_of_philos;
-	join_threads(d, n_philo);
 
 }

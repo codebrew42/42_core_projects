@@ -171,3 +171,27 @@ https://jiwon.oopy.io/2c8294ad-8bd9-4ad6-a2e0-ab62e79801fd\
 ## todo
 - fix threads.c : the philo[4] and philo[5] are eating at the same time
 - eating sequence is not random, it is always the same (1,3 -> 2,4,5)
+
+
+## 250111
+## issues to fix
+
+: after joining, it still thinks
+see : jin1@iMac-von-TJ code % ./obj/philo 5 800 200 200 10
+...
+4874 3 is thinking
+4874 4 is sleeping
+4882 1 is thinking
+Successfully joined routine thread 0
+Attempting to join routine thread 1
+Successfully joined routine thread 1
+Attempting to join routine thread 2
+Successfully joined routine thread 2
+Attempting to join routine thread 3
+5079 4 is thinking
+Successfully joined routine thread 3
+Attempting to join routine thread 4
+Successfully joined routine thread 4
+Attempting to join monitor thread
+Successfully joined monitor thread
+jin1@iMac-von-TJ code % ls
