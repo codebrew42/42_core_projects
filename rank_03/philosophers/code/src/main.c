@@ -38,6 +38,18 @@ void	display_data(t_data *d)
 	printf("* * * display ends... * * *\n");
 }
 
+int	one_philo(t_data *d)
+{
+	if (pthread_create(&d->routine_thread[0], NULL, routine, &d->philos[0]))
+		exit_on_error("pthread_create failed", 0);
+	//if (pthread_create(&d->monitor_thread, NULL, monitor, d))
+	//	exit_on_error("pthread_create failed", 0);
+
+	destroy_mutex(d);
+	free_data(&d);
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	t_data		*d;
@@ -47,14 +59,16 @@ int	main(int ac, char **av)
 		return (exit_on_error("Number of arguments should be 5", 1));
 	init_data(&av[1], &d);
 	n_philo = d->nbr_of_philos;
-
-	//rm
-	//display_data(d);
-	//display_status(d, "is eating\n", 1);
-//
+	if (d->nbr_of_philos == 1)
+	{
+		d->start_time = get_current_time();
+		display_status(d, "has taken a fork", 0);
+		usleep(d->time_to_die * 1000);
+		display_status(d, "died", 0);
+		free(d);
+		return (0);
+	}
 	launch_threads(d, n_philo);
-
-
 	destroy_mutex(d);
 	free_data(&d);
 }

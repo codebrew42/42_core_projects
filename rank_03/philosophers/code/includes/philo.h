@@ -38,7 +38,7 @@ typedef struct s_data
 	pthread_mutex_t			print_lock;		//protects access to printf in philo_routine
 	pthread_t				monitor_thread;
 	pthread_mutex_t			*forks;
-	struct s_philo			*philos; 
+	struct s_philo			*philos;
 	pthread_t				*routine_thread;
 }	t_data;
 
@@ -56,7 +56,6 @@ typedef struct s_philo
 
 
 //	init.c
-int			ft_strlen(char *s);
 uint64_t	str_to_uint64(char *s);
 void		init_elements(t_data **d, int n_philos);
 void		allocate_memory(t_data **d, int n_philos);

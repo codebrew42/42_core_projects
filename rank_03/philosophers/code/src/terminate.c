@@ -100,6 +100,5 @@ void	destroy_mutex(t_data *d)
 		pthread_mutex_destroy(&d->philos[i].meal_lock);
 		i++;
 	}
-	n_philo = d->nbr_of_philos;
-
+	printf("time: %ld, check debugging point C\n", get_current_time() - d->start_time);
 }

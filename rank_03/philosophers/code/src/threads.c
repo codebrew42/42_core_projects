@@ -1,16 +1,31 @@
 #include "../includes/philo.h"
 
+int			check_already_ended(t_data *d);
 void		eating(t_philo *p, t_data *d, int p_id, int n_philo);
 void		*monitor(void *arg);
 void		*routine(void *arg);
-int			check_end_condition(t_data *d, int n_philo);
 int			launch_threads(t_data *d, int n_philo);
+
+int	check_already_ended(t_data *d)
+{
+	pthread_mutex_lock(&d->death_lock);
+	if (d->dead_philo_id != -1 || d->nbr_of_philos_full == d->nbr_of_philos)
+	{
+		printf("debugging D: dead_philo_id: %d, nbr_of_philos_full: %d\n", d->dead_philo_id, d->nbr_of_philos_full);
+		pthread_mutex_unlock(&d->death_lock);
+		return (1);
+	}
+	pthread_mutex_unlock(&d->death_lock);
+	return (0);
+}
 
 void	eating(t_philo *p, t_data *d, int p_id, int n_philo)
 {
 	int		first_fork;
 	int		second_fork;
 
+	if (check_already_ended(d))
+		return ;
 	first_fork = RIGHT(p_id, n_philo);
 	second_fork = LEFT(p_id, n_philo);
 	if (p_id == n_philo)
@@ -25,6 +40,8 @@ void	eating(t_philo *p, t_data *d, int p_id, int n_philo)
 	pthread_mutex_lock(&p->meal_lock);
 	p->last_meal_time = display_status(d, "is eating", p_id);
 	p->meal_count++;
+	if (p->meal_count == p->data->nbr_of_times_each_philo_must_eat)
+		p->data->nbr_of_philos_full++;
 	usleep(p->data->time_to_eat * 1000);
 	pthread_mutex_unlock(&p->meal_lock);
 	pthread_mutex_unlock(&p->data->forks[second_fork]);
@@ -45,35 +62,28 @@ void	*monitor(void *arg)
 	n_philo = d->nbr_of_philos;
 	while (1)
 	{
-		if (check_end_condition(d, n_philo))
-			return (NULL);
 		i = 0;
 		while (i < n_philo)
 		{
+			if (check_already_ended(d))
+				return (NULL);
 			pthread_mutex_lock(&d->philos[i].meal_lock);
-			if (d->philos[i].meal_count == d->nbr_of_times_each_philo_must_eat)
-				d->nbr_of_philos_full++;
+			if (d->philos[i].last_meal_time + d->time_to_die < get_current_time())
+			{
+				display_status(d, "died", i);
+				d->dead_philo_id = i + 1;
+				pthread_mutex_unlock(&d->philos[i].meal_lock);
+				return (NULL);
+			}
 			pthread_mutex_unlock(&d->philos[i].meal_lock);
 			i++;
 		}
-		if (check_end_condition(d, n_philo))
-			return (NULL);
 		usleep(500);
 	}	
 	return (NULL);
 }
 
-int	check_end_condition(t_data *d, int n_philo)
-{
-	pthread_mutex_lock(&d->death_lock);
-	if (d->dead_philo_id != 0 || d->nbr_of_philos_full == n_philo)
-	{
-		pthread_mutex_unlock(&d->death_lock);
-		return (1);
-	}
-	pthread_mutex_unlock(&d->death_lock);
-	return (0);
-}
+
 
 /** @note always void *func(void *arg)
  * 
@@ -90,14 +100,13 @@ void	*routine(void *arg)
 	n_philo = d->nbr_of_philos;
 	while (1)
 	{
-		if (check_end_condition(d, n_philo))
+		if (check_already_ended(d))
 			return (NULL);
 		p_id = p->id;
 		eating(p, d, p_id, n_philo);
 
 		display_status(d, "is sleeping", p_id);
 		usleep(p->data->time_to_sleep * 1000);
-
 		display_status(d, "is thinking", p_id);
 		//usleep(500 * 1000); //check time
 	}
@@ -110,22 +119,17 @@ void	*routine(void *arg)
 int	launch_threads(t_data *d, int n_philo)
 {
 	int		i;
-	int		j;
 
 	i = 0;
 	if (pthread_create(&d->monitor_thread, NULL, monitor, d))
-		return (exit_on_error("pthread_create failed", 0));
+		exit_on_error("pthread_create failed", 0);
 	while (i < n_philo)
 	{
 		if (pthread_create(&d->routine_thread[i], NULL, routine, &d->philos[i]))
-		{
-			// Need to join already created threads before returning
-			while (i > 0)
-				pthread_join(d->routine_thread[--i], NULL);
-			pthread_join(d->monitor_thread, NULL);
-			return (exit_on_error("pthread_create failed", 0));
-		}
+			exit_on_error("pthread_create failed", 0);
 		i++;
 	}
 	return (0);
 }
+
+
