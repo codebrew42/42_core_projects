@@ -45,8 +45,14 @@ Let's understand what each part does:
 
 ### Example:
 ```bash
+# case 1
 echo 'abcdefaaaabcdeabcabcdabc' | ./filter abc
 # Output: ***defaaa***de******d***
+
+# case 2
+echo 'abb' | ./filter abbabc
+# output : ***abc
+
 ```
 
 ## Implementation Steps
@@ -179,5 +185,9 @@ Remember:
 - Handle all error cases
 - Keep code clean and well-structured
 - Focus on efficiency and correctness
+
+Edge cases:
+- what if replacement is cut in half, and it reads on the next call?
+-> to avoid this, save the whole text first, and then start to filter
 
 This should give you a solid foundation for implementing the filter assignment! 😊
