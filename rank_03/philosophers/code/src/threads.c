@@ -22,11 +22,18 @@ void	eating(t_philo *p, t_data *d, int p_id, int n_philo)
 	display_status(d, "has taken a fork", p_id);
 	pthread_mutex_lock(&p->data->forks[second_fork]);
 	display_status(d, "has taken a fork", p_id);
+
 	pthread_mutex_lock(&p->meal_lock);
 	p->last_meal_time = display_status(d, "is eating", p_id);
 	p->meal_count++;
-	usleep(p->data->time_to_eat * 1000);
 	pthread_mutex_unlock(&p->meal_lock);
+	if (p->meal_count == d->nbr_of_times_each_philo_must_eat)
+    {
+        pthread_mutex_lock(&d->death_lock);
+        d->nbr_of_philos_full++;
+        pthread_mutex_unlock(&d->death_lock);
+    }
+	usleep(p->data->time_to_eat * 1000);
 	pthread_mutex_unlock(&p->data->forks[second_fork]);
 	pthread_mutex_unlock(&p->data->forks[first_fork]);
 }
@@ -47,17 +54,6 @@ void	*monitor(void *arg)
 	{
 		if (check_end_condition(d, n_philo))
 			return (NULL);
-		i = 0;
-		while (i < n_philo)
-		{
-			pthread_mutex_lock(&d->philos[i].meal_lock);
-			if (d->philos[i].meal_count == d->nbr_of_times_each_philo_must_eat)
-				d->nbr_of_philos_full++;
-			pthread_mutex_unlock(&d->philos[i].meal_lock);
-			i++;
-		}
-		if (check_end_condition(d, n_philo))
-			return (NULL);
 		usleep(500);
 	}	
 	return (NULL);
@@ -66,7 +62,7 @@ void	*monitor(void *arg)
 int	check_end_condition(t_data *d, int n_philo)
 {
 	pthread_mutex_lock(&d->death_lock);
-	if (d->dead_philo_id != 0 || d->nbr_of_philos_full == n_philo)
+	if (d->dead_philo_id != 0 || d->nbr_of_philos_full >= n_philo)
 	{
 		pthread_mutex_unlock(&d->death_lock);
 		return (1);
