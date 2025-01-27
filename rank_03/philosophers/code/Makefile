@@ -15,7 +15,7 @@ CFLAG		:= -Wall -Wextra -Werror -I includes
 RM			:= rm -rf
 
 $(NAME)		: $(OBJ_DIR) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(OBJ_DIR)/$(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -o $(OBJ_DIR)/$(NAME) -lpthread
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
