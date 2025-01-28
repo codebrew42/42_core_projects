@@ -9,8 +9,10 @@ uint64_t	display_status(t_data *d, char *s, int p_id)
 {
 	uint64_t	current_t;
 
+	pthread_mutex_lock(&d->print_lock);
 	current_t = get_current_time() - d->start_time;
-	printf("%llu %d %s\n", current_t, p_id, s);
+	printf("%lu %d %s\n", current_t, p_id, s);
+	pthread_mutex_unlock(&d->print_lock);
 	return (current_t);
 }
 
