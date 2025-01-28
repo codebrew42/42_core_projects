@@ -51,7 +51,7 @@ int	main(int ac, char **av)
 	//rm
 	//display_data(d);
 	//display_status(d, "is eating\n", 1);
-//
+
 	launch_threads(d, n_philo);
 
 

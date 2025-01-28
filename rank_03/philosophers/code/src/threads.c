@@ -65,6 +65,26 @@ void	*monitor(void *arg)
 
 int	check_end_condition(t_data *d, int n_philo)
 {
+	int		i;
+	int		current_time;
+
+	i = 0;
+	while (i < n_philo)
+	{
+		pthread_mutex_lock(&d->philos[i].meal_lock);
+		current_time = get_current_time() - d->start_time;
+		if (d->philos[i].meal_count > 0 &&
+			d->philos[i].last_meal_time + d->time_to_die < current_time)
+		{
+			pthread_mutex_unlock(&d->philos[i].meal_lock);
+			pthread_mutex_lock(&d->death_lock);
+			d->dead_philo_id = i;
+			pthread_mutex_unlock(&d->death_lock);
+			return (1);
+		}
+		pthread_mutex_unlock(&d->philos[i].meal_lock);
+		i++;
+	}
 	pthread_mutex_lock(&d->death_lock);
 	if (d->dead_philo_id != 0 || d->nbr_of_philos_full >= n_philo)
 	{
@@ -119,7 +139,6 @@ int	launch_threads(t_data *d, int n_philo)
 	{
 		if (pthread_create(&d->routine_thread[i], NULL, routine, &d->philos[i]))
 		{
-			// Need to join already created threads before returning
 			while (i > 0)
 				pthread_join(d->routine_thread[--i], NULL);
 			pthread_join(d->monitor_thread, NULL);

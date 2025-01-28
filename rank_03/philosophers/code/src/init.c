@@ -71,6 +71,11 @@ void	init_elements(t_data **d, int n_philos)
 			free_data(d);
 			exit_on_error("Mutex init failed", 1);
 		}
+		if (pthread_mutex_init(&(*d)->philos[i].meal_lock, NULL))
+		{
+			free_data(d);
+			exit_on_error("Mutex init failed", 1);
+		}
 		p[i].id = i + 1;
 		p[i].has_died = 0;
 		p[i].meal_count = 0;
