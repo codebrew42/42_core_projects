@@ -22,6 +22,7 @@
 #include <limits.h>
 #include <stdint.h> //uint64_t
 
+//first version
 #define LEFT(id, n) (id - 1)
 #define RIGHT(id, n) (id % n)
 typedef struct s_data

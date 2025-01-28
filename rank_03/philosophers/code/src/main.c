@@ -43,8 +43,8 @@ int	main(int ac, char **av)
 	t_data		*d;
 	int			n_philo;
 
-	if (ac != 6)
-		return (exit_on_error("Number of arguments should be 5", 1));
+	if (ac != 5 && ac != 6)
+		return (exit_on_error("Number of arguments should be 5 or 6", 1));
 	init_data(&av[1], &d);
 	n_philo = d->nbr_of_philos;
 

@@ -195,3 +195,10 @@ Successfully joined routine thread 4
 Attempting to join monitor thread
 Successfully joined monitor thread
 jin1@iMac-von-TJ code % ls
+
+
+#250128
+## things to fix
+[1]
+c4b12c2% valgrind --tool=helgrind --log-file=helgrind7.log ./obj/philo 1 800 200 200
+=> should not eat and should die

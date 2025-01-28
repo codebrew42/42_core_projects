@@ -82,11 +82,6 @@ void	init_elements(t_data **d, int n_philos)
 		p[i].last_meal_time = (*d)->start_time;
 		p[i].death_timestamp = 0;
 		p[i].data = *d;
-		if (pthread_mutex_init(&(*d)->forks[i], NULL))
-		{
-			free_data(d);
-			exit_on_error("Mutex init failed", 1);
-		}
 		i++;
 	}
 }
@@ -117,15 +112,16 @@ void	init_data(char **s, t_data **d)
 	(*d)->time_to_die = str_to_uint64(s[1]);
 	(*d)->time_to_eat = str_to_uint64(s[2]);
 	(*d)->time_to_sleep = str_to_uint64(s[3]);
-	(*d)->nbr_of_times_each_philo_must_eat = str_to_uint64(s[4]);
+	if (s[4])
+		(*d)->nbr_of_times_each_philo_must_eat = str_to_uint64(s[4]);
+	else
+		(*d)->nbr_of_times_each_philo_must_eat = 0;
 	if ((*d)->nbr_of_philos == 0 || (*d)->time_to_die == 0
-	|| (*d)->time_to_eat == 0 || (*d)->time_to_sleep == 0
-	|| (*d)->nbr_of_times_each_philo_must_eat == 0)
+	|| (*d)->time_to_eat == 0 || (*d)->time_to_sleep == 0)
 	{
 		free_data(d);
 		exit_on_error("Invalid input.", 1);
 	}
-	(*d)->start_time = get_current_time();
 	(*d)->nbr_of_philos_full = 0;
 	(*d)->dead_philo_id = 0;
 	pthread_mutex_init(&(*d)->death_lock, NULL);
