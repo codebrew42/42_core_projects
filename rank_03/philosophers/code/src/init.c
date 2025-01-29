@@ -15,8 +15,8 @@
 uint64_t	str_to_uint64(char *s);
 void		init_elements(t_data **d, int n_philos);
 void		allocate_memory(t_data **d, int n_philos);
-void		handle_invalid_input(t_data **d);
 void		init_data(char **s, t_data **d);
+void		handle_invalid_input(t_data **d);
 
 /**
  * @brief the number given as a param is always greater than 0
@@ -104,8 +104,6 @@ void	init_data(char **s, t_data **d)
 		exit_on_error("Malloc failed.", 1);
 	(*d)->nbr_of_philos = (size_t)str_to_uint64(s[0]);
 	n_philos = (*d)->nbr_of_philos;
-	if (n_philos > 200)
-		display_warning_message("Number of philosophers is greater than 200");
 	(*d)->time_to_die = str_to_uint64(s[1]);
 	(*d)->time_to_eat = str_to_uint64(s[2]);
 	(*d)->time_to_sleep = str_to_uint64(s[3]);
@@ -114,6 +112,7 @@ void	init_data(char **s, t_data **d)
 	else
 		(*d)->max_mealtime = 0;
 	handle_invalid_input(d);
+	(*d)->start_time = get_current_time();
 	(*d)->nbr_of_philos_full = 0;
 	(*d)->dead_philo_id = 0;
 	pthread_mutex_init(&(*d)->death_lock, NULL);

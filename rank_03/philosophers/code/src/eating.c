@@ -12,11 +12,12 @@
 
 #include "../includes/philo.h"
 
+void	one_philo_case(t_philo *p, t_data *d, int p_id);
 void	take_forks(t_philo *p, int p_id, int first_fork, int second_fork);
 void	update_eating_status(t_philo *p, t_data *d, int p_id);
 void	eating(t_philo *p, t_data *d, int p_id, int n_philo);
 
-void	take_forks(t_philo *p, int p_id, int first_fork, int second_fork)
+void	one_philo_case(t_philo *p, t_data *d, int p_id)
 {
 	if (p->data->nbr_of_philos == 1)
 	{
@@ -28,6 +29,10 @@ void	take_forks(t_philo *p, int p_id, int first_fork, int second_fork)
 		pthread_mutex_unlock(&p->data->print_lock);
 		return ;
 	}
+}
+
+void	take_forks(t_philo *p, int p_id, int first_fork, int second_fork)
+{
 	pthread_mutex_lock(&p->data->forks[first_fork]);
 	display_status(p->data, "has taken a fork", p_id);
 	pthread_mutex_lock(&p->data->forks[second_fork]);
@@ -59,10 +64,9 @@ void	eating(t_philo *p, t_data *d, int p_id, int n_philo)
 	int		first_fork;
 	int		second_fork;
 
-	if (n_philo == 1)
+	if (p->data->nbr_of_philos == 1)
 	{
-		take_forks(p, p_id, 0, 0);
-		return ;
+		return (one_philo_case(p, d, p_id));
 	}
 	if (p_id % 2 == 0)
 	{

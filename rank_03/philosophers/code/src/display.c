@@ -14,7 +14,6 @@
 
 uint64_t	display_status(t_data *d, char *s, int p_id);
 uint64_t	get_current_time(void);
-void		display_warning_message(char *s);
 int			exit_on_error(char *s, int exit_flag);
 
 uint64_t	display_status(t_data *d, char *s, int p_id)
@@ -41,11 +40,6 @@ uint64_t	get_current_time(void)
 
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-}
-
-void	display_warning_message(char *s)
-{
-	printf("Warning: %s", s);
 }
 
 int	exit_on_error(char *s, int exit_flag)

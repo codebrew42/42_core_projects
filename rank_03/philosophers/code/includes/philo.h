@@ -75,7 +75,6 @@ void		destroy_mutex(t_data *d);
 //	display.c
 uint64_t	display_status(t_data *d, char *s, int p_id);
 uint64_t	get_current_time(void);
-void		display_warning_message(char *s);
 int			exit_on_error(char *s, int exit_flag);
 
 #endif

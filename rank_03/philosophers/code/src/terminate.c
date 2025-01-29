@@ -24,17 +24,11 @@ int	join_threads(t_data *d, int n_philo)
 	while (i < n_philo)
 	{
 		if (pthread_join(d->routine_thread[i], NULL))
-		{
-			printf("Failed to join routine thread %d\n", i);
 			return (exit_on_error("pthread_join failed", 0));
-		}
 		i++;
 	}
 	if (pthread_join(d->monitor_thread, NULL))
-	{
-		printf("Failed to join monitor thread\n");
 		return (exit_on_error("pthread_join failed", 0));
-	}
 	return (0);
 }
 

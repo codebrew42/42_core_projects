@@ -116,18 +116,13 @@ int	launch_threads(t_data *d, int n_philo)
 
 	i = 0;
 	d->start_time = get_current_time();
-	if (pthread_create(&d->monitor_thread, NULL, monitor, d))
-		return (exit_on_error("pthread_create failed", 0));
 	while (i < n_philo)
 	{
 		if (pthread_create(&d->routine_thread[i], NULL, routine, &d->philos[i]))
-		{
-			while (i > 0)
-				pthread_join(d->routine_thread[--i], NULL);
-			pthread_join(d->monitor_thread, NULL);
 			return (exit_on_error("pthread_create failed", 0));
-		}
 		i++;
 	}
+	if (pthread_create(&d->monitor_thread, NULL, monitor, d))
+		return (exit_on_error("pthread_create failed", 0));
 	return (0);
 }
