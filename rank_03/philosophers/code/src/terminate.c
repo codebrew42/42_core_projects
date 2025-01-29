@@ -13,8 +13,8 @@
 #include "../includes/philo.h"
 
 int		join_threads(t_data *d, int n_philo);
-void		free_data(t_data **d);
-void		destroy_mutex(t_data *d);
+void	free_data(t_data **d);
+void	destroy_mutex(t_data *d);
 
 int	join_threads(t_data *d, int n_philo)
 {
@@ -24,25 +24,20 @@ int	join_threads(t_data *d, int n_philo)
 	printf("Starting to join threads. n_philo = %d\n", n_philo);
 	while (i < n_philo)
 	{
-		//printf("Attempting to join routine thread %d\n", i);
 		if (pthread_join(d->routine_thread[i], NULL))
 		{
 			printf("Failed to join routine thread %d\n", i);
 			return (exit_on_error("pthread_join failed", 0));
 		}
-		//printf("Successfully joined routine thread %d\n", i);
 		i++;
 	}
-	//printf("Attempting to join monitor thread\n");
 	if (pthread_join(d->monitor_thread, NULL))
 	{
 		printf("Failed to join monitor thread\n");
 		return (exit_on_error("pthread_join failed", 0));
 	}
-	//printf("Successfully joined monitor thread\n");
 	return (0);
 }
-
 
 void	free_data(t_data **d)
 {
@@ -76,5 +71,4 @@ void	destroy_mutex(t_data *d)
 		i++;
 	}
 	n_philo = d->nbr_of_philos;
-
 }

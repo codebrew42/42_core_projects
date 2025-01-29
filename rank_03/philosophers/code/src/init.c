@@ -12,23 +12,11 @@
 
 #include "../includes/philo.h"
 
-int			ft_strlen(char *s);
 uint64_t	str_to_uint64(char *s);
 void		init_elements(t_data **d, int n_philos);
 void		allocate_memory(t_data **d, int n_philos);
 void		init_data(char **s, t_data **d);
 
-int	ft_strlen(char *s)
-{
-	int	len;
-
-	if (!s)
-		return (0);
-	len = 0;
-	while (s[len])
-		len++;
-	return (len);
-}
 
 /**
  * @brief the number given as a param is always greater than 0
@@ -80,13 +68,7 @@ void	init_elements(t_data **d, int n_philos)
 		p[i].has_died = 0;
 		p[i].meal_count = 0;
 		p[i].last_meal_time = (*d)->start_time;
-		p[i].death_timestamp = 0;
 		p[i].data = *d;
-		if (pthread_mutex_init(&(*d)->forks[i], NULL))
-		{
-			free_data(d);
-			exit_on_error("Mutex init failed", 1);
-		}
 		i++;
 	}
 }
@@ -117,10 +99,12 @@ void	init_data(char **s, t_data **d)
 	(*d)->time_to_die = str_to_uint64(s[1]);
 	(*d)->time_to_eat = str_to_uint64(s[2]);
 	(*d)->time_to_sleep = str_to_uint64(s[3]);
-	(*d)->nbr_of_times_each_philo_must_eat = str_to_uint64(s[4]);
+	if (s[4])
+		(*d)->nbr_of_times_each_philo_must_eat = str_to_uint64(s[4]);
+	else
+		(*d)->nbr_of_times_each_philo_must_eat = 0;
 	if ((*d)->nbr_of_philos == 0 || (*d)->time_to_die == 0
-	|| (*d)->time_to_eat == 0 || (*d)->time_to_sleep == 0
-	|| (*d)->nbr_of_times_each_philo_must_eat == 0)
+		|| (*d)->time_to_eat == 0 || (*d)->time_to_sleep == 0)
 	{
 		free_data(d);
 		exit_on_error("Invalid input.", 1);

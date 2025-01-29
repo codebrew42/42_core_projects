@@ -19,12 +19,15 @@ void	eating(t_philo *p, t_data *d, int p_id, int n_philo)
 	int		first_fork;
 	int		second_fork;
 
-	first_fork = RIGHT(p_id, n_philo);
-	second_fork = LEFT(p_id, n_philo);
-	if (p_id == n_philo)
+	if (p_id % 2 == 0)
 	{
-		first_fork = LEFT(p_id, n_philo);
-		second_fork = RIGHT(p_id, n_philo);
+		first_fork = p_id - 2;
+		second_fork = p_id - 1;
+	}
+	else
+	{
+		first_fork = p_id - 1;
+		second_fork = p_id;
 	}
 	take_forks(p, p_id, first_fork, second_fork);
 	pthread_mutex_lock(&p->meal_lock);
@@ -42,7 +45,6 @@ void	eating(t_philo *p, t_data *d, int p_id, int n_philo)
 	pthread_mutex_unlock(&p->data->forks[first_fork]);
 }
 
-
 /** @brief "{time} {id} died" should be displayed in 10 sec if a philo dies
  *  @return id of the dead philosopher, -1 if no philosopher dies
  */
@@ -58,8 +60,8 @@ void	*monitor(void *arg)
 	{
 		if (check_end_condition(d, n_philo))
 			return (NULL);
-		usleep(500);
-	}	
+		usleep(100);
+	}
 	return (NULL);
 }
 
@@ -114,12 +116,9 @@ void	*routine(void *arg)
 			return (NULL);
 		p_id = p->id;
 		eating(p, d, p_id, n_philo);
-
 		display_status(d, "is sleeping", p_id);
 		usleep(p->data->time_to_sleep * 1000);
-
 		display_status(d, "is thinking", p_id);
-		//usleep(500 * 1000); //check time
 	}
 	return (NULL);
 }
@@ -133,18 +132,13 @@ int	launch_threads(t_data *d, int n_philo)
 	int		j;
 
 	i = 0;
-	if (pthread_create(&d->monitor_thread, NULL, monitor, d))
-		return (exit_on_error("pthread_create failed", 0));
 	while (i < n_philo)
 	{
 		if (pthread_create(&d->routine_thread[i], NULL, routine, &d->philos[i]))
-		{
-			while (i > 0)
-				pthread_join(d->routine_thread[--i], NULL);
-			pthread_join(d->monitor_thread, NULL);
 			return (exit_on_error("pthread_create failed", 0));
-		}
 		i++;
 	}
+	if (pthread_create(&d->monitor_thread, NULL, monitor, d))
+		return (exit_on_error("pthread_create failed", 0));
 	return (0);
 }

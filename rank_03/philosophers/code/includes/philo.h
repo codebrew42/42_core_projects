@@ -27,15 +27,15 @@
 typedef struct s_data
 {
 	size_t					nbr_of_philos;
-	uint64_t				time_to_die;	//time*: millisec
+	uint64_t				time_to_die;
 	uint64_t				time_to_eat;
 	uint64_t				time_to_sleep;
 	uint64_t				start_time;
 	size_t					nbr_of_times_each_philo_must_eat;
 	int						nbr_of_philos_full;
 	int						dead_philo_id;
-	pthread_mutex_t			death_lock;		//protects access to dead_philo_id
-	pthread_mutex_t			print_lock;		//protects access to printf in philo_routine
+	pthread_mutex_t			death_lock;
+	pthread_mutex_t			print_lock;
 	pthread_t				monitor_thread;
 	pthread_mutex_t			*forks;
 	struct s_philo			*philos; 
@@ -47,13 +47,10 @@ typedef struct s_philo
 	int					id;
 	int					has_died;
 	int					meal_count;
-	//int					is_eating;
 	uint64_t			last_meal_time;
-	uint64_t			death_timestamp; //maybe remove
-	pthread_mutex_t		meal_lock; //protects access to meal_count&last_meal_time
+	pthread_mutex_t		meal_lock;
 	struct s_data		*data;
 }	t_philo;
-
 
 //	init.c
 int			ft_strlen(char *s);
@@ -70,7 +67,7 @@ int			check_end_condition(t_data *d, int n_philo);
 int			launch_threads(t_data *d, int n_philo);
 
 //	terminate.c
-int		join_threads(t_data *d, int n_philo);
+int			join_threads(t_data *d, int n_philo);
 void		free_data(t_data **d);
 void		destroy_mutex(t_data *d);
 
