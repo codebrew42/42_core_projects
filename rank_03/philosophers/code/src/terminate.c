@@ -13,8 +13,8 @@
 #include "../includes/philo.h"
 
 int		join_threads(t_data *d, int n_philo);
-void		free_data(t_data **d);
-void		destroy_mutex(t_data *d);
+void	free_data(t_data **d);
+void	destroy_mutex(t_data *d);
 
 int	join_threads(t_data *d, int n_philo)
 {
@@ -38,7 +38,6 @@ int	join_threads(t_data *d, int n_philo)
 	return (0);
 }
 
-
 void	free_data(t_data **d)
 {
 	if (!d || !*d)
@@ -60,7 +59,7 @@ void	destroy_mutex(t_data *d)
 	int		n_philo;
 
 	n_philo = d->nbr_of_philos;
-	join_threads(d, n_philo);
+	join_threads(d, n_philo); 
 	pthread_mutex_destroy(&d->death_lock);
 	pthread_mutex_destroy(&d->print_lock);
 	i = 0;
@@ -70,6 +69,4 @@ void	destroy_mutex(t_data *d)
 		pthread_mutex_destroy(&d->philos[i].meal_lock);
 		i++;
 	}
-	n_philo = d->nbr_of_philos;
-
 }

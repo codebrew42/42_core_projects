@@ -4,7 +4,8 @@ SRC			:=	src/display.c \
 				src/init.c \
 				src/main.c \
 				src/terminate.c \
-				src/threads.c
+				src/threads.c \
+				src/eating.c
 
 OBJ_DIR		:= obj
 
