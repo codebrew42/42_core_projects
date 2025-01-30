@@ -22,13 +22,13 @@ uint64_t	print_status_and_return_time(t_data *d, char *s, int p_id)
 	uint64_t	current_time;
 
 	current_time = get_current_time();
-	pthread_mutex_lock(&d->death_lock);
-	if (d->dead_philo_id || d->completed_meal_philo_count == d->nbr_of_philos)
-	{
-		pthread_mutex_unlock(&d->death_lock);
-		return (0);
-	}
-	pthread_mutex_unlock(&d->death_lock);
+	// pthread_mutex_lock(&d->death_lock);
+	// if (d->dead_philo_id || d->completed_meal_philo_count == d->nbr_of_philos)
+	// {
+	// 	pthread_mutex_unlock(&d->death_lock);
+	// 	return (0);
+	// }
+	// pthread_mutex_unlock(&d->death_lock);
 	pthread_mutex_lock(&d->print_lock);
 	printf("%ld %d %s\n", current_time - d->start_time, p_id, s);
 	pthread_mutex_unlock(&d->print_lock);
