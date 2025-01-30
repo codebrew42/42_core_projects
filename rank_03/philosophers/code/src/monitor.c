@@ -1,19 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   display.c                                          :+:      :+:    :+:   */
+/*   threads.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiepark <jiepark@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/29 16:32:10 by jiepark           #+#    #+#             */
-/*   Updated: 2025/01/29 16:32:10 by jiepark          ###   ########.fr       */
+/*   Created: 2025/01/29 16:31:57 by jiepark           #+#    #+#             */
+/*   Updated: 2025/01/29 16:31:58 by jiepark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-uint64_t	display_status(t_data *d, char *s, int p_id);
-uint64_t	get_current_time(void);
-int			exit_on_error(char *s, int exit_flag);
-
-
+void		*monitor(void *arg);
+int			check_death(t_data *d, int n_philo);
+int			check_full(t_data *d, int n_philo);

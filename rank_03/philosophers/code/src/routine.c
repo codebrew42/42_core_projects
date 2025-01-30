@@ -1,19 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   threads.c                                          :+:      :+:    :+:   */
+/*   eating.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiepark <jiepark@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/29 16:31:57 by jiepark           #+#    #+#             */
-/*   Updated: 2025/01/29 16:31:58 by jiepark          ###   ########.fr       */
+/*   Created: 2025/01/29 17:03:39 by jiepark           #+#    #+#             */
+/*   Updated: 2025/01/29 17:04:04 by jiepark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void		*monitor(void *arg);
-int			check_death(t_data *d, int n_philo);
-int			check_end_condition(t_data *d, int n_philo);
-int			launch_threads(t_data *d, int n_philo);
+//take_fork
+//eating
 void		*routine(void *arg);

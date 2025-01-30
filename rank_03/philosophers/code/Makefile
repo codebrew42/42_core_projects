@@ -1,11 +1,11 @@
 NAME		:=	philo
 
-SRC			:=	src/display.c \
-				src/init.c \
+SRC			:=	src/init.c \
 				src/main.c \
-				src/terminate.c \
-				src/threads.c \
-				src/eating.c
+				src/print.c \
+				src/terminate.c
+#				src/monitor.c
+#				src/routine.c
 
 OBJ_DIR		:= obj
 

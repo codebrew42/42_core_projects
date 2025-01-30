@@ -13,14 +13,11 @@
 #include "../includes/philo.h"
 
 uint64_t	str_to_uint64(char *s);
-void		init_elements(t_data **d, int n_philos);
-void		allocate_memory(t_data **d, int n_philos);
-void		init_data(char **s, t_data **d);
-void		handle_invalid_input(t_data **d);
+int			init_mutexes(t_data **d, int n_philos);
+int			allocate_mem_to_ptrs(t_data **d, int n_philos);
+int			parse_input(t_data **d, char **s);
+int			init_data(char **s, t_data **d);
 
-/**
- * @brief the number given as a param is always greater than 0
- */
 uint64_t	str_to_uint64(char *s)
 {
 	long	res;
@@ -39,71 +36,53 @@ uint64_t	str_to_uint64(char *s)
 		res = res * 10 + temp;
 		i++;
 	}
-	if (res > INT_MAX || res == 0)
+	if (res > INT_MAX)
 		return (0);
 	return ((uint64_t)res);
 }
 
-//to avoid memleak, use "(*d)->philos[i].*"
-void	init_elements(t_data **d, int n_philos)
+int	init_mutexes(t_data **d, int n_philos)
 {
 	int			i;
-	t_philo		*p;
 
-	i = 0;
-	p = (*d)->philos;
-	while (i < n_philos)
+	i = -1;
+	pthread_mutex_init(&(*d)->death_lock, NULL);
+	pthread_mutex_init(&(*d)->print_lock, NULL);
+	while (++i < n_philos)
 	{
-		if (pthread_mutex_init(&(*d)->forks[i], NULL))
+		if (pthread_mutex_init(&(*d)->fork_lock[i], NULL))
 		{
-			free_data(d);
-			exit_on_error("Mutex init failed", 1);
+			destroy_n_mutexes((*d)->fork_lock, i);
+			return (1);
 		}
+	}
+	i = -1;
+	while (++i < n_philos)
+	{
 		if (pthread_mutex_init(&(*d)->philos[i].meal_lock, NULL))
 		{
-			free_data(d);
-			exit_on_error("Mutex init failed", 1);
+			destroy_n_mutexes((*d)->fork_lock, n_philos);
+			while (--i >= 0)
+				pthread_mutex_destroy(&(*d)->philos[i].meal_lock);
+			return (1);
 		}
-		p[i].id = i + 1;
-		p[i].has_died = 0;
-		p[i].meal_count = 0;
-		p[i].last_meal_time = (*d)->start_time;
-		p[i].data = *d;
-		i++;
 	}
+	return (0);
 }
 
-void	allocate_memory(t_data **d, int n_philos)
+int	allocate_mem_to_ptrs(t_data **d, int n_philos)
 {
-	(*d)->forks = malloc(sizeof(pthread_mutex_t) * n_philos);
+	(*d)->fork_lock = malloc(sizeof(pthread_mutex_t) * n_philos);
 	(*d)->philos = malloc(sizeof(t_philo) * n_philos);
 	(*d)->routine_thread = malloc(sizeof(pthread_t) * n_philos);
-	if (!(*d)->forks || !(*d)->philos || !(*d)->routine_thread)
-	{
-		free_data(d);
-		exit_on_error("Malloc failed.", 1);
-	}
+	if (!(*d)->fork_lock || !(*d)->philos || !(*d)->routine_thread)
+		return (1);
+	return (0);
 }
 
-void	handle_invalid_input(t_data **d)
+int	parse_input(t_data **d, char **s)
 {
-	if ((*d)->nbr_of_philos == 0 || (*d)->time_to_die == 0
-		|| (*d)->time_to_eat == 0 || (*d)->time_to_sleep == 0)
-	{
-		free_data(d);
-		exit_on_error("Invalid input.", 1);
-	}
-}
-
-void	init_data(char **s, t_data **d)
-{
-	int			n_philos;
-
-	*d = malloc(sizeof(t_data));
-	if (!*d)
-		exit_on_error("Malloc failed.", 1);
 	(*d)->nbr_of_philos = (size_t)str_to_uint64(s[0]);
-	n_philos = (*d)->nbr_of_philos;
 	(*d)->time_to_die = str_to_uint64(s[1]);
 	(*d)->time_to_eat = str_to_uint64(s[2]);
 	(*d)->time_to_sleep = str_to_uint64(s[3]);
@@ -111,12 +90,35 @@ void	init_data(char **s, t_data **d)
 		(*d)->max_mealtime = str_to_uint64(s[4]);
 	else
 		(*d)->max_mealtime = 0;
-	handle_invalid_input(d);
+	if ((*d)->nbr_of_philos == 0 || (*d)->time_to_die == 0
+		|| (*d)->time_to_eat == 0 || (*d)->time_to_sleep == 0)
+		return (1);
+	return (0);
+}
+
+int	init_data(char **s, t_data **d)
+{
+	int			n_philos;
+
+	*d = malloc(sizeof(t_data));
+	if (!*d)
+		return (print_err_msg("Malloc failed"));
+	if (parse_input(d, s))
+		return (print_err_msg_and_free("Invalid input", d));
+	n_philos = (*d)->nbr_of_philos;
+	if (allocate_mem_to_ptrs(d, n_philos))
+		return (print_err_msg_and_free("Malloc failed", d));
+	if (init_mutexes(d, n_philos))
+		return (print_err_msg_and_free("Mutex init failed", d));
 	(*d)->start_time = get_current_time();
-	(*d)->nbr_of_philos_full = 0;
+	(*d)->nbr_of_full_philos = 0;
 	(*d)->dead_philo_id = 0;
-	pthread_mutex_init(&(*d)->death_lock, NULL);
-	pthread_mutex_init(&(*d)->print_lock, NULL);
-	allocate_memory(d, n_philos);
-	init_elements(d, n_philos);
+	while (--n_philos >= 0)
+	{
+		(*d)->philos[n_philos].id = n_philos + 1;
+		(*d)->philos[n_philos].meal_count = 0;
+		(*d)->philos[n_philos].last_meal_time = (*d)->start_time;
+		(*d)->philos[n_philos].data = *d;
+	}
+	return (0);
 }

@@ -29,26 +29,45 @@ typedef struct s_data
 	uint64_t				time_to_sleep;
 	uint64_t				start_time;
 	size_t					max_mealtime;
-	int						nbr_of_philos_full;
+	int						nbr_of_full_philos;
 	int						dead_philo_id;
 	pthread_mutex_t			death_lock;
 	pthread_mutex_t			print_lock;
+	pthread_mutex_t			*fork_lock;
 	pthread_t				monitor_thread;
-	pthread_mutex_t			*forks;
-	struct s_philo			*philos; 
+	struct s_philo			*philos;
 	pthread_t				*routine_thread;
 }	t_data;
 
 typedef struct s_philo
 {
 	int					id;
-	int					has_died;
 	int					meal_count;
 	uint64_t			last_meal_time;
 	pthread_mutex_t		meal_lock;
 	struct s_data		*data;
 }	t_philo;
 
+/* * * * * init.c * * * */
+int			init_data(char **s, t_data **d);
+int			init_mutexes(t_data **d, int n_philos);
+int			allocate_mem_to_ptrs(t_data **d, int n_philos);
+int			parse_input(t_data **d, char **s);
 
+/* * * * * monitor.c * * * */
+
+/* * * * * print.c * * * */
+uint64_t	print_status_and_return_current_time(t_data *d, char *s, int p_id);
+uint64_t	get_current_time(void);
+int			print_err_msg(char *s);
+int			print_err_msg_and_free(char *s, t_data **d);
+
+/* * * * * routine.c * * * */
+
+/* * * * * terminate.c * * * */
+int			join_threads(t_data *d, int n_philo);
+void		free_data(t_data **d);
+int			destroy_n_mutexes(pthread_mutex_t *p, int max_i);
+int			destroy_all_mutexes(t_data *d, int n_philos);
 
 #endif
