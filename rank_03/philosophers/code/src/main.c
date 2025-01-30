@@ -20,8 +20,5 @@ int	main(int ac, char **av)
 	if (ac != 5 && ac != 6)
 		return (exit_on_error("Number of arguments should be 5 or 6", 1));
 	init_data(&av[1], &d);
-	n_philo = d->nbr_of_philos;
-	launch_threads(d, n_philo);
-	destroy_mutex(d);
-	free_data(&d);
+
 }

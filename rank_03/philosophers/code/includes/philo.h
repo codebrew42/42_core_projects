@@ -49,32 +49,6 @@ typedef struct s_philo
 	struct s_data		*data;
 }	t_philo;
 
-//	init.c
-uint64_t	str_to_uint64(char *s);
-void		init_elements(t_data **d, int n_philos);
-void		allocate_memory(t_data **d, int n_philos);
-void		init_data(char **s, t_data **d);
 
-// eating.c
-void		take_forks(t_philo *p, int p_id, int first_fork, int second_fork);
-void		eating(t_philo *p, t_data *d, int p_id, int n_philo);
-void		update_eating_status(t_philo *p, t_data *d, int p_id);
-
-//	threads.c
-void		*monitor(void *arg);
-void		*routine(void *arg);
-int			check_end_condition(t_data *d, int n_philo);
-int			check_death(t_data *d, int n_philo);
-int			launch_threads(t_data *d, int n_philo);
-
-//	terminate.c
-int			join_threads(t_data *d, int n_philo);
-void		free_data(t_data **d);
-void		destroy_mutex(t_data *d);
-
-//	display.c
-uint64_t	display_status(t_data *d, char *s, int p_id);
-uint64_t	get_current_time(void);
-int			exit_on_error(char *s, int exit_flag);
 
 #endif
