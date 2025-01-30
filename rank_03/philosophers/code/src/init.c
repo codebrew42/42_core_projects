@@ -110,14 +110,12 @@ int	init_data(char **s, t_data **d)
 		return (print_err_msg_and_free("Malloc failed", d));
 	if (init_mutexes(d, n_philos))
 		return (print_err_msg_and_free("Mutex init failed", d));
-	(*d)->start_time = get_current_time();
-	(*d)->nbr_of_full_philos = 0;
+	(*d)->completed_meal_philo_count = 0;
 	(*d)->dead_philo_id = 0;
 	while (--n_philos >= 0)
 	{
 		(*d)->philos[n_philos].id = n_philos + 1;
 		(*d)->philos[n_philos].meal_count = 0;
-		(*d)->philos[n_philos].last_meal_time = (*d)->start_time;
 		(*d)->philos[n_philos].data = *d;
 	}
 	return (0);

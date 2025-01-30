@@ -12,14 +12,46 @@
 
 #include "../includes/philo.h"
 
-int		join_threads(t_data *d, int n_philo);
+int		join_n_threads(pthread_t *p, int n);
+int		join_all_threads(t_data *d);
 void	free_data(t_data **d);
 int		destroy_n_mutexes(pthread_mutex_t *p, int max_i);
 int		destroy_all_mutexes(t_data *d, int n_philos);
 
-int	join_threads(t_data *d, int n_philo)
+int	join_n_threads(pthread_t *p, int n)
 {
-	return (1);
+	int		i;
+	int		ret;
+
+	i = 0;
+	ret = 0;
+	while (i < n)
+	{
+		if (pthread_join(p[i], NULL))
+			ret = 1;
+		i++;
+	}
+	return (ret);
+}
+
+int	join_all_threads(t_data *d)
+{
+	int		i;
+	int		ret;
+
+	i = 0;
+	ret = 0;
+	while (i < d->nbr_of_philos)
+	{
+		if (pthread_join(d->routine_thread[i], NULL))
+			ret = 1;
+		i++;
+	}
+	if (pthread_join(d->monitor_thread, NULL))
+		ret = 1;
+	if (ret)
+		print_err_msg("joining all threads failed");
+	return (ret);
 }
 
 /**

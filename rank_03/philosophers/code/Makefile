@@ -3,16 +3,16 @@ NAME		:=	philo
 SRC			:=	src/init.c \
 				src/main.c \
 				src/print.c \
-				src/terminate.c
-#				src/monitor.c
-#				src/routine.c
+				src/terminate.c \
+				src/monitor.c \
+				src/routine.c
 
 OBJ_DIR		:= obj
 
 OBJ			:= $(SRC:src/%.c=$(OBJ_DIR)/%.o)
 
 CC			:= gcc
-CFLAG		:= -Wall -Wextra -Werror -I includes -g
+CFLAG		:= -Wall -Wextra -Werror -I includes -g -fsanitize=address
 RM			:= rm -rf
 
 $(NAME)		: $(OBJ_DIR) $(OBJ)

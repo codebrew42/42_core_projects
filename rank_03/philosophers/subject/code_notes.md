@@ -1,4 +1,4 @@
-# Mutex and Thread Management in Philosophers
+# General questions about Mutex and Thread Management
 
 ## Mutex Questions
 

@@ -12,40 +12,50 @@
 
 #include "../includes/philo.h"
 
+int		handle_case_one(t_data *d);
 int		launch_threads(t_data *d, int n_philos);
 
-void	display_all_philos_data_for_debug(t_data *d)
+int	handle_case_one(t_data *d)
 {
-	int			i;
-
-	printf(" * * * * *\n");
-	printf("[1] data\n");
-	printf("nbr_of_philos: %zu\n", d->nbr_of_philos);
-	printf("time_to_die: %lu\n", d->time_to_die);
-	printf("time_to_eat: %lu\n", d->time_to_eat);
-	printf("time_to_sleep: %lu\n", d->time_to_sleep);
-	printf("start_time: %lu\n", d->start_time);
-	printf("max_mealtime: %zu\n", d->max_mealtime);
-	printf("nbr_of_full_philos: %d\n", d->nbr_of_full_philos);
-	printf("dead_philo_id: %d\n\n", d->dead_philo_id);
-	printf(" * * * * *\n");
-	printf("[2]Philosophers data\n");
-	i = 0;
-	while (i < d->nbr_of_philos)
-	{
-		printf("loop %d:Philosopher id[%d]\n", i, d->philos[i].id);
-		printf("meal_count: %d\n", d->philos[i].meal_count);
-		printf("last_meal_time: %lu\n\n", d->philos[i].last_meal_time);
-		i++;
-	}
-	printf(" END * * * * *\n");
+	if (d->nbr_of_philos != 1)
+		return (0);
+	pthread_mutex_lock(&d->print_lock);
+	printf("%lu %d %s\n", 0lu, 1, "has taken a fork");
+	pthread_mutex_unlock(&d->print_lock);
+	usleep(d->time_to_die * 1000);
+	pthread_mutex_lock(&d->print_lock);
+	printf("%lu %d %s\n", d->time_to_die, 1, "died");
+	pthread_mutex_unlock(&d->print_lock);
+	return (1);
 }
 
 int	launch_threads(t_data *d, int n_philos)
 {
+	int			i;
+
 	d->start_time = get_current_time();
-
-
+	i = 0;
+	while (i < n_philos)
+	{
+		d->philos[i].last_meal_time = d->start_time;
+		i++;
+	}
+	i = 0;
+	while (i < n_philos)
+	{
+		if (pthread_create(&d->routine_thread[i], NULL, routine, &d->philos[i]))
+		{
+			if (join_n_threads(d->routine_thread, i))
+				return (1);
+		}
+		i++;
+	}
+	if (pthread_create(&d->monitor_thread, NULL, monitor, d))
+	{
+		if (join_n_threads(d->routine_thread, i))
+			return (1);
+	}
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -56,12 +66,15 @@ int	main(int ac, char **av)
 	if (ac != 5 && ac != 6)
 		return (print_err_msg("Number of arguments is not 4 or 5"));
 	init_data(&av[1], &d);
-	//display_all_philos_data_for_debug(d); //rm
 	n_philos = d->nbr_of_philos;
-	//printf("current time %lu\n", get_current_time()); //rm
-	//print_status_and_return_current_time(d, "start\n", 0); //rm
-	launch_threads(d, n_philos);
-	// join_threads();
+	if (!handle_case_one(d))
+	{
+		if (launch_threads(d, n_philos))
+			print_err_msg("thread creation failed");
+		else
+			join_all_threads(d);
+	}
 	destroy_all_mutexes(d, n_philos);
 	free_data(&d);
+	return (0);
 }
