@@ -19,7 +19,6 @@ void		*routine(void *arg);
 
 void	log_meal(t_philo *p, uint64_t meal_time)
 {
-	usleep(p->data->time_to_eat * 1000);
 	pthread_mutex_lock(&p->meal_lock);
 	p->last_meal_time = meal_time;
 	p->meal_count++;
@@ -57,7 +56,10 @@ int	eat_and_monitor(t_philo *p)
 	}
 	take_fork(p, second_fork);
 	if (!check_and_print_a_philo_died(p->data, p->id))
+	{
 		log_meal(p, print_status_and_return_time(p->data, "is eating", p->id));
+		usleep(p->data->time_to_eat * 1000);
+	}
 	pthread_mutex_unlock(&p->data->fork_lock[second_fork]);
 	pthread_mutex_unlock(&p->data->fork_lock[first_fork]);
 	return (0);
