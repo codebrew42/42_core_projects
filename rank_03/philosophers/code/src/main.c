@@ -65,16 +65,18 @@ int	main(int ac, char **av)
 
 	if (ac != 5 && ac != 6)
 		return (print_err_msg("Number of arguments is not 4 or 5"));
-	init_data(&av[1], &d);
-	n_philos = d->nbr_of_philos;
-	if (!handle_case_one(d))
+	if (!init_data(&av[1], &d))
 	{
-		if (launch_threads(d, n_philos))
-			print_err_msg("thread creation failed");
-		else
-			join_all_threads(d);
+		n_philos = d->nbr_of_philos;
+		if (!handle_case_one(d))
+		{
+			if (launch_threads(d, n_philos))
+				print_err_msg("thread creation failed");
+			else
+				join_all_threads(d);
+		}
+		destroy_all_mutexes(d, n_philos);
 	}
-	destroy_all_mutexes(d, n_philos);
 	free_data(&d);
 	return (0);
 }

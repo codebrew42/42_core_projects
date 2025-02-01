@@ -46,25 +46,23 @@ int	init_mutexes(t_data **d, int n_philos)
 	int			i;
 
 	i = -1;
-	pthread_mutex_init(&(*d)->death_lock, NULL);
-	pthread_mutex_init(&(*d)->print_lock, NULL);
+	if (pthread_mutex_init(&(*d)->death_lock, NULL))
+		return (1);
+	if (pthread_mutex_init(&(*d)->print_lock, NULL))
+		return (pthread_mutex_destroy(&(*d)->death_lock) + 1);
 	while (++i < n_philos)
 	{
 		if (pthread_mutex_init(&(*d)->fork_lock[i], NULL))
-		{
-			destroy_n_mutexes((*d)->fork_lock, i);
-			return (1);
-		}
+			return (destroy_n_mutexes((*d)->fork_lock, i) + 1);
 	}
 	i = -1;
 	while (++i < n_philos)
 	{
 		if (pthread_mutex_init(&(*d)->philos[i].meal_lock, NULL))
 		{
-			destroy_n_mutexes((*d)->fork_lock, n_philos);
 			while (--i >= 0)
 				pthread_mutex_destroy(&(*d)->philos[i].meal_lock);
-			return (1);
+			return (destroy_n_mutexes((*d)->fork_lock, n_philos) + 1);
 		}
 	}
 	return (0);
