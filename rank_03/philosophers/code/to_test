@@ -1,12 +1,14 @@
 valgrind --log-file=helgrind1.log ./obj/philo 1 800 200 200
 -> just die
 valgrind --log-file=helgrind1.log ./obj/philo 5 800 200 200
-
+->no die
 valgrind --log-file=helgrind1.log ./obj/philo 5 800 200 200 7
-
+->stops
 valgrind --log-file=helgrind1.log ./obj/philo 4 410 200 200
-
+->no die
 valgrind --log-file=helgrind1.log ./obj/philo 4 310 200 100
+-> one should die
+
 
 + test with 2 philos, same time
 + teset with 2 philos, diff time_to_die

@@ -26,7 +26,6 @@ uint64_t	str_to_uint64(char *s)
 
 	if (!s)
 		return (0);
-
 	res = 0;
 	i = 0;
 	while (s[i] == ' ' || s[i] == '\t')

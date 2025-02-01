@@ -79,6 +79,8 @@ void	*routine(void *arg)
 	t_philo		*p;
 
 	p = (t_philo *)arg;
+	if (p->id % 2 == 0)
+		usleep(100);
 	while (1)
 	{
 		if (eat_and_monitor(p))
