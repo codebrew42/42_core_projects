@@ -70,9 +70,9 @@ int	init_mutexes(t_data **d, int n_philos)
 
 int	allocate_mem_to_ptrs(t_data **d, int n_philos)
 {
-	(*d)->fork_lock = malloc(sizeof(pthread_mutex_t) * n_philos);
-	(*d)->philos = malloc(sizeof(t_philo) * n_philos);
-	(*d)->routine_thread = malloc(sizeof(pthread_t) * n_philos);
+	(*d)->fork_lock = malloc(sizeof(pthread_mutex_t) * (n_philos + 1));
+	(*d)->philos = malloc(sizeof(t_philo) * (n_philos + 1));
+	(*d)->routine_thread = malloc(sizeof(pthread_t) * (n_philos + 1));
 	if (!(*d)->fork_lock || !(*d)->philos || !(*d)->routine_thread)
 		return (1);
 	return (0);
