@@ -202,3 +202,7 @@ jin1@iMac-von-TJ code % ls
 [1]
 c4b12c2% valgrind --tool=helgrind --log-file=helgrind7.log ./obj/philo 1 800 200 200
 => should not eat and should die
+
+# 250202
+# to fix
+- print after death
