@@ -36,18 +36,30 @@ int	take_fork(t_philo *p, int index)
 	return (0);
 }
 
+void	set_forks(int p_id, int n_philos, int *first, int *second)
+{
+	int	temp;
+
+	if (p_id == 1)
+		*first = n_philos - 1;
+	else
+		*first = p_id - 2;
+	*second = p_id - 1;
+	if (p_id % 2 == 0)
+	{
+		temp = *first;
+		*first = *second;
+		*second = temp;
+	}
+}
+
 int	eat_and_monitor(t_philo *p)
 {
 	int			first_fork;
 	int			second_fork;
 	t_data		*d;
 
-	first_fork = p->id - 1;
-	second_fork = p->id - 1;
-	if (p->id % 2 == 0)
-		first_fork = p->id - 2;
-	else
-		second_fork = p->id;
+	set_forks(p->id, p->data->nbr_of_philos, &first_fork, &second_fork);
 	take_fork(p, first_fork);
 	if (check_and_print_a_philo_died(p->data, p->id))
 		(pthread_mutex_unlock(&p->data->fork_lock[first_fork]) + 1);
