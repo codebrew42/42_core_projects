@@ -58,6 +58,19 @@ int	launch_threads(t_data *d, int n_philos)
 	return (0);
 }
 
+int	validate_input(char *s)
+{
+	if (str_to_uint64(&s[1]) <= 0)
+		return (print_err_msg("Invalid number of philosophers"));
+	if (str_to_uint64(&s[2]) <= 0)
+		return (print_err_msg("Invalid time to die"));
+	if (str_to_uint64(&s[3]) <= 0)
+		return (print_err_msg("Invalid time to eat"));
+	if (str_to_uint64(&s[4]) <= 0)
+		return (print_err_msg("Invalid time to sleep"));
+	return (0);
+}
+
 int	main(int ac, char **av)
 {
 	t_data		*d;
@@ -65,6 +78,8 @@ int	main(int ac, char **av)
 
 	if (ac != 5 && ac != 6)
 		return (print_err_msg("Number of arguments is not 4 or 5"));
+	if (validate_input(av[1]))
+		return (1);
 	if (!init_data(&av[1], &d))
 	{
 		n_philos = d->nbr_of_philos;

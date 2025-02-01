@@ -67,8 +67,11 @@ void	free_data(t_data **d)
 		free((*d)->philos);
 	if ((*d)->routine_thread)
 		free((*d)->routine_thread);
-	free(*d);
-	*d = NULL;
+	if (*d)
+	{
+		free(*d);
+		*d = NULL;
+	}
 }
 
 /**

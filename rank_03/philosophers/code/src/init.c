@@ -24,8 +24,14 @@ uint64_t	str_to_uint64(char *s)
 	long	temp;
 	int		i;
 
+	if (!s)
+		return (0);
 	res = 0;
 	i = 0;
+	while (s[i] == ' ' || s[i] == '\t')
+		i++;
+	if (s[i] == '+')
+		i++;
 	while (s[i])
 	{
 		if (s[i] < 48 || s[i] > 57)
@@ -102,7 +108,10 @@ int	init_data(char **s, t_data **d)
 	if (!*d)
 		return (print_err_msg("Malloc failed"));
 	if (parse_input(d, s))
-		return (print_err_msg_and_free("Invalid input", d));
+	{
+		print_err_msg_and_free("Invalid input", d);
+		exit (1);
+	}
 	n_philos = (*d)->nbr_of_philos;
 	if (allocate_mem_to_ptrs(d, n_philos))
 		return (print_err_msg_and_free("Malloc failed", d));

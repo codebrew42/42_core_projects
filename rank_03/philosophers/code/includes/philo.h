@@ -49,10 +49,11 @@ typedef struct s_philo
 }	t_philo;
 
 /* * * * * init.c * * * */
-int			init_data(char **s, t_data **d);
+uint64_t	str_to_uint64(char *s);
 int			init_mutexes(t_data **d, int n_philos);
 int			allocate_mem_to_ptrs(t_data **d, int n_philos);
 int			parse_input(t_data **d, char **s);
+int			init_data(char **s, t_data **d);
 
 /* * * * * monitor.c * * * */
 int			check_all_completed_meal(t_data *d, int n_philo);
