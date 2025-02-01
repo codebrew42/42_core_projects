@@ -11,7 +11,7 @@ valgrind --log-file=helgrind1.log ./obj/philo 4 310 200 100
 
 
 + test with 2 philos, same time
-+ teset with 2 philos, diff time_to_die
++ test with 2 philos, diff time_to_die
 
 -> see death delay no more then 10 ms
 
