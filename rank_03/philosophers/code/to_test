@@ -1,0 +1,15 @@
+valgrind --log-file=helgrind1.log ./obj/philo 1 800 200 200
+-> just die
+valgrind --log-file=helgrind1.log ./obj/philo 5 800 200 200
+
+valgrind --log-file=helgrind1.log ./obj/philo 5 800 200 200 7
+
+valgrind --log-file=helgrind1.log ./obj/philo 4 410 200 200
+
+valgrind --log-file=helgrind1.log ./obj/philo 4 310 200 100
+
++ test with 2 philos, same time
++ teset with 2 philos, diff time_to_die
+
+-> see death delay no more then 10 ms
+
