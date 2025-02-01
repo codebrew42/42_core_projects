@@ -206,3 +206,4 @@ c4b12c2% valgrind --tool=helgrind --log-file=helgrind7.log ./obj/philo 1 800 200
 # 250202
 # to fix
 - print after death
+- early death : 5 800 200 200
