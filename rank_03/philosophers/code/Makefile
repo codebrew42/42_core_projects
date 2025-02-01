@@ -12,7 +12,7 @@ OBJ_DIR		:= obj
 OBJ			:= $(SRC:src/%.c=$(OBJ_DIR)/%.o)
 
 CC			:= gcc
-CFLAG		:= -Wall -Wextra -Werror -I includes -g -fsanitize=address
+CFLAG		:= -Wall -Wextra -Werror -I includes -g
 RM			:= rm -rf
 
 $(NAME)		: $(OBJ_DIR) $(OBJ)

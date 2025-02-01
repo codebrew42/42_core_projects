@@ -50,10 +50,7 @@ int	eat_and_monitor(t_philo *p)
 		second_fork = p->id;
 	take_fork(p, first_fork);
 	if (check_and_print_a_philo_died(p->data, p->id))
-	{
-		pthread_mutex_unlock(&p->data->fork_lock[first_fork]);
-		return (1);
-	}
+		(pthread_mutex_unlock(&p->data->fork_lock[first_fork]) + 1);
 	take_fork(p, second_fork);
 	if (!check_and_print_a_philo_died(p->data, p->id))
 	{
