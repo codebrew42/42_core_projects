@@ -36,39 +36,85 @@ int	take_fork(t_philo *p, int index)
 	return (0);
 }
 
-void	set_forks(int p_id, int n_philos, int *first, int *second)
+/** chat gpt */
+void set_forks(int p_id, int n_philos, int *first, int *second)
 {
-	int	temp;
+    int left;
+    int right;
 
-	if (p_id == 1)
-		*first = n_philos - 1;
-	else
-		*first = p_id - 2;
-	*second = p_id - 1;
-	if (p_id % 2 == 0)
-	{
-		temp = *first;
-		*first = *second;
-		*second = temp;
-	}
+    // Compute left and right fork indices.
+    // Assuming philosophers are numbered from 1 to n_philos,
+    // left fork is (p_id - 1) and right fork is (p_id % n_philos).
+    left = (p_id + n_philos - 1) % n_philos;  // Adjust for 0-indexed fork array
+    right = p_id % n_philos;
+
+    // Order the forks by index: the lower index is picked up first.
+    if (left < right)
+    {
+        *first = left;
+        *second = right;
+    }
+    else
+    {
+        *first = right;
+        *second = left;
+    }
 }
+
+/** deep seek */
+// void	set_forks(int p_id, int n_philos, int *first, int *second)
+// {
+// 	int	temp;
+
+// 	if (p_id % 2 == 0)
+// 	{
+// 		*first = p_id - 1;
+// 		*second = (p_id) % n_philos;
+// 	}
+// 	else
+// 	{
+// 		*first = (p_id) % n_philos;
+// 		*second = p_id - 1;
+// 	}
+// 	if (*first < *second)
+// 	{
+// 		temp = *first;
+// 		*first = *second;
+// 		*second = temp;
+// 	}
+// }
+
+/** mine  */
+// void	set_forks(int p_id, int n_philos, int *first, int *second)
+// {
+// 	int	temp;
+
+// 	if (p_id == 1)
+// 		*first = n_philos - 1;
+// 	else
+// 		*first = p_id - 2;
+// 	*second = p_id - 1;
+// 	if (p_id % 2 == 0)
+// 	{
+// 		temp = *first;
+// 		*first = *second;
+// 		*second = temp;
+// 	}
+// }
 
 int	eat_and_monitor(t_philo *p)
 {
 	int			first_fork;
 	int			second_fork;
 	t_data		*d;
+	uint64_t	meal_time;
 
 	set_forks(p->id, p->data->nbr_of_philos, &first_fork, &second_fork);
 	take_fork(p, first_fork);
-	if (check_and_print_a_philo_died(p->data, p->id))
-		return (pthread_mutex_unlock(&p->data->fork_lock[first_fork]) + 1);
 	take_fork(p, second_fork);
-	if (!check_and_print_a_philo_died(p->data, p->id))
-	{
-		log_meal(p, print_status_and_return_time(p->data, "is eating", p->id));
-		usleep(p->data->time_to_eat * 1000);
-	}
+	meal_time = print_status_and_return_time(p->data, "is eating", p->id);
+	log_meal(p, meal_time);
+	usleep(p->data->time_to_eat * 1000);
 	pthread_mutex_unlock(&p->data->fork_lock[second_fork]);
 	pthread_mutex_unlock(&p->data->fork_lock[first_fork]);
 	return (0);
@@ -79,7 +125,7 @@ void	*routine(void *arg)
 	t_philo		*p;
 
 	p = (t_philo *)arg;
-	if (p->id % 2)
+	if (!p->id % 2)
 		usleep(100);
 	while (1)
 	{
