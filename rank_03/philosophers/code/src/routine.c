@@ -37,28 +37,23 @@ int	take_fork(t_philo *p, int index)
 }
 
 /** chat gpt */
-void set_forks(int p_id, int n_philos, int *first, int *second)
+void	set_forks(int p_id, int n_philos, int *first, int *second)
 {
-    int left;
-    int right;
+	int	left;
+	int	right;
 
-    // Compute left and right fork indices.
-    // Assuming philosophers are numbered from 1 to n_philos,
-    // left fork is (p_id - 1) and right fork is (p_id % n_philos).
-    left = (p_id + n_philos - 1) % n_philos;  // Adjust for 0-indexed fork array
-    right = p_id % n_philos;
-
-    // Order the forks by index: the lower index is picked up first.
-    if (left < right)
-    {
-        *first = left;
-        *second = right;
-    }
-    else
-    {
-        *first = right;
-        *second = left;
-    }
+	left = (p_id + n_philos - 1) % n_philos;
+	right = p_id % n_philos;
+	if (left < right)
+	{
+		*first = left;
+		*second = right;
+	}
+	else
+	{
+		*first = right;
+		*second = left;
+	}
 }
 
 /** deep seek */
