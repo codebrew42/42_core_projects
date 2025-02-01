@@ -62,7 +62,7 @@ int	eat_and_monitor(t_philo *p)
 	set_forks(p->id, p->data->nbr_of_philos, &first_fork, &second_fork);
 	take_fork(p, first_fork);
 	if (check_and_print_a_philo_died(p->data, p->id))
-		(pthread_mutex_unlock(&p->data->fork_lock[first_fork]) + 1);
+		return (pthread_mutex_unlock(&p->data->fork_lock[first_fork]) + 1);
 	take_fork(p, second_fork);
 	if (!check_and_print_a_philo_died(p->data, p->id))
 	{
@@ -79,7 +79,7 @@ void	*routine(void *arg)
 	t_philo		*p;
 
 	p = (t_philo *)arg;
-	if (p->id % 2 == 0)
+	if (p->id % 2)
 		usleep(100);
 	while (1)
 	{
