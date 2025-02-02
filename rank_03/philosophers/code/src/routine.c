@@ -53,7 +53,7 @@ int	take_fork(t_philo *p, int index)
 	return (0);
 }
 
-/** chat gpt */
+/** chat gpt 
 void	set_forks(int p_id, int n_philos, int *first, int *second)
 {
 	int	left;
@@ -72,29 +72,34 @@ void	set_forks(int p_id, int n_philos, int *first, int *second)
 		*second = left;
 	}
 }
+*/
 
 /** deep seek */
-// void	set_forks(int p_id, int n_philos, int *first, int *second)
-// {
-// 	int	temp;
+void set_forks(int p_id, int n_philos, int *first, int *second)
+{
+    int temp;
 
-// 	if (p_id % 2 == 0)
-// 	{
-// 		*first = p_id - 1;
-// 		*second = (p_id) % n_philos;
-// 	}
-// 	else
-// 	{
-// 		*first = (p_id) % n_philos;
-// 		*second = p_id - 1;
-// 	}
-// 	if (*first < *second)
-// 	{
-// 		temp = *first;
-// 		*first = *second;
-// 		*second = temp;
-// 	}
-// }
+    // 홀수 ID: 오른쪽 포크 먼저, 짝수 ID: 왼쪽 포크 먼저
+    if (p_id % 2 == 0)
+    {
+        *first = (p_id - 1) % n_philos;
+        *second = p_id % n_philos;
+    }
+    else
+    {
+        *first = p_id % n_philos;
+        *second = (p_id - 1) % n_philos;
+    }
+
+    // 항상 낮은 인덱스의 포크를 먼저 잡도록 순서 조정
+    if (*first > *second)
+    {
+        temp = *first;
+        *first = *second;
+        *second = temp;
+    }
+}
+
 
 /** mine  */
 // void	set_forks(int p_id, int n_philos, int *first, int *second)
@@ -126,7 +131,7 @@ int	eat_and_monitor(t_philo *p)
 	take_fork(p, second_fork);
 	meal_time = print_status_and_return_time(p->data, "is eating", p->id);
 	log_meal(p, meal_time);
-	usleep(p->data->time_to_eat * 1000);
+	wait_time(p->data->time_to_eat);
 	pthread_mutex_unlock(&p->data->fork_lock[second_fork]);
 	pthread_mutex_unlock(&p->data->fork_lock[first_fork]);
 	return (0);
@@ -137,8 +142,8 @@ void	*routine(void *arg)
 	t_philo		*p;
 
 	p = (t_philo *)arg;
-	if (!p->id % 2)
-		usleep(500);
+	if (p->id % 2)
+		usleep(2000);
 	while (1)
 	{
 		if (eat_and_monitor(p))
@@ -146,7 +151,6 @@ void	*routine(void *arg)
 		// if (check_all_completed_meal(p->data, p->data->nbr_of_philos))
 		// 	return (NULL);
 		print_status_and_return_time(p->data, "is sleeping", p->id);
-		//usleep(p->data->time_to_sleep * 1000);
 		wait_time(p->data->time_to_sleep);
 		if (check_and_print_a_philo_died(p->data, p->id)
 			|| check_all_completed_meal(p->data, p->data->nbr_of_philos))
