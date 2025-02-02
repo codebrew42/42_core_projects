@@ -113,6 +113,12 @@ void set_forks(int p_id, int n_philos, int *first, int *second)
 {
 	int temp;
 
+	if (p_id == n_philos)
+	{
+		*first = 0;          // Right fork first
+		*second = p_id - 1;
+	}
+
 	if (p_id % 2 == 0)
 	{
 		*first = (p_id - 1) % n_philos;
