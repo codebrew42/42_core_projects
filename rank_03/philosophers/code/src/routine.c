@@ -49,10 +49,43 @@ void	log_meal(t_philo *p, uint64_t meal_time)
 
 int	take_fork(t_philo *p, int index)
 {
-	pthread_mutex_lock(&p->data->fork_lock[index]);
-	print_status_and_return_time(p->data, "has taken a fork", p->id);
-	return (0);
+	while (1)
+	{
+		if (!pthread_mutex_lock(&p->data->fork_lock[index]))
+		{
+			print_status_and_return_time(p->data, "has taken a fork", p->id);
+			return (0);
+		}
+		wait_time(100);
+	}
+	return (1);
 }
+
+/*
+int	take_fork(t_philo *p, int index)
+{
+	int	return_flag;
+
+	return_flag = 0;
+	while (!return_flag)
+	{
+		if (!pthread_mutex_lock(&p->data->fork_lock[index]))
+		{
+			print_status_and_return_time(p->data, "has taken a fork", p->id);
+			return (0);
+		}
+		wait_time(p->data->time_to_sleep * 0.9);
+		if (!pthread_mutex_lock(&p->data->fork_lock[index]))
+		{
+			print_status_and_return_time(p->data, "has taken a fork", p->id);
+			return (0);
+		}
+		else
+			return_flag = 1;
+	}
+	return (1);
+}
+*/
 
 /** chat gpt 
 void	set_forks(int p_id, int n_philos, int *first, int *second)
@@ -142,7 +175,7 @@ void	*routine(void *arg)
 
 	p = (t_philo *)arg;
 	if (p->id % 2)
-		usleep(2000);
+		usleep(3000);
 	while (1)
 	{
 		if (eat_and_monitor(p))

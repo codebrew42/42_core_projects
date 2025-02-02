@@ -45,7 +45,7 @@ uint64_t	get_current_time(void)
 
 int	print_err_msg(char *s)
 {
-	printf("Error: %s", s);
+	printf("Error: %s\n", s);
 	return (1);
 }
 
