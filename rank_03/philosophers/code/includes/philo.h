@@ -67,6 +67,7 @@ int			print_err_msg(char *s);
 int			print_err_msg_and_free(char *s, t_data **d);
 
 /* * * * * routine.c * * * */
+void		wait_time(uint64_t wait_time);
 void		log_meal(t_philo *p, uint64_t meal_time);
 int			take_fork(t_philo *p, int index);
 int			eat_and_monitor(t_philo *p);

@@ -22,7 +22,8 @@ int	handle_case_one(t_data *d)
 	pthread_mutex_lock(&d->print_lock);
 	printf("%lu %d %s\n", 0lu, 1, "has taken a fork");
 	pthread_mutex_unlock(&d->print_lock);
-	usleep(d->time_to_die * 1000);
+//	usleep(d->time_to_die * 1000);
+	wait_time(d->time_to_die);
 	pthread_mutex_lock(&d->print_lock);
 	printf("%lu %d %s\n", d->time_to_die, 1, "died");
 	pthread_mutex_unlock(&d->print_lock);

@@ -30,7 +30,8 @@ void	wait_time(uint64_t wait_time)
 		now = get_current_time();
 		if ((now - start) >= wait_time)
 			break;
-		usleep(wait_time * 100);
+		//usleep(wait_time * 100);
+		usleep(500);
 	}
 }
 
@@ -77,47 +78,45 @@ void	set_forks(int p_id, int n_philos, int *first, int *second)
 /** deep seek */
 void set_forks(int p_id, int n_philos, int *first, int *second)
 {
-    int temp;
+	int temp;
 
-    // 홀수 ID: 오른쪽 포크 먼저, 짝수 ID: 왼쪽 포크 먼저
-    if (p_id % 2 == 0)
-    {
-        *first = (p_id - 1) % n_philos;
-        *second = p_id % n_philos;
-    }
-    else
-    {
-        *first = p_id % n_philos;
-        *second = (p_id - 1) % n_philos;
-    }
-
-    // 항상 낮은 인덱스의 포크를 먼저 잡도록 순서 조정
-    if (*first > *second)
-    {
-        temp = *first;
-        *first = *second;
-        *second = temp;
-    }
+	if (p_id % 2 == 0)
+	{
+		*first = (p_id - 1) % n_philos;
+		*second = p_id % n_philos;
+	}
+	else
+	{
+		*first = p_id % n_philos;
+		*second = (p_id - 1) % n_philos;
+	}
+	if (*first > *second)
+	{
+		temp = *first;
+		*first = *second;
+		*second = temp;
+	}
 }
 
 
-/** mine  */
-// void	set_forks(int p_id, int n_philos, int *first, int *second)
-// {
-// 	int	temp;
+/** mine  
+void	set_forks(int p_id, int n_philos, int *first, int *second)
+{
+	int	temp;
 
-// 	if (p_id == 1)
-// 		*first = n_philos - 1;
-// 	else
-// 		*first = p_id - 2;
-// 	*second = p_id - 1;
-// 	if (p_id % 2 == 0)
-// 	{
-// 		temp = *first;
-// 		*first = *second;
-// 		*second = temp;
-// 	}
-// }
+	if (p_id == 1)
+		*first = n_philos - 1;
+	else
+		*first = p_id - 2;
+	*second = p_id - 1;
+	if (p_id % 2 == 0)
+ 	{
+		temp = *first;
+		*first = *second;
+		*second = temp;
+	}
+}
+*/
 
 int	eat_and_monitor(t_philo *p)
 {
