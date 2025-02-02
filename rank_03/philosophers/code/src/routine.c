@@ -12,10 +12,27 @@
 
 #include "../includes/philo.h"
 
+void		wait_time(uint64_t wait_time);
 void		log_meal(t_philo *p, uint64_t meal_time);
 int			take_fork(t_philo *p, int index);
 int			eat_and_monitor(t_philo *p);
 void		*routine(void *arg);
+
+void	wait_time(uint64_t wait_time)
+{
+	uint64_t start;
+	uint64_t now;
+
+	start = get_current_time();
+	usleep(wait_time * 900);
+	while (1)
+	{
+		now = get_current_time();
+		if ((now - start) >= wait_time)
+			break;
+		usleep(wait_time * 100);
+	}
+}
 
 void	log_meal(t_philo *p, uint64_t meal_time)
 {
