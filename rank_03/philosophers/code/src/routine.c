@@ -146,7 +146,8 @@ void	*routine(void *arg)
 		// if (check_all_completed_meal(p->data, p->data->nbr_of_philos))
 		// 	return (NULL);
 		print_status_and_return_time(p->data, "is sleeping", p->id);
-		usleep(p->data->time_to_sleep * 1000);
+		//usleep(p->data->time_to_sleep * 1000);
+		wait_time(p->data->time_to_sleep);
 		if (check_and_print_a_philo_died(p->data, p->id)
 			|| check_all_completed_meal(p->data, p->data->nbr_of_philos))
 			return (NULL);
