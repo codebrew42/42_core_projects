@@ -20,8 +20,8 @@ void		*routine(void *arg);
 
 void	wait_time(uint64_t wait_time)
 {
-	uint64_t start;
-	uint64_t now;
+	uint64_t	start;
+	uint64_t	now;
 
 	start = get_current_time();
 	usleep(wait_time * 900);
@@ -31,7 +31,7 @@ void	wait_time(uint64_t wait_time)
 		if ((now - start) >= wait_time)
 			break;
 		//usleep(wait_time * 100);
-		usleep(500);
+		usleep(300);
 	}
 }
 
@@ -56,69 +56,20 @@ int	take_fork(t_philo *p, int index)
 			print_status_and_return_time(p->data, "has taken a fork", p->id);
 			return (0);
 		}
-		wait_time(100);
+		wait_time(50);
 	}
 	return (1);
 }
 
-/*
-int	take_fork(t_philo *p, int index)
-{
-	int	return_flag;
-
-	return_flag = 0;
-	while (!return_flag)
-	{
-		if (!pthread_mutex_lock(&p->data->fork_lock[index]))
-		{
-			print_status_and_return_time(p->data, "has taken a fork", p->id);
-			return (0);
-		}
-		wait_time(p->data->time_to_sleep * 0.9);
-		if (!pthread_mutex_lock(&p->data->fork_lock[index]))
-		{
-			print_status_and_return_time(p->data, "has taken a fork", p->id);
-			return (0);
-		}
-		else
-			return_flag = 1;
-	}
-	return (1);
-}
-*/
-
-/** chat gpt 
-void	set_forks(int p_id, int n_philos, int *first, int *second)
-{
-	int	left;
-	int	right;
-
-	left = (p_id + n_philos - 1) % n_philos;
-	right = p_id % n_philos;
-	if (left < right)
-	{
-		*first = left;
-		*second = right;
-	}
-	else
-	{
-		*first = right;
-		*second = left;
-	}
-}
-*/
-
-/** deep seek */
 void set_forks(int p_id, int n_philos, int *first, int *second)
 {
 	int temp;
 
 	if (p_id == n_philos)
 	{
-		*first = 0;          // Right fork first
+		*first = 0;
 		*second = p_id - 1;
 	}
-
 	if (p_id % 2 == 0)
 	{
 		*first = (p_id - 1) % n_philos;
@@ -136,26 +87,6 @@ void set_forks(int p_id, int n_philos, int *first, int *second)
 		*second = temp;
 	}
 }
-
-
-/** mine  
-void	set_forks(int p_id, int n_philos, int *first, int *second)
-{
-	int	temp;
-
-	if (p_id == 1)
-		*first = n_philos - 1;
-	else
-		*first = p_id - 2;
-	*second = p_id - 1;
-	if (p_id % 2 == 0)
- 	{
-		temp = *first;
-		*first = *second;
-		*second = temp;
-	}
-}
-*/
 
 int	eat_and_monitor(t_philo *p)
 {

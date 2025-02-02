@@ -23,7 +23,10 @@ int	check_all_completed_meal(t_data *d, int n_philo)
 	ret = 0;
 	pthread_mutex_lock(&d->death_lock);
 	if (d->completed_meal_philo_count == d->nbr_of_philos)
+	{
 		ret = 1;
+		//d->dead_philo_id = -1;
+	}
 	pthread_mutex_unlock(&d->death_lock);
 	return (ret);
 }
