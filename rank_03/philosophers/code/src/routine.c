@@ -138,7 +138,7 @@ void	*routine(void *arg)
 
 	p = (t_philo *)arg;
 	if (!p->id % 2)
-		usleep(100);
+		usleep(500);
 	while (1)
 	{
 		if (eat_and_monitor(p))
