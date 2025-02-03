@@ -31,3 +31,16 @@ echo 'abcdefaaaabcdeabcabcdabc' | ./filter abc | cat -e
 
 echo 'ababcabababc' | ./filter ababc | cat -e
 *****ab*****$
+
+Allowed functions: read, write, strlen, memmem, memmove, malloc, calloc,
+realloc, free, perror, fprintf, stderr 
+
+
+----
+[my doubt]
+1. how to use stderr msg?
+
+2.about read
+- how to read?
+- is it ok to use char buff[BUFFER_SIZE]?
+- is it possible to define BUFFER_SIZE in the .c file?
