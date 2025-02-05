@@ -61,15 +61,15 @@ int	take_fork(t_philo *p, int index)
 	return (1);
 }
 
-void set_forks(int p_id, int n_philos, int *first, int *second)
+void	set_forks(int p_id, int n_philos, int *first, int *second)
 {
-	int temp;
+	int	temp;
 
-	if (p_id == n_philos)
-	{
-		*first = 0;
-		*second = p_id - 1;
-	}
+	// if (p_id == n_philos)
+	// {
+	// 	*first = 0;
+	// 	*second = p_id - 1;
+	// }
 	if (p_id % 2 == 0)
 	{
 		*first = (p_id - 1) % n_philos;
