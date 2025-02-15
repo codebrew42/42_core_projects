@@ -1,17 +1,31 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jiepark <jiepark@student.42berlin.de>      +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/02/07 13:04:55 by jiepark           #+#    #+#              #
+#    Updated: 2025/02/07 13:04:58 by jiepark          ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME		:=	philo
 
-SRC			:=	src/display.c \
-				src/init.c \
+SRC			:=	src/init.c \
 				src/main.c \
+				src/print.c \
 				src/terminate.c \
-				src/threads.c
+				src/monitor.c \
+				src/routine.c \
+				src/utils.c
 
 OBJ_DIR		:= obj
 
 OBJ			:= $(SRC:src/%.c=$(OBJ_DIR)/%.o)
 
 CC			:= gcc
-CFLAG		:= -Wall -Wextra -Werror -I includes
+CFLAG		:= -Wall -Wextra -Werror -I includes -g
 RM			:= rm -rf
 
 $(NAME)		: $(OBJ_DIR) $(OBJ)

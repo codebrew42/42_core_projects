@@ -10,75 +10,85 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef PHILO_H
+# define PHILO_H
+# include <pthread.h>
+# include <string.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/time.h>
+# include <limits.h>
+# include <stdint.h>
 
-#ifndef		PHILO_H
-# define	PHILO_H
-#include <pthread.h> //pthread*
-#include <string.h> //memset
-#include <stdio.h> //printf
-#include <stdlib.h> //malloc, free
-#include <unistd.h> //usleep
-#include <sys/time.h> //gettimeofday
-#include <limits.h>
-#include <stdint.h> //uint64_t
-
-#define LEFT(id, n) (id - 1)
-#define RIGHT(id, n) (id % n)
 typedef struct s_data
 {
 	size_t					nbr_of_philos;
-	uint64_t				time_to_die;	//time*: millisec
+	uint64_t				time_to_die;
 	uint64_t				time_to_eat;
 	uint64_t				time_to_sleep;
 	uint64_t				start_time;
-	size_t					nbr_of_times_each_philo_must_eat;
-	int						nbr_of_philos_full;
+	size_t					max_mealtime;
+	int						completed_meal_philo_count;
 	int						dead_philo_id;
-	pthread_mutex_t			death_lock;		//protects access to dead_philo_id
-	pthread_mutex_t			print_lock;		//protects access to printf in philo_routine
+	int						current_eaters;
+	int						max_eaters;
+	int						died_is_printed;
+	pthread_mutex_t			eaters_lock;
+	pthread_mutex_t			death_lock;
+	pthread_mutex_t			print_lock;
+	pthread_mutex_t			*fork_lock;
 	pthread_t				monitor_thread;
-	pthread_mutex_t			*forks;
-	struct s_philo			*philos; 
+	struct s_philo			*philos;
 	pthread_t				*routine_thread;
 }	t_data;
 
 typedef struct s_philo
 {
 	int					id;
-	int					has_died;
 	int					meal_count;
-	//int					is_eating;
 	uint64_t			last_meal_time;
-	uint64_t			death_timestamp; //maybe remove
-	pthread_mutex_t		meal_lock; //protects access to meal_count&last_meal_time
+	pthread_mutex_t		meal_lock;
 	struct s_data		*data;
 }	t_philo;
 
-
-//	init.c
-int			ft_strlen(char *s);
+/* * * * * main.c * * * */
+int			ft_strcmp(char *s1, char *s2);
 uint64_t	str_to_uint64(char *s);
-void		init_elements(t_data **d, int n_philos);
-void		allocate_memory(t_data **d, int n_philos);
-void		init_data(char **s, t_data **d);
+int			handle_case_one(t_data *d);
+int			launch_threads(t_data *d, int n_philos);
+int			validate_input(char **s);
 
-//	threads.c
-void		eating(t_philo *p, t_data *d, int p_id, int n_philo);
+/* * * * * init.c * * * */
+int			init_multiple_mutexes(t_data **d, int n_philos);
+int			init_single_mutexes(t_data **d);
+int			allocate_mem_to_ptrs(t_data **d, int n_philos);
+int			parse_input(t_data **d, char **s);
+int			init_data(char **s, t_data **d);
+
+/* * * * * monitor.c * * * */
+int			check_all_completed_meal(t_data *d, int n_philo);
+int			check_and_print_a_philo_died(t_data *d, int p_id);
 void		*monitor(void *arg);
-void		*routine(void *arg);
-int			check_end_condition(t_data *d, int n_philo);
-int			launch_threads(t_data *d, int n_philo);
 
-//	terminate.c
-int		join_threads(t_data *d, int n_philo);
-void		free_data(t_data **d);
-void		destroy_mutex(t_data *d);
-
-//	display.c
-uint64_t	display_status(t_data *d, char *s, int p_id);
+/* * * * * print.c * * * */
+uint64_t	print_status_and_return_time(t_data *d, char *s, int p_id);
 uint64_t	get_current_time(void);
-void		display_warning_message(char *s);
-int			exit_on_error(char *s, int exit_flag);
+int			print_err_msg(char *s);
+int			print_err_msg_and_free(char *s, t_data **d);
 
+/* * * * * routine.c * * * */
+void		log_meal(t_philo *p, uint64_t meal_time);
+void		set_forks(int p_id, int n_philos, int *first, int *second);
+int			eat_and_monitor(t_philo *p);
+int			check_philo_id(t_philo *p);
+void		*routine(void *arg);
+
+/* * * * * terminate.c * * * */
+int			join_n_threads(pthread_t *p, int n);
+int			join_all_threads(t_data *d);
+void		free_data(t_data **d);
+int			destroy_n_mutexes(pthread_mutex_t *p, int max_i);
+int			destroy_all_mutexes(t_data *d, int n_philos);
 
 #endif

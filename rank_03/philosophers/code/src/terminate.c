@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   terminate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jiepark <jiepark@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,94 +12,110 @@
 
 #include "../includes/philo.h"
 
-int		join_threads(t_data *d, int n_philo);
-void		free_data(t_data **d);
-void		destroy_mutex(t_data *d);
+int		join_n_threads(pthread_t *p, int n);
+int		join_all_threads(t_data *d);
+void	free_data(t_data **d);
+int		destroy_n_mutexes(pthread_mutex_t *p, int max_i);
+int		destroy_all_mutexes(t_data *d, int n_philos);
 
-int	join_threads(t_data *d, int n_philo)
+int	join_n_threads(pthread_t *p, int n)
 {
 	int		i;
+	int		ret;
 
 	i = 0;
-	printf("Starting to join threads. n_philo = %d\n", n_philo);
-	while (i < n_philo)
+	ret = 0;
+	while (i < n)
 	{
-		printf("Attempting to join routine thread %d\n", i);
-		if (pthread_join(d->routine_thread[i], NULL))
-		{
-			printf("Failed to join routine thread %d\n", i);
-			return (exit_on_error("pthread_join failed", 0));
-		}
-		printf("Successfully joined routine thread %d\n", i);
+		if (pthread_join(p[i], NULL))
+			ret = 1;
 		i++;
 	}
-	printf("Attempting to join monitor thread\n");
-	if (pthread_join(d->monitor_thread, NULL))
-	{
-		printf("Failed to join monitor thread\n");
-		return (exit_on_error("pthread_join failed", 0));
-	}
-	printf("Successfully joined monitor thread\n");
-	return (0);
+	return (ret);
 }
 
-/*
-int	join_threads(t_data *d, int n_philo)
+int	join_all_threads(t_data *d)
 {
 	int		i;
+	int		ret;
 
 	i = 0;
-	while (i < n_philo)
+	ret = 0;
+	while (i < d->nbr_of_philos)
 	{
 		if (pthread_join(d->routine_thread[i], NULL))
-		{
-			printf("check debugging point A: [%d]\n", i);
-			//free_data(&d);
-			return (exit_on_error("pthread_join failed", 0));
-		}
+			ret = 1;
 		i++;
 	}
 	if (pthread_join(d->monitor_thread, NULL))
-	{
-		printf("check debugging point B\n");
-		free_data(&d);
-		return (exit_on_error("pthread_join failed", 0));
-	}
-	return (0);
-}*/
+		ret = 1;
+	if (ret)
+		print_err_msg("joining all threads failed");
+	return (ret);
+}
 
-
+/**
+ * @note why using double pointer?: to NULL after freeing
+ */
 void	free_data(t_data **d)
 {
 	if (!d || !*d)
 		return ;
-	if ((*d)->forks)
-		free((*d)->forks);
+	if ((*d)->fork_lock)
+		free((*d)->fork_lock);
 	if ((*d)->philos)
 		free((*d)->philos);
 	if ((*d)->routine_thread)
 		free((*d)->routine_thread);
 	if (*d)
+	{
 		free(*d);
-	*d = NULL;
+		*d = NULL;
+	}
 }
 
-void	destroy_mutex(t_data *d)
+/**
+ * @return	0 on error, 1 on success by using return value of
+ * 			pthread_mutex_destroy
+ * @note	max_i will be skipped, assuming it's not created
+ * 			when coding: use "&p[o]" instead of "p"
+**/
+int	destroy_n_mutexes(pthread_mutex_t *p, int max_i)
 {
-	int		i;
-	int		n_philo;
+	int	ret;
 
-	n_philo = d->nbr_of_philos;
-	join_threads(d, n_philo);
-	pthread_mutex_destroy(&d->death_lock);
-	pthread_mutex_destroy(&d->print_lock);
-	i = 0;
-	while (i < d->nbr_of_philos)
+	if (!p || max_i <= 0)
+		return (1);
+	if (max_i == 1)
 	{
-		pthread_mutex_destroy(&d->forks[i]);
-		pthread_mutex_destroy(&d->philos[i].meal_lock);
-		i++;
+		return (pthread_mutex_destroy(&p[0]));
 	}
-	n_philo = d->nbr_of_philos;
+	while (max_i >= 0)
+	{
+		ret = pthread_mutex_destroy(&p[max_i]);
+		if (!ret)
+			return (ret);
+		max_i--;
+	}
+	return (0);
+}
 
+int	destroy_all_mutexes(t_data *d, int n_philos)
+{
+	int	ret;
+
+	if (pthread_mutex_destroy(&d->death_lock))
+		return (1);
+	if (pthread_mutex_destroy(&d->print_lock))
+		return (1);
+	if (pthread_mutex_destroy(&d->eaters_lock))
+		return (1);
+	while (--n_philos >= 0)
+	{
+		if (pthread_mutex_destroy(&d->philos[n_philos].meal_lock))
+			return (1);
+		if (pthread_mutex_destroy(&d->fork_lock[n_philos]))
+			return (1);
+	}
+	return (0);
 }
