@@ -1,0 +1,40 @@
+pwd
+cd .
+pwd
+echo $PWD
+echo $OLDPWD
+
+cd ..
+pwd
+echo $PWD
+echo $OLDPWD
+
+cd ./minishell
+pwd
+echo $PWD
+echo $OLDPWD
+
+cd src/../libft
+pwd
+echo $PWD
+echo $OLDPWD
+
+cd ../src
+pwd
+echo $PWD
+echo $OLDPWD
+
+cd .././libft
+pwd
+echo $PWD
+echo $OLDPWD
+
+cd ./../
+pwd
+echo $PWD
+echo $OLDPWD
+
+cd src/./../libft
+pwd
+echo $PWD
+echo $OLDPWD

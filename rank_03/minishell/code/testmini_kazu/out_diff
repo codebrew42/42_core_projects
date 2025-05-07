@@ -1,0 +1,34 @@
+36c36
+< minishell: : Command not found
+---
+> bash: line 17: : command not found
+39c39
+< minishell: : Command not found
+---
+> bash: line 20: : command not found
+42c42
+< minishell: : Command not found
+---
+> bash: line 23: : command not found
+111,123d110
+< 1
+< out_bash
+< out_diff
+< out_mini
+< readline.supp
+< test_cd.sh
+< test_echo
+< test_exec
+< testmini.sh
+< testout
+< test_small
+< test_wildcard
+< tsetout
+125d111
+< minishell: syntax error near `(('
+129d114
+< /home/kyabuuch/work/ms/minishell/testmini_kazu
+131d115
+< minishell: syntax error near `(('
+184a169
+> /home/kyabuuch/work/ms/minishell/testmini_kazu

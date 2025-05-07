@@ -1,0 +1,6 @@
+echo hello
+
+echo -n hello
+
+echo -n -n hello
+

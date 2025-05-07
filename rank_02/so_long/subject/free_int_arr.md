@@ -1,4 +1,3 @@
-```markdown
 # Freeing Integer Arrays in C
 
 ## Overview

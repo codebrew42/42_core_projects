@@ -1,4 +1,4 @@
-# why it causes valgrind error (X11 Error)
+# why it causes valgrind error
 
 ## code
 	game->mlx_pointer = mlx_init();

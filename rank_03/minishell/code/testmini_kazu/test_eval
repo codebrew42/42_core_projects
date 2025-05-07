@@ -1,0 +1,22 @@
+/bin/ls
+/bin/echo hello
+echo hello world
+echo
+echo $?
+echo $? + $?
+pwd
+cd src
+pwd
+cd ..
+pwd
+cd .
+pwd
+ls
+echo hello | wc
+cat file | grep bla | more
+ls notexist | grep bla | more
+echo $HOME
+echo "$HOME"
+echo '$HOME'
+echo $USER
+echo '"$USER"'

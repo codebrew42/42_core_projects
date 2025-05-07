@@ -1,0 +1,184 @@
+test 1
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+test 2
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+test 3
+hello
+test 4
+hi !
+test 5
+51
+test 6
+minishell: : Command not found
+0
+test 7
+minishell: : Command not found
+0
+test 8
+minishell: : Command not found
+test 9
+/home/kyabuuch/work/ms/minishell/testmini_kazu
+test 10
+/home/kyabuuch/work/ms/minishell/testmini_kazu
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+test 11
+/home/kyabuuch/work/ms/minishell/testmini_kazu
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+hi
+test 12
+/home/kyabuuch/work/ms/minishell/testmini_kazu
+hi
+test 13
+/home/kyabuuch/work/ms/minishell/testmini_kazu
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+test 14
+/home/kyabuuch/work/ms/minishell/testmini_kazu
+test 15
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+test 16
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+test 17
+minishell: syntax error near `(('
+test 18
+/home/kyabuuch/work/ms/minishell/testmini_kazu
+test 19
+/home/kyabuuch/work/ms/minishell/testmini_kazu
+test 20
+minishell: syntax error near `(('
+test 21
+cat: xxx: No such file or directory
+test 22
+cat: xxx: No such file or directory
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+/home/kyabuuch/work/ms/minishell/testmini_kazu
+test 23
+cat: xxx: No such file or directory
+/home/kyabuuch/work/ms/minishell/testmini_kazu
+test 24
+cat: xxx: No such file or directory
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+test 25
+/home/kyabuuch/work/ms/minishell/testmini_kazu
+cat: xxx: No such file or directory
+cat: xxx: No such file or directory
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout

@@ -1,0 +1,32 @@
+echo *.md
+echo built*
+echo oi*
+echo *.supp
+echo 'bye *' bo*s bye
+echo 'bye *' mini* bye
+echo *ME*
+echo "*"
+"*"
+manual*
+echo * | awk -v RS=" " '{print}' | sort
+<*.txt
+echo 'bye *' t*.c bye
+echo *EMPTY hello READ* world
+cat <README*
+echo "pip*"
+echo *bonus *.supp bonjour
+echo .*
+echo .
+echo src/expander/*.c
+echo te*t
+echo "file *.supp"
+echo file *.supp
+echo */*.c
+echo *i*i*
+echo non*
+cat < non
+echo $HOME/.c
+echo '**'
+echo */.*
+<a_result.txt <b*.c
+echo ../.*
