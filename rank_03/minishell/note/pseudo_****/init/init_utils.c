@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyabuuch <kyabuuch@student.42berlin.d      +#+  +:+       +#+        */
+/*   By:                                      e>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 20:11:00 by kyabuuch          #+#    #+#             */
-/*   Updated: 2025/02/25 20:14:43 by kyabuuch         ###   ########.fr       */
+/*   Created: 2025/02/26 18:37:11 by                   #+#    #+#             */
+/*   Updated: 2025/02/26 18:40:48 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#incldue "minishell.h"
 
-//parse tokens into tree
-void	parser()
+void	get_env_path(t_data *data)
 {
-	// detect the values
-	// expand and
-	// contain into the structure 
+	// creating the path array from envp
+	// find PATH with strcmp
+	// split the line
+	// contain to the struct
+	
 }

@@ -1,4 +1,4 @@
-# Minishell To‐Do List (Kazu, Jin)
+# Minishell To‐Do List (****, Jin)
 ## Day 1 (2025.02.17) -> ignore
 - [ ] **understanding bash reference(1)**
   ([Bash Study](https://grizzly-touch-858.notion.site/minishell-483e1e34034f42f4b2afeb2ad4b989aa))
@@ -15,7 +15,7 @@
 
 
 ## Day 2 (2025.02.18)
-- [ ] kazu : makes a note from 3-1.
+- [ ] **** : makes a note from 3-1.
 - [ ] both : to discuss about
 	- 3.1.2.4 ANSI-C Quoting
 	- 3.1.2.5 Locale-Specific Translation
@@ -39,6 +39,6 @@
 [jin] Step 2: Tokenizer  
 [jin] Step 3: Parser  
 Step 4: Expander/Managing Env Var  
-[kazu] Step 5: Execute  
+[****] Step 5: Execute  
 Step 6: Signal Handler  
 Step 7: utils  

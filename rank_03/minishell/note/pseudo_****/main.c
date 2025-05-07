@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyabuuch <kyabuuch@student.42berlin.d      +#+  +:+       +#+        */
+/*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 17:43:39 by kyabuuch          #+#    #+#             */
-/*   Updated: 2025/02/28 17:09:27 by kyabuuch         ###   ########.fr       */
+/*   Created: 2025/02/15 17:43:39 by                   #+#    #+#             */
+/*   Updated: 2025/02/28 17:09:27 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	init_data(t_mshell *ms_data, char **envp);//jin
 void	minishell(t_mshell *ms_data); //jin
-void	free_mshell_data(t_mshell *ms_data); //kazu
+void	free_mshell_data(t_mshell *ms_data); //****
 void	handle_signal(); //jin
 void	tokenizer(t_mshell *ms_data); //jin
 void	parser(t_mshell *ms_data); //jin
-heredoc() //kazu
-executor() //kazu
-builtin() //kazu
-exit___() //kazu
+heredoc() //****
+executor() //****
+builtin() //****
+exit___() //****
 free___() //kau
 
 

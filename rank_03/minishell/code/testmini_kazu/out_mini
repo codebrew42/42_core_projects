@@ -41,9 +41,9 @@ minishell: : Command not found
 test 8
 minishell: : Command not found
 test 9
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 test 10
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 1
 out_bash
 out_diff
@@ -58,7 +58,7 @@ test_small
 test_wildcard
 tsetout
 test 11
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 1
 out_bash
 out_diff
@@ -74,10 +74,10 @@ test_wildcard
 tsetout
 hi
 test 12
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 hi
 test 13
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 1
 out_bash
 out_diff
@@ -92,7 +92,7 @@ test_small
 test_wildcard
 tsetout
 test 14
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 test 15
 1
 out_bash
@@ -124,9 +124,9 @@ tsetout
 test 17
 minishell: syntax error near `(('
 test 18
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 test 19
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 test 20
 minishell: syntax error near `(('
 test 21
@@ -146,10 +146,10 @@ testout
 test_small
 test_wildcard
 tsetout
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 test 23
 cat: xxx: No such file or directory
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 test 24
 cat: xxx: No such file or directory
 1
@@ -166,7 +166,7 @@ test_small
 test_wildcard
 tsetout
 test 25
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 cat: xxx: No such file or directory
 cat: xxx: No such file or directory
 1

@@ -1,17 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.c                                         :+:      :+:    :+:   */
+/*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyabuuch <kyabuuch@student.42berlin.d      +#+  +:+       +#+        */
+/*   By:                                      e>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/25 19:54:05 by kyabuuch          #+#    #+#             */
-/*   Updated: 2025/02/25 19:55:48 by kyabuuch         ###   ########.fr       */
+/*   Created: 2025/02/28 17:15:10 by                   #+#    #+#             */
+/*   Updated: 2025/02/28 17:41:23 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #incldue "minishell.h"
 
-//expanding env.val and wildcard
+void	free_data(s_mhell *data)
+{
+	
+}
 
-
+void	err_exit(char *s)
+{
+	if (!s)
+		perror("minishell: ");
+	else
+	{
+		write(1, "minishell: ", 11);
+		ft_putendl_fd(s, 1);
+	}
+	exit(errno);
+}

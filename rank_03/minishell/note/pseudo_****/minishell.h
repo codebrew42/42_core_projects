@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyabuuch <kyabuuch@student.42berlin.d      +#+  +:+       +#+        */
+/*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/15 17:53:50 by kyabuuch          #+#    #+#             */
-/*   Updated: 2025/02/28 17:49:02 by kyabuuch         ###   ########.fr       */
+/*   Created: 2025/02/15 17:53:50 by                   #+#    #+#             */
+/*   Updated: 2025/02/28 17:49:02 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 extern int g_exit_status;
 # define MAX_INPUT_LEN 4096
 
-//added Kazu
+//added ****
 # define ERR -1
 
 //for tokenizer.h?

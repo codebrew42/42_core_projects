@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_utils.c                                  :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyabuuch <kyabuuch@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/28 17:15:10 by kyabuuch          #+#    #+#             */
-/*   Updated: 2025/02/28 17:41:23 by kyabuuch         ###   ########.fr       */
+/*   Created: 2025/02/25 20:11:00 by                   #+#    #+#             */
+/*   Updated: 2025/02/25 20:14:43 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#incldue "minishell.h"
+#include "minishell.h"
 
-void	free_data(s_mhell *data)
+//parse tokens into tree
+void	parser()
 {
-	
-}
-
-void	err_exit(char *s)
-{
-	if (!s)
-		perror("minishell: ");
-	else
-	{
-		write(1, "minishell: ", 11);
-		ft_putendl_fd(s, 1);
-	}
-	exit(errno);
+	// detect the values
+	// expand and
+	// contain into the structure 
 }

@@ -1,22 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_utils.c                                       :+:      :+:    :+:   */
+/*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kyabuuch <kyabuuch@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By:                                            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/26 18:37:11 by kyabuuch          #+#    #+#             */
-/*   Updated: 2025/02/26 18:40:48 by kyabuuch         ###   ########.fr       */
+/*   Created: 2025/02/25 19:54:05 by                   #+#    #+#             */
+/*   Updated: 2025/02/25 19:55:48 by                  ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #incldue "minishell.h"
 
-void	get_env_path(t_data *data)
-{
-	// creating the path array from envp
-	// find PATH with strcmp
-	// split the line
-	// contain to the struct
-	
-}
+//expanding env.val and wildcard
+
+

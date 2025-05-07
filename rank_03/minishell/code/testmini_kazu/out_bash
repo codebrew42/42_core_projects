@@ -41,9 +41,9 @@ bash: line 20: : command not found
 test 8
 bash: line 23: : command not found
 test 9
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 test 10
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 1
 out_bash
 out_diff
@@ -58,7 +58,7 @@ test_small
 test_wildcard
 tsetout
 test 11
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 1
 out_bash
 out_diff
@@ -74,10 +74,10 @@ test_wildcard
 tsetout
 hi
 test 12
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 hi
 test 13
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 1
 out_bash
 out_diff
@@ -92,7 +92,7 @@ test_small
 test_wildcard
 tsetout
 test 14
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 test 15
 1
 out_bash
@@ -110,7 +110,7 @@ tsetout
 test 16
 test 17
 test 18
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 test 19
 test 20
 test 21
@@ -130,10 +130,10 @@ testout
 test_small
 test_wildcard
 tsetout
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 test 23
 cat: xxx: No such file or directory
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 test 24
 cat: xxx: No such file or directory
 1
@@ -150,7 +150,7 @@ test_small
 test_wildcard
 tsetout
 test 25
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
 cat: xxx: No such file or directory
 cat: xxx: No such file or directory
 1
@@ -166,4 +166,4 @@ testout
 test_small
 test_wildcard
 tsetout
-/home/kyabuuch/work/ms/minishell/testmini_kazu
+/home/        /work/ms/minishell/testmini_****
