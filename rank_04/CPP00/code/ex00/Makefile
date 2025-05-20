@@ -1,35 +1,24 @@
-
-
 NAME					= megaphone
-C++/CC					=
-C++_FLAGS/CFLAGS		=
+C++						= c++
+C++_FLAGS				= -Wall -Wextra -Werror -std=c++98
 
-#directories
-SRC_DIR					= megaphone.cpp
-OBJ_DIR					=
-INC_DIR					=
+SRC						= megaphone.cpp
+OBJ						= $(SRC:.cpp=.o)
 
-#src files
-SRC_FILES		=
-OBJ_FILES		=
+%.o: %.cpp
+	$(C++) $(C++_FLAGS) -c $< -o $@
 
+all: $(NAME)
 
-#color
-RESET		=	\033[0m
-GREEN		=	\033[32m
-YELLOW		=	\033[33m
-BLUE		=	\033[34m
-RED			=	\033[31m
-UP			=	\033[A
-CUT			=	\033[K
-
-
-all:
+$(NAME): $(OBJ)
+	$(C++) $(C++_FLAGS) $< -o $@
 
 clean:
+	rm -f $(OBJ)
 
-fclean:
+fclean: clean
+	rm -f $(NAME)
 
-re:
+re: fclean all
 
 .PHONY: all clean fclean re

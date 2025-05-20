@@ -1,0 +1,8 @@
+250520
+- think about
+	[1] structure:  sepearting them is a good idea?
+		: add.cpp, search.cpp, exit.cpp
+	[2] dividing/having multiple functions, properly written?
+		: get*, set*., in contact.cpp
+
+- learn more about : using const, 
