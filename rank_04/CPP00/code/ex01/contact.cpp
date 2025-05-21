@@ -4,18 +4,44 @@ using	std::string;
 
 Contact::Contact()
 {
-	return;
 }
 
 Contact::~Contact()
 {
-	return;
+}
+
+string	Contact::CapitalizeFirstLetter(string input) const
+{
+	if (!input.empty())
+		input[0] = std::toupper(input[0]);
+	return input;
 }
 
 string	Contact::getFirstName() const
 {
-	return (this->_firstName);
+	return (CapitalizeFirstLetter(this->_firstName));
 }
+
+string	Contact::getLastName() const
+{
+	return (CapitalizeFirstLetter(this->_lastName));
+}
+
+string	Contact::getPhoneNumber() const
+{
+	return (this->_phoneNumber);
+}
+
+string	Contact::getDarkestSecret() const
+{
+	return (this->_darkestSecret);
+}
+
+string	Contact::getNickname() const
+{
+	return (this->_nickname);
+}
+
 
 void	Contact::setFirstName(const std::string& input)
 {
@@ -39,5 +65,5 @@ void	Contact::setPhoneNumber(const std::string& input)
 
 void	Contact::setDarkSecret(const std::string& input)
 {
-	this->_darkSecret = input;
+	this->_darkestSecret = input;
 }
