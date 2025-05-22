@@ -2,13 +2,9 @@
 
 using	std::string;
 
-Contact::Contact()
-{
-}
+Contact::Contact() {}
 
-Contact::~Contact()
-{
-}
+Contact::~Contact() {}
 
 string	Contact::CapitalizeFirstLetter(string input) const
 {

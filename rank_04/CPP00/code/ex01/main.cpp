@@ -2,9 +2,9 @@
 #include "main.hpp"
 #include "phoneBook.hpp"
 
-using	std::string;
-using	std::cin;
-using	std::cout;
+using std::cin;
+using std::cout;
+using std::string;
 
 void displayStringInLine(string message)
 {
@@ -13,16 +13,21 @@ void displayStringInLine(string message)
 
 string getInputString(string message)
 {
-	string		output;
+	string output;
 
 	cout << message;
 	cin >> output;
+	if (cin.eof()) //check for EOF (ctr D)
+	{
+		cout << "\n";
+		exit(0);
+	}
 	return output;
 }
 
 Contact createNewContact()
 {
-	Contact	contact;
+	Contact contact;
 
 	contact.setFirstName(getInputString("Enter your first name: "));
 	contact.setLastName(getInputString("Enter your last name: "));
@@ -34,13 +39,15 @@ Contact createNewContact()
 
 int main()
 {
-	string		command;
-	Contact		contact_temp;
-	PhoneBook	phoneBook;
+	string command;
+	Contact contact_temp;
+	PhoneBook phoneBook;
 
 	while (true)
 	{
 		command = getInputString("Please enter one of these commands(ADD, SEARCH, EXIT): \n");
+		if (command.empty()) // if ctr+D case
+			return 1;
 		if (command == "ADD")
 		{
 			contact_temp = createNewContact();
@@ -53,13 +60,13 @@ int main()
 		}
 		else if (command == "EXIT")
 		{
-			break ;
+			break;
 		}
 		else
 		{
 			displayStringInLine("Error: Invalid input, try again!");
-			continue ;
+			continue;
 		}
 	}
-
+	return 0;
 }

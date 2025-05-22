@@ -1,0 +1,9 @@
+250522 18:13
+- [x] write: README.md
+	- add features, requirement
+- [x] write: Makefile
+	- you only need to write one file: Account.cpp
+
+250523 
+- [ ] complete: the whole code
+	- goto : TODO

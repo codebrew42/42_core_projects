@@ -19,7 +19,7 @@
 			- [x] if invalid, define a relevant behavior
 	- EXIT
 		- [x] quits program
-		- [ ] delete contacts
+		- [x] delete contacts
 		- [x] after execution of ADD, SEARCH, program waits for another one, untill user inputs EXIT
 
 ### contact (class)
@@ -34,8 +34,8 @@
 
 ## checklist
 - [ ] no dynamic allocation
-	- "std::string" is allowed(slack said yes)
-- [ ] diffrentiate class's elements: private, public
+	- "std::string" is allowed(slack said yes, but really)?
+- [x] diffrentiate class's elements: private, public
 
 ## last touch : error
-- [ ] when ctrl+D is typed, should terminated normally&cleanly
+- [x] when ctrl+D is typed, should terminated normally&cleanly
