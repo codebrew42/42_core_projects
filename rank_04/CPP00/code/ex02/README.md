@@ -10,16 +10,17 @@
 ### todo
 - [ ] write the missing file: Account.cpp
 	- can get hint from compiling tests.cpp
+	- main(): is already in test.cpp
+	- from the initial compilation (see reference)
+		- [ ] write: `Account::displayAccountsInfos()'
+		- [ ] write: `Account::displayStatus() const'
+		- [ ] write: `Account::makeDeposit(int)'
+		- [ ] write:  `Account::makeWithdrawal(int)'
+		- [ ] include: `Account::~Account(), Account::Account(int)'
 - [ ] pass the test : Account.cpp + tests.cpp
 	- [ ] output matches perfectly the with 1992*.log, except timestamps
 
-- [ ] find what to add from output
-	- main(): is already in test.cpp
-	- [ ] write: `Account::displayAccountsInfos()'
-	- [ ] write: `Account::displayStatus() const'
-	- [ ] write: `Account::makeDeposit(int)'
-	- [ ] write:  `Account::makeWithdrawal(int)'
-	- [ ] include: `Account::~Account(), Account::Account(int)'
+### reference
 ```bash
 jin@jin:~/coding/42_core_projects/rank_04/CPP00/code/ex02$ make
 g++ -Wall -Wextra -Werror -std=c++98 -c tests.cpp -o tests.o
