@@ -12,6 +12,9 @@
 #ifndef __ACCOUNT_H__
 #define __ACCOUNT_H__
 
+#include <iostream>
+
+
 // ************************************************************************** //
 //                               Account Class                                //
 // ************************************************************************** //
@@ -40,6 +43,9 @@ public:
 
 private:
 
+	//static
+	//- shared by all instaces
+	//- cannot be init in init list in .cpp
 	static int	_nbAccounts;
 	static int	_totalAmount;
 	static int	_totalNbDeposits;
@@ -47,6 +53,7 @@ private:
 
 	static void	_displayTimestamp( void );
 
+	//can be init in init list in constructor(.cpp) 
 	int				_accountIndex;
 	int				_amount;
 	int				_nbDeposits;
