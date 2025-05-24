@@ -1,0 +1,27 @@
+# key concepts
+
+ex00: class, (de)constructor, heap/stack alloc
+	- heap: newZombie
+	- stack: randomChump
+ex01: dynamic arr, mem management
+	- allocate: zombieHorde
+	- init arrr
+ex02: pointer, reference
+	- print addresses and values of a string, pointer, reference
+ex03: reference vs pointer, encapsultation
+	- reference: Weapon, HumanA
+	- pointer: HumanB
+	- attack logic
+ex04: file I/O, string manipulation
+	- replace all occurrences of a string in a file
+	- write to a new file
+ex05: pointers to member functions
+	- function pointers: call complaint method in Harl
+ex06: switch, filtering logic
+	- filter and disp msg based on log level, using switch
+
+
+
+250524
+- ex00
+  - [ ] read subject & write README.md, notes in cpp_notes
