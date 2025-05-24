@@ -1,5 +1,5 @@
 NAME	= PhoneBook
-CC		= g++
+CC		= c++
 C_FLAG	= -Wall -Wextra -Werror -std=c++98
 SRC		= contact.cpp main.cpp phoneBook.cpp
 OBJ		= $(SRC:.cpp=.o)
@@ -7,7 +7,7 @@ OBJ		= $(SRC:.cpp=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(C_FLAG) $< -o $@
+ˆˆ	$(CC) $(C_FLAG) $(OBJ) -o $@
 
 %.o: %.cpp
 	$(CC) $(C_FLAG) -c $< -o $@

@@ -25,7 +25,7 @@ OBJ = $(CLIENT_SRC:.c=.o) $(SERVER_SRC:.c=.o)
 
 # Compiler and Flags
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -no-pie
+CFLAGS = -Wall -Werror -Wextra
 LDFLAGS = -L$(LIBFT_DIR) -L$(PRINTF_DIR)
 LDLIBS = -lft -lftprintf
 

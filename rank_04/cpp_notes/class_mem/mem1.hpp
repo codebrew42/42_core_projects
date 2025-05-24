@@ -2,31 +2,29 @@
 #define MEM_HPP
 
 #include <string>
+#include <iostream>
+
+using	std::string;
 
 class Zombie
 {
 private:
+	std::string	_characteristic;
+	int			_age;
+	double		_height;
+	double		_weight;
 
 public:
-	Zombie(std::string name) {};
-	~Zombie() {};
-
+	void	displayCharacteristic();
+	string	getUserInputString(string message);
+	string	getCharacteristic();
+	// Declare the constructor (without implementation {})
+	Zombie(std::string name);
+	// Declare the destructor
+	~Zombie();
 }
+;
 
-/* basic structure 
-class 
-{
-private:
-	// data 
-public:
-	mem1(// args );
-	~mem1();
-};
-
-mem1::mem1(// args ) {}
-
-mem1::~mem1() {}
-*/
 
 
 #endif
