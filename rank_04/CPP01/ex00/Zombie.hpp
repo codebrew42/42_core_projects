@@ -10,9 +10,13 @@ private:
 	string _name;
 
 public:
-	Zombie();
+	Zombie( string name );
 	~Zombie();
-	Zombie* Zombie::NewZombie( string name );
+	void announce( void );
 };
+
+// Standalone functions (not member functions, so not in class)
+Zombie* NewZombie( string name );
+void randomChump( string name );
 
 #endif

@@ -1,6 +1,20 @@
 #include "Zombie.hpp"
+#include <iostream>
 
-Zombie::Zombie() {};
+using std::string;
 
-Zombie::~Zombie() {};
+//_name(name) : init list (non-static)
+//Zombie::Zombie(string name) : _name(name) {};
+
+Zombie::Zombie( string name ) {
+	_name = name;
+}
+
+Zombie::~Zombie() {
+    std::cout << _name << " is destroyed" << std::endl;
+}
+
+void Zombie::announce(void) {
+    std::cout << _name << ": BraiiiiiiinnnzzzZ..." << std::endl;
+}
 

@@ -26,9 +26,12 @@ ex06: switch, filtering logic
 - ex00
   - [x] made notes about : (de)constructor, lib, alloc((-)HEAP/(+)STACK)
   - [x] read subject & write README.made
-  - [ ] write: code
+  - [x] write: code
 
-	- read this: what's member func, standalone func, how to sepearte, if it's outside the file, then standalon? (confusing)
+
+## reference
+### ex00: standout function?
+- Q:  what's member func, standalone func, how to sepearte, if it's outside the file, then standalon? (confusing)
 ```
 I understand your confusion. Let me clarify this concept as simply as possible.
 
