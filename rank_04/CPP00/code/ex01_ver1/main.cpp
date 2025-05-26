@@ -11,9 +11,10 @@ void displayStringInLine(string message)
 	cout << message << "\n";
 }
 
-string getInputString(string message)
+const char* getInputString(string message)
 {
-	string output;
+	static string		output;
+//	const char*	refinedOutput;
 
 	cout << message;
 	cin >> output;
@@ -22,7 +23,10 @@ string getInputString(string message)
 		cout << "\n";
 		exit(0);
 	}
-	return output;
+//	refinedOutput = output.c_str();
+//	cout << "out: " << refinedOutput;
+//	return refinedOutput;
+	return	output.c_str();
 }
 
 Contact createNewContact()

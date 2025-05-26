@@ -6,6 +6,6 @@
 #include <cstdlib>
 
 void			displayStringInLine(std::string message);
-std::string		getInputString(std::string message);
+const char*		getInputString(std::string message);
 
 #endif

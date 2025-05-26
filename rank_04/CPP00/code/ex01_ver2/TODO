@@ -1,0 +1,41 @@
+250520
+- think about
+	[1] structure:  sepearting them is a good idea?
+		: add.cpp, search.cpp, exit.cpp
+	[2] dividing/having multiple functions, properly written?
+		: get*, set*., in contact.cpp
+
+- learn more about : using const, 
+
+
+250526
+- go beyond the assignment
+- to fix
+	[1] multiple input(ADD add)
+```
+Please enter one of these commands(ADD, SEARCH, EXIT): 
+ADD add 
+Enter your first name: Enter your last name: 
+
+#detail
+Please enter one of these commands(ADD, SEARCH, EXIT): 
+ADD add 
+Enter your first name: Enter your last name: jin park
+Enter your nickname: Enter your phone number: tjit
+Enter your darkest secret: tjt
+Please enter one of these commands(ADD, SEARCH, EXIT): 
+SEARCH
+=============================================
+     Index|First Name| Last Name|  Nickname
+
+         0|       Add|       Jin|      park
+=============================================
+Enter the index you want to see the detail: 0 
+=============================================
+    First name: Add
+     Last name: Jin
+      Nickname: park
+  Phone number: tjit
+Darkest Secret: tjt
+=============================================
+```

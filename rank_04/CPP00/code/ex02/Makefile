@@ -1,5 +1,5 @@
 NAME	= Account
-CC		= g++
+CC		= c++
 CFLAGS	= -Wall -Wextra -Werror -std=c++98
 SRC		= tests.cpp account.cpp
 OBJ		= $(SRC:.cpp=.o)
