@@ -35,9 +35,13 @@ ex06: switch, filtering logic
 
 250528
 - ex02
-	- [ ] write README.me (files, structure, feature)	
-	- [ ] make notes on it
-	- [ ] then start to code
+	- [x] write README.me (files, structure, feature)	
+	- [x] make notes on it
+	- [x] then  to code
+- ex03
+	- [] write README.me (files, structure, feature)	
+	- [] make notes on it
+	- [] then  to code
 
 
 ## reference
