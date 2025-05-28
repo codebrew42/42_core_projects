@@ -31,7 +31,14 @@ ex06: switch, filtering logic
 250526
 - ex01
 	- [x] write code
-	- [ ] write your own tester
+	- [x] write your own tester (using announce())
+
+250528
+- ex02
+	- [ ] write README.me (files, structure, feature)	
+	- [ ] make notes on it
+	- [ ] then start to code
+
 
 ## reference
 ### ex00: standout function?

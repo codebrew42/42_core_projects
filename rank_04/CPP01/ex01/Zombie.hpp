@@ -16,6 +16,7 @@ public:
 	~Zombie();
 	void	announce(void);
 	void	setName(string name);
+	string	getNameOfZombie();
 
 private:
 	string _name;
@@ -26,6 +27,7 @@ private:
 string	getUserInputString(string message);
 int		stringToInt(string input);
 int		getPositiveNumber(string message);
+void	numberOfZombiesTester(Zombie *z, int number);
 
 //zombieHorde.cpp
 Zombie*		zombieHorde( int N, string name );

@@ -8,6 +8,11 @@ Zombie::Zombie() {};
 
 Zombie::~Zombie() {};
 
+string Zombie::getNameOfZombie()
+{
+	return _name;
+}
+
 void Zombie::announce(void) {
     std::cout << _name << ": BraiiiiiiinnnzzzZ..." << std::endl;
 };

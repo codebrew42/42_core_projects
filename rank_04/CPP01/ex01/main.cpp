@@ -74,6 +74,20 @@ string getName(string message)
 	return name;
 }
 
+void	numberOfZombiesTester(Zombie *z, int number)
+{
+	int		i = -1;
+	cout << "* * * Test starts... * * * " << endl;
+	cout << " Name : " << z[0].getNameOfZombie() << endl;
+	cout << "Number: " << number << endl;
+	cout << "(Zombies start shouting...)" << endl;
+	while (++i < number)
+	{
+		z[i].announce();
+	}
+	cout << "* * * Test ends...* * * " << endl;
+}
+
 int	main()
 {
 	int		number = -1;
@@ -82,5 +96,7 @@ int	main()
 	number = getPositiveNumber(GET_NUMBER);
 	name = getName(GET_NAME);
 	Zombie *z = zombieHorde(number, name);
+	numberOfZombiesTester(z, number);
+
 	delete[] z;
 }
