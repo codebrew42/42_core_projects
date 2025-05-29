@@ -13,6 +13,8 @@ class PhoneBook
 	public:
 		PhoneBook();
 		~PhoneBook();
+		PhoneBook(const PhoneBook& source);
+		PhoneBook&	operator=(const PhoneBook& source);
 
 		std::string	to_string(int number);
 		void		addContact(const Contact& contact);

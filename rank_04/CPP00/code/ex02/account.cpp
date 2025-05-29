@@ -3,11 +3,13 @@
 using	std::cout;
 using	std::endl;
 
-//here 4 members: static (can't be init in init list of class)
+//4 members: static (can't be init in init list of class)
 int	Account::_nbAccounts = 0;
 int	Account::_totalAmount = 0;
 int	Account::_totalNbDeposits = 0;
 int	Account::_totalNbWithdrawals = 0;
+
+Account::Account() {}
 
 Account::Account( int initial_deposit )
 	: _accountIndex(Account::_nbAccounts++), _amount(initial_deposit), _nbDeposits(0), _nbWithdrawals(0) //check: wrong
@@ -16,6 +18,28 @@ Account::Account( int initial_deposit )
 	Account::_displayTimestamp();
 	std::cout << " index:" << _accountIndex << ";amount:" << initial_deposit << ";created" << std::endl;
 }
+
+Account::Account( const Account& source )
+	: _accountIndex(Account::_nbAccounts++),
+		_amount(source._amount),
+		_nbDeposits(source._nbDeposits),
+		_nbWithdrawals(source._nbWithdrawals)
+{
+	Account::_totalAmount += _amount;
+}
+
+Account& Account::operator=( const Account& source)
+{
+	if (this != &source)
+	{
+		Account::_totalAmount += source._amount - _amount;
+		_amount = source._amount;
+		_nbDeposits = source._nbDeposits;
+		_nbWithdrawals = source._nbWithdrawals;
+	}
+	return *this;
+}
+
 Account::~Account() {
 	Account::_displayTimestamp();
 	cout << " index:" << Account::_accountIndex;

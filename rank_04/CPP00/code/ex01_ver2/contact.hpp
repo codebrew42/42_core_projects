@@ -7,7 +7,9 @@ class	Contact
 {
 	public:
 		Contact();
+		Contact(const Contact& original);
 		~Contact();
+		Contact&		operator=(const Contact& source);
 		std::string		getFirstName() const;
 		std::string		getLastName() const;
 		std::string		getNickname() const;
@@ -18,8 +20,7 @@ class	Contact
 		void			setNickname(const std::string& input);
 		void			setPhoneNumber(const std::string& input);
 		void			setDarkSecret(const std::string& input);
-		Contact			addAllContactInfo();
-		std::string		CapitalizeFirstLetter(std::string input) const;
+		std::string		CapitalizeFirstLetter(const std::string& input) const;
 
 	private:
 		std::string		_firstName; 

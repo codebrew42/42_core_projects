@@ -6,11 +6,39 @@ Contact::Contact() {}
 
 Contact::~Contact() {}
 
-string	Contact::CapitalizeFirstLetter(string input) const
+Contact::Contact(const Contact& original) //more efficient using init list
+    : _firstName(original._firstName),
+      _lastName(original._lastName),
+      _nickname(original._nickname),
+      _phoneNumber(original._phoneNumber),
+      _darkestSecret(original._darkestSecret)
 {
-	if (!input.empty())
-		input[0] = std::toupper(input[0]);
-	return input;
+	// _firstName = original._firstName;
+	// _lastName = original._lastName;
+	// _nickname = original._nickname;
+	// _phoneNumber = original._phoneNumber;
+	// _darkestSecret = original._darkestSecret;
+}
+
+Contact& Contact::operator=(const Contact& source)
+{
+	if (this != &source)
+	{
+		_firstName = source._firstName;
+		_lastName = source._lastName;
+		_nickname = source._nickname;
+		_phoneNumber = source._phoneNumber;
+		_darkestSecret = source._darkestSecret;
+	}
+	return *this;
+}
+
+string	Contact::CapitalizeFirstLetter(const string& input) const
+{
+	string result = input;
+	if (!result.empty())
+		result[0] = std::toupper(result[0]);
+	return result;
 }
 
 string	Contact::getFirstName() const

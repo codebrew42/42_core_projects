@@ -42,7 +42,7 @@ int main()
 {
 	int			hasContactFlag = 0;
 	string		command;
-	Contact		contactTemp;
+//	Contact		contactTemp; //better to combine in c++; clear intent, fewer glabal ->more efficient
 	PhoneBook	phoneBook;
 
 	while (true)
@@ -53,7 +53,7 @@ int main()
 		if (command == "ADD")
 		{
 			hasContactFlag = 1;
-			contactTemp = createNewContact();
+			Contact contactTemp = createNewContact();
 			phoneBook.addContact(contactTemp);
 		}
 		else if (command == "SEARCH")

@@ -1,4 +1,5 @@
 #include "phoneBook.hpp"
+#include "contact.hpp"
 #include "main.hpp"
 
 using std::cout;
@@ -7,6 +8,28 @@ using std::string;
 PhoneBook::PhoneBook() : _numberOfContacts(0) {}
 
 PhoneBook::~PhoneBook() {}
+
+PhoneBook::PhoneBook(const PhoneBook& source)
+	: _numberOfContacts(source._numberOfContacts) //having here: more efficient
+{
+	int	i = -1;
+	while (++i < 8)
+	{
+		_contact[i] = source._contact[i];
+	}
+}
+
+PhoneBook&	PhoneBook::operator=(const PhoneBook& source)
+{
+	if (this != &source)
+	{
+		_numberOfContacts = source._numberOfContacts;
+		int i = -1;
+		while (++i < 8)
+			_contact[i] = source._contact[i];
+	}
+	return *this;
+}
 
 
 string	PhoneBook::to_string(int number)

@@ -23,26 +23,26 @@ class Account {
 
 
 public:
-
 	typedef Account		t;
 
+	Account( void );
+	Account( int initial_deposit );
+	Account( const Account& source );
+	Account& operator=( const Account& source );
+	~Account( void );
 	static int	getNbAccounts( void );
 	static int	getTotalAmount( void );
 	static int	getNbDeposits( void );
 	static int	getNbWithdrawals( void );
 	static void	displayAccountsInfos( void );
-
-	Account( int initial_deposit );
-	~Account( void );
-
-	void	makeDeposit( int deposit );
-	bool	makeWithdrawal( int withdrawal );
-	int		checkAmount( void ) const;
-	void	displayStatus( void ) const;
+	void		makeDeposit( int deposit );
+	bool		makeWithdrawal( int withdrawal );
+	int			checkAmount( void ) const;
+	void		displayStatus( void ) const;
+	static void	_displayTimestamp( void );
 
 
 private:
-
 	//static
 	//- shared by all instaces
 	//- cannot be init in init list in .cpp
@@ -51,16 +51,11 @@ private:
 	static int	_totalNbDeposits;
 	static int	_totalNbWithdrawals;
 
-	static void	_displayTimestamp( void );
-
 	//can be init in init list in constructor(.cpp) 
 	int				_accountIndex;
 	int				_amount;
 	int				_nbDeposits;
 	int				_nbWithdrawals;
-
-	Account( void );
-
 };
 
 
