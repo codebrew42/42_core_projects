@@ -1,3 +1,6 @@
+# to check before submission
+- compile : make, make re, make fclean, make clean
+
 # compiling
 -Wall -Wextra -Werror -std=c++98
 
