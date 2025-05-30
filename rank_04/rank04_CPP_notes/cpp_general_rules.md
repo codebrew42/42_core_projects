@@ -1,3 +1,6 @@
+# to check before submission
+- compile : make, make re, make fclean, make clean
+
 # compiling
 -Wall -Wextra -Werror -std=c++98
 
@@ -40,3 +43,8 @@ e.g. ClassName.hpp, ClassName.cpp
 - can be added alongside the mandatory files
 
 
+## orthodox canonial form
+- default constructor
+- (optional: parametarized constructor)
+- copy constructor
+- copy assignment operator

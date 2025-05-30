@@ -4,6 +4,8 @@ CC			= c++
 C_FLAG		= -Wall -Werror -Wextra -std=c++98
 OBJ			= $(SRC:.cpp=.o)
 
+all: $(NAME)
+
 $(NAME): $(OBJ)
 	$(CC) $(C_FLAG) $(OBJ) -o $@
  

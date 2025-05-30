@@ -10,8 +10,11 @@ private:
 	string _name;
 
 public:
+	Zombie();
 	Zombie( string name );
+	Zombie( const Zombie& source);
 	~Zombie();
+	Zombie& operator=( const Zombie& source );
 	void announce( void );
 };
 

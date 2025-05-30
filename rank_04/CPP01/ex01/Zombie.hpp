@@ -13,7 +13,9 @@ class Zombie
 {
 public:
 	Zombie();
+	Zombie( const Zombie& source );
 	~Zombie();
+	Zombie&	operator=( const Zombie& source );
 	void	announce(void);
 	void	setName(string name);
 	string	getNameOfZombie();
