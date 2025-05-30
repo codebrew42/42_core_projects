@@ -20,8 +20,6 @@ ex05: pointers to member functions
 ex06: switch, filtering logic
 	- filter and disp msg based on log level, using switch
 
-
-
 250524
 - ex00
   - [x] made notes about : (de)constructor, lib, alloc((-)HEAP/(+)STACK)
@@ -33,16 +31,24 @@ ex06: switch, filtering logic
 	- [x] write code
 	- [x] write your own tester (using announce())
 
-250528
+250528 - 250530
 - ex02
 	- [x] write README.me (files, structure, feature)	
 	- [x] make notes on it
 	- [x] then  to code
 - ex03
 	- [x] write README.me (files, structure, feature)	
+	- [x] make notes on it
+	- [x] then  to code
+
+250530
+- ex04
+	- [] write README.me (files, structure, feature)	
 	- [] make notes on it
 	- [] then  to code
 
+Later
+- [] fix: ex01(see TODO)
 
 ## reference
 ### ex00: standout function?

@@ -1,32 +1,47 @@
 # ex03: Unnecessary violence
 
 ## files
-- [] Makefile
-- [] main.cpp
+- [x] Makefile
+- [x] main.cpp
 
-- [] Weapon.hpp
-- [] Weapon.cpp
+- [x] Weapon.hpp
+- [x] Weapon.cpp
 
-- [] HumanA.hpp
-- [] HumanA.cpp
+- [x] HumanA.hpp
+- [x] HumanA.cpp
 
-- [] HumanB.hpp
-- [] HumanB.cpp
+- [x] HumanB.hpp
+- [x] HumanB.cpp
 
 ## program
 - class `Weapon` has
-	- [] private: string `type`
-	- [] getType(): returns a constant reference to `type`
-	- [] setType(): sets `type` using new value passed as a param
+	- [x] private: string `type`
+	- [x] getType(): returns a constant reference to `type`
+	- [x] setType(): sets `type` using new value passed as a param
 - class `HumanA` and class `HumanB` contains
-	- [] class `Weapon`
-	- [] `name`
-	- [] attack() : disp `<NAME> attacks with their <WEAPON TYPE>` (except angle brackets)
+	- [x] class `Weapon`
+	- [x] `name`
+	- [x] attack() : disp `<NAME> attacks with their <WEAPON TYPE>` (except angle brackets)
 	- only difference is in two details
-		- [] `HumanA` takes `Weapon` in its contructor, `HumanB` doesn't
-		- [] `HumanA` always has `Weapon`, `HumanB` may not always does
+		- [x] `HumanA` takes `Weapon` in its contructor, `HumanB` doesn't
+		- [x] `HumanA` always has `Weapon`, `HumanB` may not always does
 - check mem leaks
 
 ## key concepts
 - for each case: which one to use, and why?
 	- pointer to a Weapon vs. ref to Weapon?
+
+## notes: interpretation of the assignment
+- [1] takes Weapon 
+	- meaning = pass it as a param to the constructor
+	- hint: that the class's const includes this param
+- [2] always has Weapon, not always has Weapon
+	- have an attribute `Weapon*` or `Weapon&`
+- [3] returns a constant refernce to type
+```
+
+const string& Weapon::getType() const //correct
+string Weapon::getType() //wrong
+
+
+```

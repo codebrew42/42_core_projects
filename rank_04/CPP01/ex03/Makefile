@@ -1,5 +1,5 @@
 NAME = violentGame
-SRC = main.cpp
+SRC = main.cpp Weapon.cpp HumanA.cpp HumanB.cpp
 OBJ = $(SRC:.cpp=.o)
 CC = c++
 CFLAG = -Wall -Wextra -Werror -std=c++98
@@ -7,15 +7,18 @@ CFLAG = -Wall -Wextra -Werror -std=c++98
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	$(CC) $(CLFAG) $(OBJ) -o $@
+	$(CC) $(CFLAG) $(OBJ) -o $@
 
-$(OBJ) : $(SRC)
+%.o: %.cpp
 	$(CC) $(CFLAG) -c $< -o $@ #not sure
 
-fclean : clean
-	rm -rf $(NAME)
 
 clean : 
 	rm -rf $(OBJ)
 
-.PHONY = fclean clean re all
+fclean : clean
+	rm -rf $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re
