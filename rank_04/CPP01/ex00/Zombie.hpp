@@ -16,7 +16,7 @@ public:
 };
 
 // Standalone functions (not member functions, so not in class)
-Zombie* NewZombie( string name );
+Zombie* newZombie( string name );
 void randomChump( string name );
 
 #endif

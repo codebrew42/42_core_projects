@@ -6,7 +6,10 @@ using	std::endl;
 
 Zombie::Zombie() {};
 
-Zombie::~Zombie() {};
+Zombie::~Zombie() {
+	std::cout << "zombie deleted " << this->_name << std::endl; //added
+};
+
 
 string Zombie::getNameOfZombie()
 {

@@ -2,7 +2,7 @@
 
 //just function in file => is expected
 
-Zombie* NewZombie( string name )
+Zombie* newZombie( string name )
 {
 	//creating on heap 
 	Zombie* z = new Zombie(name);

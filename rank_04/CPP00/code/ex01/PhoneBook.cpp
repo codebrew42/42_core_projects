@@ -1,14 +1,35 @@
-#include "phoneBook.hpp"
+#include "PhoneBook.hpp"
+#include "Contact.hpp"
 #include "main.hpp"
 
 using std::cout;
-//using std::stoi;
 using std::string;
-//using std::to_string;
 
 PhoneBook::PhoneBook() : _numberOfContacts(0) {}
 
 PhoneBook::~PhoneBook() {}
+
+PhoneBook::PhoneBook(const PhoneBook& source)
+	: _numberOfContacts(source._numberOfContacts) //having here: more efficient
+{
+	int	i = -1;
+	while (++i < 8)
+	{
+		_contact[i] = source._contact[i];
+	}
+}
+
+PhoneBook&	PhoneBook::operator=(const PhoneBook& source)
+{
+	if (this != &source)
+	{
+		_numberOfContacts = source._numberOfContacts;
+		int i = -1;
+		while (++i < 8)
+			_contact[i] = source._contact[i];
+	}
+	return *this;
+}
 
 
 string	PhoneBook::to_string(int number)
@@ -20,12 +41,9 @@ string	PhoneBook::to_string(int number)
 
 /* when to use "this->"*/
 // if multiple phonebook: using "this->"" is necessary
-// Otherwise, using property name: enough.
+// Otherwise, using property name: enough
 void PhoneBook::addContact(const Contact &contact)
 {
-	/* indexing */
-	// if (NOC == 0 - 7), ret {same nbr}
-	// else if ( NOC >= 8 ), ret { nbr % 8}
 	int index = _numberOfContacts % 8;
 	_contact[index] = contact;
 	_numberOfContacts++;
@@ -95,7 +113,7 @@ void PhoneBook::displaySingleContact()
 
 	while (true)
 	{
-		requestedIndex = atoi(getInputString("Enter the index you want to see the detail: "));
+		requestedIndex = atoi(getInputString("Enter the index you want to see the detail: ").c_str());
 		if (requestedIndex >= getNumberOfContacts() || requestedIndex >= 8 || requestedIndex < 0)
 		{
 			displayStringInLine("Error: the index doesn't exist in the phonebook, try again!");

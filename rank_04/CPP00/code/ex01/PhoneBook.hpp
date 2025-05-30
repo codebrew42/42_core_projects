@@ -1,7 +1,7 @@
 #ifndef PHONEBOOK_HPP
 # define PHONEBOOK_HPP
 
-#include "contact.hpp"
+#include "Contact.hpp"
 #include <stdexcept>
 #include <sstream>
 class PhoneBook
@@ -13,8 +13,9 @@ class PhoneBook
 	public:
 		PhoneBook();
 		~PhoneBook();
+		PhoneBook(const PhoneBook& source);
+		PhoneBook&	operator=(const PhoneBook& source);
 
-		//functions inside phonebook.cpp
 		std::string	to_string(int number);
 		void		addContact(const Contact& contact);
 		int			getCurrentIndex();

@@ -15,8 +15,8 @@
 
 ## program
 - class `Weapon` has
-	- [] private: string type
-	- [] getType(): returns a constant refernce to `type`
+	- [] private: string `type`
+	- [] getType(): returns a constant reference to `type`
 	- [] setType(): sets `type` using new value passed as a param
 - class `HumanA` and class `HumanB` contains
 	- [] class `Weapon`
@@ -24,8 +24,9 @@
 	- [] attack() : disp `<NAME> attacks with their <WEAPON TYPE>` (except angle brackets)
 	- only difference is in two details
 		- [] `HumanA` takes `Weapon` in its contructor, `HumanB` doesn't
-		- [] `HumanA` always have `Weapon`, `HumanB` may not always have it
+		- [] `HumanA` always has `Weapon`, `HumanB` may not always does
 - check mem leaks
 
 ## key concepts
-- in which cases to use, and why: pointer to a Weapon vs. ref to Weapon?
+- for each case: which one to use, and why?
+	- pointer to a Weapon vs. ref to Weapon?

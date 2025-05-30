@@ -72,7 +72,6 @@ void	Account::displayAccountsInfos( void )
 	cout << ";deposits:" << temp;
 	temp = getNbWithdrawals();
 	cout << ";withdrawals:" << temp << endl;
-
 }
 
 
@@ -127,26 +126,20 @@ int		Account::checkAmount( void ) const
 
 bool Account::makeWithdrawal(int withdrawal)
 {
-    Account::_displayTimestamp();
-    cout << " index:" << _accountIndex;
-    cout << ";p_amount:" << _amount;
-    if (_amount < withdrawal)
-    {
-        cout << ";withdrawal:refused" << endl;
-        return false;
-    }
-    _amount -= withdrawal;
-    _totalAmount -= withdrawal;
-    _nbWithdrawals++;
-    _totalNbWithdrawals++;
-    cout << ";withdrawal:" << withdrawal;
-    cout << ";amount:" << _amount;
-    cout << ";nb_withdrawals:" << _nbWithdrawals << endl;
-    return true;
+	Account::_displayTimestamp();
+	cout << " index:" << _accountIndex;
+	cout << ";p_amount:" << _amount;
+	if (_amount < withdrawal)
+	{
+		cout << ";withdrawal:refused" << endl;
+		return false;
+	}
+	_amount -= withdrawal;
+	_totalAmount -= withdrawal;
+	_nbWithdrawals++;
+	_totalNbWithdrawals++;
+	cout << ";withdrawal:" << withdrawal;
+	cout << ";amount:" << _amount;
+	cout << ";nb_withdrawals:" << _nbWithdrawals << endl;
+	return true;
 }
-
-
-/*
-Q. why int here is not allowed/necessary?
-Q. why const here isn't meaningful?
-*/

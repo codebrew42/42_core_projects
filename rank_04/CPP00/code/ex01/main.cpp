@@ -1,20 +1,20 @@
-#include "contact.hpp"
+#include "Contact.hpp"
 #include "main.hpp"
-#include "phoneBook.hpp"
+#include "PhoneBook.hpp"
 
 using std::cin;
 using std::cout;
 using std::string;
+using std::endl;
 
 void displayStringInLine(string message)
 {
 	cout << message << "\n";
 }
 
-const char* getInputString(string message)
+string	getInputString(string message)
 {
 	static string		output;
-//	const char*	refinedOutput;
 
 	cout << message;
 	cin >> output;
@@ -23,10 +23,7 @@ const char* getInputString(string message)
 		cout << "\n";
 		exit(0);
 	}
-//	refinedOutput = output.c_str();
-//	cout << "out: " << refinedOutput;
-//	return refinedOutput;
-	return	output.c_str();
+	return	output;
 }
 
 Contact createNewContact()
@@ -43,9 +40,10 @@ Contact createNewContact()
 
 int main()
 {
-	string command;
-	Contact contact_temp;
-	PhoneBook phoneBook;
+	int			hasContactFlag = 0;
+	string		command;
+//	Contact		contactTemp; //better to combine in c++; clear intent, fewer glabal ->more efficient
+	PhoneBook	phoneBook;
 
 	while (true)
 	{
@@ -54,11 +52,17 @@ int main()
 			return 1;
 		if (command == "ADD")
 		{
-			contact_temp = createNewContact();
-			phoneBook.addContact(contact_temp);
+			hasContactFlag = 1;
+			Contact contactTemp = createNewContact();
+			phoneBook.addContact(contactTemp);
 		}
 		else if (command == "SEARCH")
 		{
+			if (hasContactFlag == 0)
+			{
+				cout << "You should add any contact info first, try again!" << endl;
+				continue ;
+			}
 			phoneBook.displayAllContacts();
 			phoneBook.displaySingleContact();
 		}

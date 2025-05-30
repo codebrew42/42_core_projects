@@ -1,31 +1,30 @@
-#include "contact.hpp"
-#include "main.hpp"
-#include "phoneBook.hpp"
+# key concept
+- getting input
+- validating input
 
-using std::cin;
-using std::cout;
-using std::string;
-using std::endl;
+# issue
 
-void displayStringInLine(string message)
+## case1 : when index=alphabet (displaying single info)
+- check: the getting index part
+- probably here of the ex01
+```
+void PhoneBook::displaySingleContact()
 {
-	cout << message << "\n";
-}
+	int requestedIndex;
 
-string	getInputString(string message)
-{
-	static string		output;
-
-	cout << message;
-	cin >> output;
-	if (cin.eof()) //check for EOF (ctr D)
+	while (true)
 	{
-		cout << "\n";
-		exit(0);
-	}
-	return	output;
-}
+		requestedIndex = atoi(getInputString("Enter the index you want to see the detail: ").c_str());
 
+		(... rest of the code ...)
+	}
+}
+```
+
+## case2 : "Enter your darkest secret: I love eating icecream with pommes" in input part(contact.cpp)
+- check: how strings are handled
+- these 2 parts
+```
 Contact createNewContact()
 {
 	Contact contact;
@@ -78,3 +77,4 @@ int main()
 	}
 	return 0;
 }
+```
