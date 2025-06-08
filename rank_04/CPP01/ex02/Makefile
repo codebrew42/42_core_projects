@@ -1,4 +1,4 @@
-NAME = Brain
+NAME = brain
 SRC = main.cpp
 OBJ = $(SRC:.cpp=.o)
 CC = c++
@@ -9,7 +9,7 @@ all : $(NAME)
 $(NAME) : $(OBJ)
 	$(CC) $(CFLAG) $(OBJ) -o $@
 
-$(OBJ) : $(SRC)
+%.o : %.cpp
 	$(CC) $(CFLAG) -c $< -o $@
 
 clean : 

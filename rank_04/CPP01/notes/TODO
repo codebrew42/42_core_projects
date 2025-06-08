@@ -50,6 +50,14 @@ ex06: switch, filtering logic
 Later
 - [] fix: ex01(see TODO)
 
+250608
+- ex04
+	- [x] then  to code
+- ex05
+	- [] write README.me (files, structure, feature)	
+	- [] make notes on it
+	- [] then  to code
+
 ## reference
 ### ex00: standout function?
 - Q:  what's member func, standalone func, how to sepearte, if it's outside the file, then standalon? (confusing)
