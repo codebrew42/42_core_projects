@@ -4,13 +4,20 @@
 #include <string>
 #include <iostream>
 
-using	namespace std;
+using					std::cerr;
+using					std::string;
+using					std::cout;
+using					std::endl;
+
+int	displayErrorMessage(const char* message);
+int	displayMessage(const char* message);
 
 class Harl{
 
 public:
 				Harl(); //default construcgtor
-				~Harl(); //deconst
+				Harl( const Harl& source );
+				~Harl();
 	void		complain( std::string level );
 
 private:
@@ -20,7 +27,8 @@ private:
 	void		error( void );
 
 	string		_levels[4]; //= {"DEBUG", "INFO", "WARNING", "ERROR"};
-
+	//void		ptrs[4];	//wrong
+	void (Harl::*_ptrs[4])(void); //arr of memb func ptr
 };
 
 #endif

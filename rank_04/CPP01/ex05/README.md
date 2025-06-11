@@ -1,65 +1,44 @@
 # ex05 : Harl 2.0
 
 ## to submit
-- [] Makefile
-- [] main.cpp
-- [] Harl.cpp
-- [] Harl.hpp
+- [x] Makefile
+- [x] main.cpp
+- [x] Harl.cpp
+- [x] Harl.hpp
 
 ## forbidden function
 - no
 
 ## requirements
-<<<<<<< HEAD
-- automate harl
-
-- Harl class
-	- private functions
-		- [] `void debug( void );`
-		- [] `void info( void );`
-		- [] `void warning( void );`
-		- [] `void error( void );`
-	- public function
-		- [] `void complain( std::string level );`
-
-## checklist
-- don't use: a forest of if/else, if/else
-
-## key concept of C++
-- Q1. what's Harl?
-	- classified by levels : debug/info/warning/error level
-
-- Q2. use pointers to member functions (MUST)
-=======
 - the program
 	- [x] gets parameter which is the level
-	- [] automates `Harl` which makes comments
+	- [x] automates `Harl` which makes comments
 
 - Harl class
 	- private functions
 		- `void debug( void );`
-			- [] Debug messages contain contextual info
-			- [] for problem diagonosis
+			- [x] Debug messages contain contextual info
+			- [x] for problem diagonosis
 		- `void info( void );`
-			- [] Info messages contain extensive info
-			- [] for tracing program execution in a production env.
+			- [x] Info messages contain extensive info
+			- [x] for tracing program execution in a production env.
 		- `void warning( void );`
-			- [] Warning messages indicate a potential issue in the system
-			- [] the issue can be handled or ignored
+			- [x] Warning messages indicate a potential issue in the system
+			- [x] the issue can be handled or ignored
 		- [] `void error( void );`
-			- [] Error messages indicate the unrecoverable error has occurred
-			- [] that error is usually critical that it requires manual intervention
+			- [x] Error messages indicate the unrecoverable error has occurred
+			- [x] that error is usually critical that it requires manual intervention
 	- public function
 		- `void complain( std::string level );`
-			- [] calls four member functions above depending on the level(param)
+			- [x] calls four member functions above depending on the level(param)
 
 ## checklist
 - don't use:
-	- [] a forest of if/else, if/else
+	- [x] a forest of if/else, if/else
 - use:
-	- [] pointers to member functions
+	- [x] pointers to member functions
 - recommended:
-	- [] use examples of comments or choose comments of your own
+	- [x] use examples of comments or choose comments of your own
 
 ## key concept of C++
 ### string comparison
@@ -93,12 +72,26 @@ else if (level == "ERROR")
 ### use pointers to member functions
 
 ```c
-typedef void (Harl::*MemberFuncPtr)(void);
+//Harl.hpp
+class Harl{
+...
+private:
+	void (Harl::*MemberFuncPtr)(void);
+}
+
+//Harl.cpp
+Harl::Harl( const Harl& source)
+	for (int i = 0; i < 4; i++)
+		if _levels == source._levels[i]
+			(this->*_ptrs[i])()
 ```
 This creates a new type called `MemberFuncPtr` which represents a ptr to a memb func
 
 - `void`: ret type (ret nothing)
 - `Harl::`: the ptr belongs to the Harl class
 
-
->>>>>>> 447b83213b4b703283f044a2ab3e057c0d4eb9d0
+- `_levels` vs `(this->*_ptrs[i])()`
+	- syntactic sugar: 
+		- 'this->' implied for all memb var access
+		- compiler automatically translate `_levels[i]` to `this->_levels[i]`
+	- `->*` (a pointer to a member function) requires explicit `this`

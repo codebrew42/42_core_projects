@@ -1,11 +1,4 @@
-#include <fstream>
-#include <iostream>
-#include <sys/stat.h>	// checking file existence without opening
-#include <cerrno>		// checking error codes
-#include <string>
-#include <stdexcept>
-
-using	namespace std;
+#include "main.hpp"
 
 bool	isReadable(const char* fileName)
 {
@@ -74,7 +67,7 @@ int main(int ac, char **av)
 //validate & exit on err
 	try {
 		if (ac != 4)
-			throw invalid_argument("Error: enter 3 arguments!");
+			throw invalid_argument("Error: enter 3 arguments(filename, string to search, string to replace)");
 		validateArguments(av[1], av[2]);
 	}
 	catch (const exception& err) //(!) exception: can be used for msging

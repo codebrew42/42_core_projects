@@ -5,6 +5,9 @@
 #include <cstdlib>
 
 using	std::string;
+using	std::cout;
+using	std::endl;
+using	std::cin;
 
 #define GET_NUMBER "How many zombies do you want to create?: "
 #define GET_NAME "Which name you want to give to these zombies?: "

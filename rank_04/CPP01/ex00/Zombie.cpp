@@ -1,15 +1,15 @@
 #include "Zombie.hpp"
 #include <iostream>
 
-using std::string;
-
 //_name(name) : init list (non-static)
 //Zombie::Zombie(string name) : _name(name) {};
 
 Zombie::Zombie() {}
 
 Zombie::Zombie( string name ) 
-	: _name(name) {}
+	: _name(name) {
+		    std::cout << _name << " is created" << std::endl;
+}
 
 Zombie::Zombie( const Zombie &source)
 	: _name(source._name) {}

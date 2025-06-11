@@ -5,9 +5,9 @@
 #include	<iostream>
 #include	"Weapon.hpp"
 
-using		std::string;
-using		std::cout;
-using		std::endl;
+using					std::string;
+using					std::cout;
+using					std::endl;
 
 class	HumanB
 {

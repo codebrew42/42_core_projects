@@ -1,13 +1,9 @@
 #include "Zombie.hpp"
 
-using	std::cout;
-using	std::string;
-using	std::endl;
-
 Zombie::Zombie() {};
 
 Zombie::~Zombie() {
-	std::cout << "zombie deleted " << this->_name << std::endl; //added
+	std::cout << "zombie [" << this->_name << "] is deleted" << std::endl; //added
 };
 
 

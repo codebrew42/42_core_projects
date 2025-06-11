@@ -58,6 +58,14 @@ Later
 	- [] make notes on it
 	- [] then  to code
 
+250611
+- ex05
+	- [x] write README.me (files, structure, feature)	
+	- [x] make notes on it
+	- [x] then  to code
+- ex01-ex05
+	- [x] restyle: ready to be submitted
+
 ## reference
 ### ex00: standout function?
 - Q:  what's member func, standalone func, how to sepearte, if it's outside the file, then standalon? (confusing)

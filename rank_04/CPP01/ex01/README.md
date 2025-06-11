@@ -15,7 +15,7 @@ Zombie* zombieHorde( int N, std::string name );
 		- get each Name from user input
 	- [x] then, ret {ptr to 1st zombie}
 - write your own tester
-	- [ ] ensure func 'zombieHorde()' works as expected
+	- [x] ensure func 'zombieHorde()' works as expected
 	- [x] call announce() for each zombie
 
 ## check mem leak
