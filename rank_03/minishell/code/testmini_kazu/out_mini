@@ -1,0 +1,184 @@
+test 1
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+test 2
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+test 3
+hello
+test 4
+hi !
+test 5
+51
+test 6
+minishell: : Command not found
+0
+test 7
+minishell: : Command not found
+0
+test 8
+minishell: : Command not found
+test 9
+/home/        /work/ms/minishell/testmini_****
+test 10
+/home/        /work/ms/minishell/testmini_****
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+test 11
+/home/        /work/ms/minishell/testmini_****
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+hi
+test 12
+/home/        /work/ms/minishell/testmini_****
+hi
+test 13
+/home/        /work/ms/minishell/testmini_****
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+test 14
+/home/        /work/ms/minishell/testmini_****
+test 15
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+test 16
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+test 17
+minishell: syntax error near `(('
+test 18
+/home/        /work/ms/minishell/testmini_****
+test 19
+/home/        /work/ms/minishell/testmini_****
+test 20
+minishell: syntax error near `(('
+test 21
+cat: xxx: No such file or directory
+test 22
+cat: xxx: No such file or directory
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+/home/        /work/ms/minishell/testmini_****
+test 23
+cat: xxx: No such file or directory
+/home/        /work/ms/minishell/testmini_****
+test 24
+cat: xxx: No such file or directory
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout
+test 25
+/home/        /work/ms/minishell/testmini_****
+cat: xxx: No such file or directory
+cat: xxx: No such file or directory
+1
+out_bash
+out_diff
+out_mini
+readline.supp
+test_cd.sh
+test_echo
+test_exec
+testmini.sh
+testout
+test_small
+test_wildcard
+tsetout

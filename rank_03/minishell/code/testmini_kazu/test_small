@@ -1,0 +1,11 @@
+echo test 1
+echo hi
+
+echo test 2
+pwd 
+
+echo test 3
+cat xxx
+
+echo test 4
+echo *

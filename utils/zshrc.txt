@@ -1,0 +1,61 @@
+
+# 42 header: new
+function c42new() {
+    # Get filename and calculate padding
+    filename=$(basename "$1")
+    length=${#filename}
+    padding=$((51 - length))  # 51 is the position where :+: should start
+    spaces=$(printf '%*s' $padding '')
+
+    echo "/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   $filename$spaces:+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jiepark <jiepark@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: $(date +%Y/%m/%d) $(date +%H:%M:%S) by jiepark          #+#    #+#              */
+/*   Updated: $(date +%Y/%m/%d) $(date +%H:%M:%S) by jiepark         ###   ########.fr        */
+/*                                                                            */
+/* ************************************************************************** */
+
+" > "$1"
+}
+
+# 42 header: old
+function c42() {
+    # Check if file exists
+    if [ ! -f "$1" ]; then
+        echo "File does not exist"
+        return 1
+    fi
+
+    # Get filename and calculate padding
+    filename=$(basename "$1")
+    length=${#filename}
+    padding=$((51 - length))  # 51 is the position where :+: should start
+    spaces=$(printf '%*s' $padding '')
+
+    # Create temporary file
+    temp_file=$(mktemp)
+
+    # Add header to temp file
+    echo "/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   $filename$spaces:+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jiepark <jiepark@student.42berlin.de>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: $(date +%Y/%m/%d) $(date +%H:%M:%S) by jiepark          #+#    #+#             */
+/*   Updated: $(date +%Y/%m/%d) $(date +%H:%M:%S) by jiepark         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+" > "$temp_file"
+
+    # Append original content
+    cat "$1" >> "$temp_file"
+
+    # Replace original file with new content
+    mv "$temp_file" "$1"
+}

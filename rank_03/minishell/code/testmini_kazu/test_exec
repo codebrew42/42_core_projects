@@ -1,0 +1,42 @@
+ls
+ls | ls | ls
+echo hello | cat
+echo hi !| cat | cat | cat
+env | cat | wc -l
+"" | cat | wc -l
+env | "" | wc -l
+env | cat | ""
+pwd || ls
+pwd && ls
+pwd && ls && echo hi
+pwd || ls && echo hi
+pwd && ls || echo hi
+pwd || ls || echo hi
+(ls)
+((ls))
+(((ls)))
+(pwd)
+((pwd))
+(((pwd)))
+(cat xxx && ls) && pwd
+(cat xxx || ls) && pwd
+(cat xxx && ls) || pwd
+(cat xxx || ls) || pwd
+pwd && (cat xxx && ls)
+pwd && (cat xxx || ls)
+pwd || (cat xxx && ls)
+pwd || (cat xxx || ls)
+(pwd && cat xxx) || (cat xxx || ls) && pwd
+pwd && (cat xxx || cat < xxx && ls) || echo hi
+pwd && (cat xxx || cat < xxx && ls) && echo hi
+&&
+||
+&
+|
+
+(pwd && (cat xxx || cat < xxx && ls)) && echo hi
+(pwd || (cat xxx || cat < xxx && ls)) && echo hi
+(pwd && (cat xxx && cat < xxx && ls)) && echo hi
+(pwd && (cat xxx || cat < xxx && ls)) || echo hi
+(pwd && (cat xxx || cat < xxx && ls))
+
