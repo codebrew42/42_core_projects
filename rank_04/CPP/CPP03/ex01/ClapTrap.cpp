@@ -28,17 +28,17 @@ ClapTrap::~ClapTrap() {
 void ClapTrap::attack(const std::string& target) {
 	if (_hitPoints == 0) {
 		std::cout << "ClapTrap " << _name 
-		          << " can't attack, since it's already dead!" << std::endl;
+				  << " can't attack, since it's already dead!" << std::endl;
 		return;
 	}
 	if (_energyPoints == 0) {
 		std::cout << "ClapTrap " << _name 
-		          << " can't attack due to low energy!" << std::endl;
+				  << " can't attack due to low energy!" << std::endl;
 		return;
 	}
 	_energyPoints--;
 	std::cout << "ClapTrap " << _name << " attacks " << target 
-	          << ", causing " << _attackDamage << " points of damage!" << std::endl;
+			  << ", causing " << _attackDamage << " points of damage!" << std::endl;
 }
 
 void ClapTrap::takeDamage(unsigned int amount) {
@@ -50,29 +50,29 @@ void ClapTrap::takeDamage(unsigned int amount) {
 	if (amount >= _hitPoints) {
 		_hitPoints = 0;
 		std::cout << "ClapTrap " << _name << " takes " << amount 
-		          << " damage and dies! Hit points: 0" << std::endl;
+				  << " damage and dies! Hit points: 0" << std::endl;
 	} else {
 		_hitPoints -= amount;
 		std::cout << "ClapTrap " << _name << " takes " << amount 
-		          << " damage! Hit points: " << _hitPoints << std::endl;
+				  << " damage! Hit points: " << _hitPoints << std::endl;
 	}
 }
 
 void ClapTrap::beRepaired(unsigned int amount) {
 	if (_hitPoints == 0) {
 		std::cout << "ClapTrap " << _name 
-		          << " can't be repaired, since it's already dead!" << std::endl;
+				  << " can't be repaired, since it's already dead!" << std::endl;
 		return;
 	}
 	if (_energyPoints == 0) {
 		std::cout << "ClapTrap " << _name 
-		          << " can't be repaired due to low energy!" << std::endl;
+				  << " can't be repaired due to low energy!" << std::endl;
 		return;
 	}
 	_energyPoints--;
 	_hitPoints += amount;
 	std::cout << "ClapTrap " << _name << " repairs itself for " << amount 
-	          << " hit points! Hit points: " << _hitPoints << std::endl;
+			  << " hit points! Hit points: " << _hitPoints << std::endl;
 }
 
 void ClapTrap::scanThisPerson() {
