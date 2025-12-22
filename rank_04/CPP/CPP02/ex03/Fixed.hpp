@@ -5,7 +5,6 @@
 #include <iostream>
 
 using	std::ostream;
-
 class Fixed{
 private:
 	int					_value;

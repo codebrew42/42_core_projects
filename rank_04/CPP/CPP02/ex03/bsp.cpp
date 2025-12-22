@@ -1,36 +1,36 @@
 #include "Point.hpp"
 
 /*
-** Calculate the sign of the cross product of vectors (p1->p2) and (p1->point)
-** This tells us which side of the line p1-p2 the point is on
+** Calculate which side of an edge a point is on
+** Returns: positive if point is on left side of edge (v1->v2)
+**          negative if point is on right side
+**          zero if point is on the edge itself
 */
-static Fixed sign(Point const p1, Point const p2, Point const point) {
-	return (p1.getX() - point.getX()) * (p2.getY() - point.getY()) -
-	       (p2.getX() - point.getX()) * (p1.getY() - point.getY());
+static Fixed sideOfEdge(Point const v1, Point const v2, Point const testPoint) {
+	return (v1.getX() - testPoint.getX()) * (v2.getY() - testPoint.getY()) -
+	       (v2.getX() - testPoint.getX()) * (v1.getY() - testPoint.getY());
 }
 
 /*
 ** BSP (Binary Space Partitioning) - checks if point is inside triangle abc
-** Returns true if point is strictly inside (not on edges or vertices)
+** Returns true if point is strictly inside
 ** Returns false if point is on edge, on vertex, or outside
 */
 bool bsp(Point const a, Point const b, Point const c, Point const point) {
-	Fixed d1, d2, d3;
-	bool has_neg, has_pos;
+	Fixed sideOfAB = sideOfEdge(a, b, point);
+	Fixed sideOfBC = sideOfEdge(b, c, point);
+	Fixed sideOfCA = sideOfEdge(c, a, point);
 
-	// Calculate cross products for each edge
-	d1 = sign(point, a, b);
-	d2 = sign(point, b, c);
-	d3 = sign(point, c, a);
-
-	// Check if any cross product is zero (point on edge or vertex)
-	if (d1.toFloat() == 0 || d2.toFloat() == 0 || d3.toFloat() == 0)
+	if (sideOfAB.toFloat() == 0 || sideOfBC.toFloat() == 0 || sideOfCA.toFloat() == 0)
 		return false;
 
-	// Check if all cross products have the same sign
-	has_neg = (d1.toFloat() < 0) || (d2.toFloat() < 0) || (d3.toFloat() < 0);
-	has_pos = (d1.toFloat() > 0) || (d2.toFloat() > 0) || (d3.toFloat() > 0);
+	bool allPositive = (sideOfAB.toFloat() > 0 && 
+						sideOfBC.toFloat() > 0 && 
+						sideOfCA.toFloat() > 0);
+	
+	bool allNegative = (sideOfAB.toFloat() < 0 && 
+						sideOfBC.toFloat() < 0 && 
+						sideOfCA.toFloat() < 0);
 
-	// If both positive and negative signs exist, point is outside
-	return !(has_neg && has_pos);
+	return allPositive || allNegative;
 }
